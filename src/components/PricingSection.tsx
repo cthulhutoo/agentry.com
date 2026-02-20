@@ -22,6 +22,14 @@ interface CreditPackage {
   sort_order: number;
 }
 
+// Map package names to Stripe tiers
+const PACKAGE_TIERS: Record<string, string> = {
+  'starter': 'starter',
+  'standard': 'standard',
+  'pro': 'pro',
+  'enterprise': 'enterprise',
+};
+
 export function PricingSection() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [packages, setPackages] = useState<CreditPackage[]>([]);
@@ -29,10 +37,30 @@ export function PricingSection() {
   const [showAuth, setShowAuth] = useState(false);
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
+  const [processingPayment, setProcessingPayment] = useState<string | null>(null);
 
   useEffect(() => {
     loadPricing();
+    checkPaymentResult();
   }, []);
+
+  const checkPaymentResult = () => {
+    const params = new URLSearchParams(window.location.search);
+    const paymentStatus = params.get('payment');
+    
+    if (paymentStatus === 'success') {
+      // Clear URL params and show success message
+      window.history.replaceState({}, '', window.location.pathname);
+      setTimeout(() => {
+        alert('Payment successful! Your credits have been added to your account.');
+      }, 500);
+    } else if (paymentStatus === 'cancelled') {
+      window.history.replaceState({}, '', window.location.pathname);
+      setTimeout(() => {
+        alert('Payment was cancelled. Please try again when ready.');
+      }, 500);
+    }
+  };
 
   const loadPricing = async () => {
     try {
@@ -76,11 +104,59 @@ export function PricingSection() {
 
   const handlePackageClick = async (packageId: string) => {
     const { data: { user } } = await supabase.auth.getUser();
+    
     if (!user) {
       setSelectedPackageId(packageId);
       setShowAuth(true);
-    } else {
-      alert('Credit purchase feature coming soon!');
+      return;
+    }
+
+    // Find the package to get its name
+    const pkg = packages.find(p => p.id === packageId);
+    if (!pkg) {
+      alert('Package not found');
+      return;
+    }
+
+    // Determine tier from package name
+    const tierKey = pkg.name.toLowerCase().replace(/[^a-z]/g, '');
+    let tier = 'starter';
+    for (const [key, value] of Object.entries(PACKAGE_TIERS)) {
+      if (tierKey.includes(key)) {
+        tier = value;
+        break;
+      }
+    }
+
+    setProcessingPayment(packageId);
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`,
+        },
+        body: JSON.stringify({ tier }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert(error instanceof Error ? error.message : 'Failed to start checkout. Please try again.');
+    } finally {
+      setProcessingPayment(null);
     }
   };
 
@@ -88,7 +164,8 @@ export function PricingSection() {
     if (selectedPlanId) {
       alert('Account created! Subscription feature coming soon.');
     } else if (selectedPackageId) {
-      alert('Account created! Credit purchase feature coming soon.');
+      // Auto-trigger checkout after auth
+      handlePackageClick(selectedPackageId);
     }
     setSelectedPlanId(null);
     setSelectedPackageId(null);
@@ -181,6 +258,7 @@ export function PricingSection() {
           {packages.map((pkg) => {
             const totalCredits = pkg.credits + pkg.bonus_credits;
             const hasBonus = pkg.bonus_credits > 0;
+            const isProcessing = processingPayment === pkg.id;
 
             return (
               <div
@@ -211,9 +289,10 @@ export function PricingSection() {
 
                 <button
                   onClick={() => handlePackageClick(pkg.id)}
-                  className="w-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+                  disabled={isProcessing}
+                  className="w-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Buy Now
+                  {isProcessing ? 'Processing...' : 'Buy Now'}
                 </button>
               </div>
             );
@@ -222,7 +301,7 @@ export function PricingSection() {
       </div>
 
       <div className="mt-12 text-center text-sm text-slate-600">
-        <p>All purchases are processed securely. Credits never expire. Need help? Contact our support team.</p>
+        <p>All purchases are processed securely via Stripe. Credits never expire. Need help? Contact our support team.</p>
       </div>
 
       <AuthModal
