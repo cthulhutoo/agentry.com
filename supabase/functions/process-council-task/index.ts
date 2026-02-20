@@ -28,6 +28,7 @@ interface TaskRequest {
     llm_provider: string;
     llm_model: string;
   }>;
+  userId?: string;
 }
 
 interface AgentResponse {
@@ -45,6 +46,7 @@ interface DiscussionRound {
 
 const RATE_LIMIT_WINDOW = 60;
 const RATE_LIMIT_MAX_REQUESTS = 10;
+const CREDITS_PER_AGENT = 1; // 1 credit per agent per task
 
 async function checkRateLimit(
   supabase: any,
@@ -117,6 +119,47 @@ async function checkRateLimit(
   };
 }
 
+async function checkAndDeductCredits(
+  supabase: any,
+  userId: string,
+  agentCount: number
+): Promise<{ success: boolean; error?: string; balance?: number }> {
+  const creditsNeeded = agentCount * CREDITS_PER_AGENT;
+
+  // Get current balance
+  const { data: account, error: accountError } = await supabase
+    .from("user_accounts")
+    .select("credits")
+    .eq("user_id", userId)
+    .single();
+
+  if (accountError || !account) {
+    return { success: false, error: "Account not found" };
+  }
+
+  if (account.credits < creditsNeeded) {
+    return { 
+      success: false, 
+      error: `Insufficient credits. Need ${creditsNeeded}, have ${account.credits}`,
+      balance: account.credits
+    };
+  }
+
+  // Deduct credits using the database function
+  const { error: deductError } = await supabase.rpc("deduct_credits", {
+    p_user_id: userId,
+    p_amount: creditsNeeded,
+    p_description: `Task processing: ${agentCount} agents`
+  });
+
+  if (deductError) {
+    console.error("Credit deduction error:", deductError);
+    return { success: false, error: "Failed to deduct credits" };
+  }
+
+  return { success: true, balance: account.credits - creditsNeeded };
+}
+
 function getClientIdentifier(req: Request): string {
   const forwarded = req.headers.get("x-forwarded-for");
   if (forwarded) {
@@ -175,7 +218,7 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const { taskId, councilId, prompt, agents }: TaskRequest = await req.json();
+    const { taskId, councilId, prompt, agents, userId }: TaskRequest = await req.json();
 
     if (!taskId || !prompt || !agents || agents.length === 0) {
       return new Response(
@@ -189,6 +232,28 @@ Deno.serve(async (req: Request) => {
           },
         }
       );
+    }
+
+    // Check and deduct credits if userId provided
+    if (userId) {
+      const creditResult = await checkAndDeductCredits(supabase, userId, agents.length);
+      if (!creditResult.success) {
+        return new Response(
+          JSON.stringify({
+            error: "Insufficient credits",
+            message: creditResult.error,
+            balance: creditResult.balance,
+            required: agents.length * CREDITS_PER_AGENT
+          }),
+          {
+            status: 402,
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
     }
 
     const { data: taskData, error: taskError } = await supabase

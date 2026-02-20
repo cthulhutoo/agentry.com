@@ -54,6 +54,27 @@ function App() {
 
   const handleSubmitTask = async (prompt: string) => {
     try {
+      // Check if user is authenticated
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        alert('Please sign in to submit tasks');
+        return;
+      }
+
+      // Check user has enough credits
+      const { data: account } = await supabase
+        .from('user_accounts')
+        .select('credits')
+        .eq('user_id', user.id)
+        .single();
+
+      const creditsNeeded = selectedAgents.length;
+      if (!account || account.credits < creditsNeeded) {
+        alert(`Insufficient credits. You need ${creditsNeeded} credits but have ${account?.credits || 0}. Please purchase more credits.`);
+        return;
+      }
+
       const { data: council } = await supabase
         .from('councils')
         .insert({
@@ -73,6 +94,7 @@ function App() {
           council_id: council.id,
           prompt,
           status: 'processing',
+          user_id: user.id,
         })
         .select()
         .single();

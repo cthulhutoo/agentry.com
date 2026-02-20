@@ -207,7 +207,7 @@ export function AccountSection() {
       </div>
 
       <div className="mt-8 text-center">
-        <button className="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl">
+        <button onClick={() => window.location.href = "#pricing"} className="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl">
           Add More Credits
         </button>
       </div>
