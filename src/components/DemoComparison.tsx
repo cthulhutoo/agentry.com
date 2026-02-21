@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Play, Users, Bot, CheckCircle2, ArrowRight, Sparkles, Mail, Star } from 'lucide-react';
+import { Play, Users, Bot, CheckCircle2, ArrowRight, Sparkles, Mail, Star, Loader } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { withRetry } from '../lib/retry';
 
 interface Scenario {
   id: string;
@@ -144,6 +145,7 @@ export function DemoComparison() {
   const [email, setEmail] = useState('');
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -390,13 +392,24 @@ export function DemoComparison() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email to sign up"
                 className="flex-1 px-6 py-4 rounded-lg border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 text-lg"
+                disabled={emailSubmitting}
               />
               <button
                 type="submit"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition-all shadow-lg inline-flex items-center justify-center gap-2 whitespace-nowrap"
+                disabled={emailSubmitting}
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition-all shadow-lg inline-flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Mail className="w-5 h-5" />
-                Sign Up
+                {emailSubmitting ? (
+                  <>
+                    <Loader className="w-5 h-5 animate-spin" />
+                    <span>Signing up...</span>
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-5 h-5" />
+                    <span>Sign Up</span>
+                  </>
+                )}
               </button>
             </form>
           ) : (

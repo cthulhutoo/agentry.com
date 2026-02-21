@@ -13,6 +13,7 @@ import { DemoComparison } from './components/DemoComparison';
 import { useAgents } from './hooks/useAgents';
 import { useCouncil } from './hooks/useCouncil';
 import { supabase, Task } from './lib/supabase';
+import { withRetry } from './lib/retry';
 import { Loader, Sparkles, Filter, Zap, Star, TrendingUp, Mail, Bell, ChevronRight, HelpCircle } from 'lucide-react';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [currentView, setCurrentView] = useState<'marketplace' | 'demo' | 'pricing' | 'account'>('marketplace');
 
   const specialties = Array.from(new Set(agents.map(a => a.specialty)));
@@ -138,25 +140,44 @@ function App() {
       return;
     }
 
-    try {
-      const { error } = await supabase
-        .from('email_signups')
-        .insert({ email });
+    setEmailSubmitting(true);
 
-      if (error) {
-        if (error.code === '23505') {
-          setEmailError('This email is already subscribed');
-        } else {
-          setEmailError('Failed to subscribe. Please try again.');
+    try {
+      // Use retry logic with exponential backoff for rate limits
+      const result = await withRetry(
+        async () => {
+          const { error } = await supabase
+            .from('email_signups')
+            .insert({ email });
+          
+          if (error) throw error;
+          return { success: true };
+        },
+        {
+          maxRetries: 3,
+          baseDelay: 1000,
+          maxDelay: 8000,
         }
-        return;
-      }
+      );
 
       setEmailSubmitted(true);
       setEmail('');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Email signup error:', error);
-      setEmailError('Failed to subscribe. Please try again.');
+      
+      // Handle specific error types
+      if (error?.code === '23505') {
+        setEmailError('This email is already subscribed');
+      } else if (error?.message?.toLowerCase().includes('rate') || 
+                 error?.message?.toLowerCase().includes('limit') ||
+                 error?.code === '429' ||
+                 error?.code === '1113') {
+        setEmailError('Service is busy. Please wait a moment and try again.');
+      } else {
+        setEmailError('Failed to subscribe. Please try again.');
+      }
+    } finally {
+      setEmailSubmitting(false);
     }
   };
 
@@ -247,13 +268,24 @@ function App() {
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="Enter your email for early access"
                           className="w-full px-4 py-3 rounded-lg border-2 border-amber-400/30 bg-slate-800/50 backdrop-blur-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm sm:text-base"
+                          disabled={emailSubmitting}
                         />
                         <button
                           type="submit"
-                          className="w-full sm:w-auto px-6 py-3 bg-amber-400 text-slate-900 rounded-lg font-bold hover:bg-amber-500 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                          disabled={emailSubmitting}
+                          className="w-full sm:w-auto px-6 py-3 bg-amber-400 text-slate-900 rounded-lg font-bold hover:bg-amber-500 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          <Bell className="w-4 h-4" />
-                          <span className="text-sm sm:text-base">Join Waitlist</span>
+                          {emailSubmitting ? (
+                            <>
+                              <Loader className="w-4 h-4 animate-spin" />
+                              <span className="text-sm sm:text-base">Signing up...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Bell className="w-4 h-4" />
+                              <span className="text-sm sm:text-base">Join Waitlist</span>
+                            </>
+                          )}
                         </button>
                       </form>
                     ) : (
@@ -297,13 +329,19 @@ function App() {
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="Enter your email"
                           className="flex-1 px-4 py-2 rounded-lg border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
+                          disabled={emailSubmitting}
                         />
                         <button
                           type="submit"
-                          className="px-6 py-2 bg-white text-fuchsia-600 rounded-lg font-semibold hover:bg-white/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 whitespace-nowrap"
+                          disabled={emailSubmitting}
+                          className="px-6 py-2 bg-white text-fuchsia-600 rounded-lg font-semibold hover:bg-white/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          <Mail className="w-4 h-4" />
-                          Get Updates
+                          {emailSubmitting ? (
+                            <Loader className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Mail className="w-4 h-4" />
+                          )}
+                          <span>{emailSubmitting ? 'Please wait...' : 'Get Updates'}</span>
                         </button>
                       </form>
                     ) : (
@@ -335,7 +373,7 @@ function App() {
             <div className="mb-8 space-y-4">
               <div className="relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-xl shadow-xl border-4 border-amber-300">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-32 -mt-32 animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-10 rounded-full -ml-24 -mb-24 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute bottom-0 left:0 w-48 h-48 bg-white opacity-10 rounded-full -ml-24 -mb-24 animate-pulse" style={{ animationDelay: '1s' }}></div>
 
                 <div className="relative p-6">
                   <div className="flex items-center gap-3 mb-3">
