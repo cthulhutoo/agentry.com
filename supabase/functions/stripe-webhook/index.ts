@@ -64,21 +64,21 @@ Deno.serve(async (req: Request) => {
         );
       }
 
-      // Get current credits
+      // Get current credits from user_accounts table
       const { data: userData, error: fetchError } = await supabase
-        .from("user_credits")
+        .from("user_accounts")
         .select("credits")
         .eq("user_id", userId)
         .single();
 
       let newCredits = credits;
-      if (userData?.credits) {
+      if (userData?.credits !== undefined) {
         newCredits = userData.credits + credits;
       }
 
-      // Upsert credits
+      // Upsert credits to user_accounts
       const { error: upsertError } = await supabase
-        .from("user_credits")
+        .from("user_accounts")
         .upsert({
           user_id: userId,
           credits: newCredits,
@@ -90,15 +90,22 @@ Deno.serve(async (req: Request) => {
         throw upsertError;
       }
 
-      // Record transaction
-      await supabase.from("credit_transactions").insert({
-        user_id: userId,
-        amount: credits,
-        transaction_type: "purchase",
-        tier: tier,
-        stripe_session_id: session.id,
-        created_at: new Date().toISOString(),
-      });
+      // Record transaction in credit_transactions
+      const { data: userAccount } = await supabase
+        .from("user_accounts")
+        .select("id")
+        .eq("user_id", userId)
+        .single();
+
+      if (userAccount) {
+        await supabase.from("credit_transactions").insert({
+          user_account_id: userAccount.id,
+          amount: credits,
+          type: "purchase",
+          description: `${tier} credit pack purchase`,
+          created_at: new Date().toISOString(),
+        });
+      }
 
       console.log(`Added ${credits} credits to user ${userId}`);
     }
