@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
+import { Check, Zap } from 'lucide-react';
 
 interface CreditTransaction {
   id: string;
@@ -11,7 +12,6 @@ interface CreditTransaction {
   task_id: string | null;
   description: string | null;
   created_at: string;
-  // New fields from schema migration
   user_id?: string;
   user_account_id?: string;
 }
@@ -22,17 +22,37 @@ interface UserCredits {
   updated_at: string;
 }
 
+interface CreditPackage {
+  id: string;
+  name: string;
+  credits: number;
+  price: number;
+  bonus_credits: number;
+  sort_order: number;
+}
+
+// Map package names to Stripe tiers
+const PACKAGE_TIERS: Record<string, string> = {
+  'starter': 'starter',
+  'standard': 'standard',
+  'pro': 'pro',
+  'enterprise': 'enterprise',
+};
+
 export function CreditDashboard() {
   const { user } = useAuth();
   const [credits, setCredits] = useState<UserCredits | null>(null);
   const [transactions, setTransactions] = useState<CreditTransaction[]>([]);
+  const [packages, setPackages] = useState<CreditPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+  const [processingPayment, setProcessingPayment] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
       loadCreditData();
+      loadPackages();
     }
   }, [user]);
 
@@ -76,6 +96,80 @@ export function CreditDashboard() {
       setError(err.message || 'Failed to load credit data');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadPackages = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('credit_packages')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order');
+
+      if (error) {
+        console.error('Error loading packages:', error);
+      } else if (data) {
+        setPackages(data);
+      }
+    } catch (err) {
+      console.error('Error loading packages:', err);
+    }
+  };
+
+  const handlePackageClick = async (packageId: string) => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+      setError('Please sign in to purchase credits');
+      return;
+    }
+
+    // Find the package to get its name
+    const pkg = packages.find(p => p.id === packageId);
+    if (!pkg) {
+      alert('Package not found');
+      return;
+    }
+
+    // Determine tier from package name
+    const tierKey = pkg.name.toLowerCase().replace(/[^a-z]/g, '');
+    let tier = 'starter';
+    for (const [key, value] of Object.entries(PACKAGE_TIERS)) {
+      if (tierKey.includes(key)) {
+        tier = value;
+        break;
+      }
+    }
+
+    setProcessingPayment(packageId);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ tier }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      
+      if (url) {
+        setShowPurchaseModal(false);
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert(error instanceof Error ? error.message : 'Failed to start checkout. Please try again.');
+    } finally {
+      setProcessingPayment(null);
     }
   };
 
@@ -234,7 +328,51 @@ export function CreditDashboard() {
               <p className="text-slate-600 mb-6">
                 Select a credit package to purchase. All purchases are one-time and credits never expire.
               </p>
-              {/* Credit packages will be rendered here */}
+              
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {packages.map((pkg) => {
+                  const totalCredits = pkg.credits + pkg.bonus_credits;
+                  const hasBonus = pkg.bonus_credits > 0;
+                  const isProcessing = processingPayment === pkg.id;
+
+                  return (
+                    <div
+                      key={pkg.id}
+                      className="bg-white rounded-xl shadow-lg p-6 border-4 border-slate-900 hover:border-amber-400 transition-all duration-300 hover:scale-105"
+                    >
+                      <div className="text-center mb-4">
+                        <h4 className="text-xl font-black text-slate-900 mb-1">{pkg.name}</h4>
+                        <div className="text-3xl font-black text-amber-500">
+                          {totalCredits}
+                        </div>
+                        <div className="text-sm text-slate-600">
+                          {hasBonus ? (
+                            <>
+                              <span>{pkg.credits} credits</span>
+                              <span className="text-emerald-600 font-bold"> +{pkg.bonus_credits} bonus</span>
+                            </>
+                          ) : (
+                            <span>credits</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="text-center mb-4">
+                        <div className="text-2xl font-black text-slate-900">${pkg.price}</div>
+                        <div className="text-xs text-slate-600">one-time payment</div>
+                      </div>
+
+                      <button
+                        onClick={() => handlePackageClick(pkg.id)}
+                        disabled={isProcessing}
+                        className="w-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isProcessing ? 'Processing...' : 'Buy Now'}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
