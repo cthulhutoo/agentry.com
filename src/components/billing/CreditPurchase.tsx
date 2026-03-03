@@ -64,7 +64,7 @@ export function CreditPurchase({ onSuccess, onClose }: CreditPurchaseProps) {
 
     try {
       // Call the stripe-checkout function
-      const { data, error: fetchError } = await fetch('/functions/v1/stripe-checkout', {
+      const { data, error: fetchError } = await fetch("${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
