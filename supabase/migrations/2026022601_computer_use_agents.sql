@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS computer_use_policy_rules (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     rule_type VARCHAR(50) NOT NULL
-        CHECK (rule_type IN ('domain', 'action', 'time', 'resource', 'custom')),
+        CHECK (rule_type IN ('domain', 'action', 'time', 'resource', 'custom', 'rate_limit')),
     
     -- Condition
     condition JSONB NOT NULL,
@@ -440,7 +440,7 @@ CREATE POLICY "Service role can manage credentials"
 -- STORAGE BUCKET FOR SCREENSHOTS
 -- ============================================================================
 
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_types)
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES ('task-screenshots', 'task-screenshots', true, 10485760, ARRAY['image/png', 'image/jpeg'])
 ON CONFLICT DO NOTHING;
 
@@ -478,77 +478,3 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- ============================================================================
--- DEFAULT ACTION TEMPLATES
--- ============================================================================
-
-INSERT INTO computer_use_action_templates (name, description, category, actions, is_public)
-VALUES
-    ('Navigate to URL', 'Navigate to a specific URL', 'navigation', 
-     '[{"action_type": "navigate", "selector": null, "value": "{{url}}"}]', true),
-    
-    ('Fill Form Field', 'Fill a text input field', 'form',
-     '[{"action_type": "click", "selector": "{{selector}}", "selector_type": "{{selector_type}}"}, {"action_type": "type", "selector": "{{selector}}", "selector_type": "{{selector_type}}", "value": "{{value}}"}]', true),
-    
-    ('Click Button', 'Click a button or link', 'automation',
-     '[{"action_type": "click", "selector": "{{selector}}", "selector_type": "{{selector_type}}"}]', true),
-    
-    ('Scroll Down', 'Scroll down the page', 'navigation',
-     '[{"action_type": "scroll", "value": "down"}]', true),
-    
-    ('Take Screenshot', 'Capture current page screenshot', 'scraping',
-     '[{"action_type": "screenshot"}]', true),
-    
-    ('Wait for Element', 'Wait for an element to appear', 'automation',
-     '[{"action_type": "wait_for_selector", "selector": "{{selector}}", "selector_type": "{{selector_type}}", "options": {"timeout": {{timeout_ms}}}]', true)
-ON CONFLICT DO NOTHING;
-
--- ============================================================================
--- MIGRATION COMPLETE
--- ============================================================================
-SELECT 'Computer Use Agents migration completed successfully' AS status;
-
--- ============================================
--- RPC Functions for Computer Use Agents
--- ============================================
-
--- Calculate credits function
-CREATE OR REPLACE FUNCTION calculate_computer_use_credits(
-  p_steps INT,
-  p_timeout_ms BIGINT,
-  p_screenshots INT
-) RETURNS INT AS $$
-BEGIN
-  RETURN 1 + p_steps + LEAST(EXTRACT(EPOCH FROM (p_timeout_ms/1000))::INT / 60, 5) + p_screenshots;
-END;
-$$ LANGUAGE plpgsql;
-
--- Deduct credits function
-CREATE OR REPLACE FUNCTION deduct_credits(
-  p_user_id UUID,
-  p_amount INT,
-  p_task_id UUID,
-  p_description TEXT
-) RETURNS BOOLEAN AS $$
-BEGIN
-  UPDATE user_credits 
-  SET credits = credits - p_amount 
-  WHERE user_id = p_user_id;
-  
-  INSERT INTO credit_transactions (user_id, amount, description, task_id)
-  VALUES (p_user_id, -p_amount, p_description, p_task_id);
-  
-  RETURN TRUE;
-EXCEPTION WHEN OTHERS THEN
-  RETURN FALSE;
-END;
-$$ LANGUAGE plpgsql;
-
--- Increment template usage
-CREATE OR REPLACE FUNCTION increment_template_usage(template_id UUID)
-RETURNS VOID AS $$
-BEGIN
-  UPDATE computer_use_action_templates 
-  SET usage_count = usage_count + 1 
-  WHERE id = template_id;
-END;
-$$ LANGUAGE plpgsql;

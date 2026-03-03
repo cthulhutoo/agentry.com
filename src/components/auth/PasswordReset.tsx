@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { X } from 'lucide-react';
 
@@ -14,6 +14,29 @@ export function PasswordReset({ isOpen, onClose, onSwitchToSignin }: PasswordRes
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [step, setStep] = useState<'request' | 'confirm'>('request');
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  // Parse access_token from URL hash when component mounts
+  useEffect(() => {
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.substring(1));
+    const token = params.get('access_token');
+    const type = params.get('type');
+
+    if (token && type === 'recovery') {
+      setAccessToken(token);
+      setStep('confirm');
+      
+      // Set the session with the access token
+      supabase.auth.setSession({
+        access_token: token,
+        refresh_token: '',
+      }).catch((err) => {
+        console.error('Error setting session:', err);
+        setError('Invalid or expired reset link. Please request a new password reset.');
+      });
+    }
+  }, []);
 
   if (!isOpen) return null;
 
@@ -25,7 +48,7 @@ export function PasswordReset({ isOpen, onClose, onSwitchToSignin }: PasswordRes
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'https://agentry.com/auth/callback',
+        redirectTo: `${window.location.origin}/auth/callback`,
       });
 
       if (error) throw error;
@@ -55,14 +78,29 @@ export function PasswordReset({ isOpen, onClose, onSwitchToSignin }: PasswordRes
       return;
     }
 
+    if (!accessToken) {
+      setError('No valid reset token found. Please request a new password reset.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const { error } = await supabase.auth.updateUser({
+      // Verify session is still valid before updating password
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        throw new Error('Session expired. Please request a new password reset link.');
+      }
+
+      // Update password
+      const { error: updateError } = await supabase.auth.updateUser({
         password: password,
       });
 
-      if (error) throw error;
+      if (updateError) throw updateError;
 
       setSuccess('Password updated successfully! You can now sign in with your new password.');
+      
       // Close the modal after a short delay
       setTimeout(() => {
         onClose();
@@ -186,10 +224,6 @@ export function PasswordReset({ isOpen, onClose, onSwitchToSignin }: PasswordRes
                     placeholder="••••••••"
                   />
                 </div>
-
-                <p className="text-sm text-slate-600">
-                  Check your email for the password reset link. This form is for demonstration purposes.
-                </p>
 
                 <button
                   type="submit"

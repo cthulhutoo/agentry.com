@@ -11,6 +11,9 @@ interface CreditTransaction {
   task_id: string | null;
   description: string | null;
   created_at: string;
+  // New fields from schema migration
+  user_id?: string;
+  user_account_id?: string;
 }
 
 interface UserCredits {
@@ -38,7 +41,7 @@ export function CreditDashboard() {
       setLoading(true);
       setError('');
 
-      // Load current credit balance
+      // Load current credit balance - try user_credits first
       const { data: creditsData, error: creditsError } = await supabase
         .from('user_credits')
         .select('credits, created_at, updated_at')
@@ -56,7 +59,7 @@ export function CreditDashboard() {
         setCredits({ credits: 0, created_at: new Date().toISOString(), updated_at: new Date().toISOString() });
       }
 
-      // Load transaction history
+      // Load transaction history using user_id (new field)
       const { data: transactionsData, error: transactionsError } = await supabase
         .from('credit_transactions')
         .select('*')
