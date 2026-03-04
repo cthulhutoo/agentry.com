@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { 
-  Sparkles, Bot, Zap, Users, Star, Mail, ArrowRight, 
+import {
+  Sparkles, Bot, Zap, Users, Star, Mail, ArrowRight,
   CheckCircle2, Menu, X, Heart, Rocket, Brain, Code,
   MessageCircle, BarChart3, LogIn, UserPlus, LogOut,
-  CreditCard, Settings, ChevronDown, Play, PartyPopper
+  CreditCard, Settings, ChevronDown, Play, PartyPopper,
+  History, Save, FileText, Download
 } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import { withRetry } from './lib/retry';
@@ -15,8 +16,11 @@ import { Header } from './components/Header';
 import { DemoComparison } from './components/DemoComparison';
 import { PricingSection } from './components/PricingSection';
 import { FAQ } from './components/FAQ';
+import TaskHistory from './components/TaskHistory';
+import CouncilManager from './components/CouncilManager';
+import { TaskResults } from './components/TaskResults';
 
-type View = 'landing' | 'dashboard' | 'agents';
+type View = 'landing' | 'dashboard' | 'agents' | 'history' | 'councils';
 
 function App() {
   const [view, setView] = useState<View>('landing');
@@ -26,6 +30,8 @@ function App() {
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup');
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<any>(null);
+  const [showTaskResults, setShowTaskResults] = useState(false);
 
   // Waitlist state
   const [email, setEmail] = useState('');
@@ -91,6 +97,11 @@ function App() {
     setShowAuthModal(true);
   };
 
+  const handleTaskSelect = (task: any) => {
+    setSelectedTask(task);
+    setShowTaskResults(true);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 flex items-center justify-center">
@@ -105,11 +116,11 @@ function App() {
   }
 
   // Dashboard view for logged-in users
-  if (view === 'dashboard' && user) {
+  if (view !== 'landing' && user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         {/* Dashboard Header */}
-        <header className="bg-black/30 backdrop-blur-lg border-b border-white/10">
+        <header className="bg-black/30 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -129,7 +140,36 @@ function App() {
                         : 'text-white/70 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    🤖 Agents
+                    <div className="flex items-center gap-2">
+                      <Bot className="w-4 h-4" />
+                      Agents
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => setView('councils')}
+                    className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                      view === 'councils'
+                        ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-purple-500/30'
+                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4" />
+                      Councils
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => setView('history')}
+                    className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                      view === 'history'
+                        ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-purple-500/30'
+                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <History className="w-4 h-4" />
+                      History
+                    </div>
                   </button>
                   <button
                     onClick={() => setView('dashboard')}
@@ -139,7 +179,10 @@ function App() {
                         : 'text-white/70 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    📊 Dashboard
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4" />
+                      Dashboard
+                    </div>
                   </button>
                 </nav>
                 
@@ -162,11 +205,59 @@ function App() {
           </div>
         </header>
 
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {view === 'dashboard' ? (
-            <CreditDashboard />
-          ) : (
-            <AgentTemplates credits={100} onTaskComplete={(result) => console.log('Task complete:', result)} />
+        {/* Mobile Navigation */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-white/10 z-50">
+          <div className="flex justify-around py-3">
+            <button
+              onClick={() => setView('agents')}
+              className={`flex flex-col items-center gap-1 ${
+                view === 'agents' ? 'text-violet-400' : 'text-white/60'
+              }`}
+            >
+              <Bot className="w-5 h-5" />
+              <span className="text-xs">Agents</span>
+            </button>
+            <button
+              onClick={() => setView('councils')}
+              className={`flex flex-col items-center gap-1 ${
+                view === 'councils' ? 'text-violet-400' : 'text-white/60'
+              }`}
+            >
+              <Users className="w-5 h-5" />
+              <span className="text-xs">Councils</span>
+            </button>
+            <button
+              onClick={() => setView('history')}
+              className={`flex flex-col items-center gap-1 ${
+                view === 'history' ? 'text-violet-400' : 'text-white/60'
+              }`}
+            >
+              <History className="w-5 h-5" />
+              <span className="text-xs">History</span>
+            </button>
+            <button
+              onClick={() => setView('dashboard')}
+              className={`flex flex-col items-center gap-1 ${
+                view === 'dashboard' ? 'text-violet-400' : 'text-white/60'
+              }`}
+            >
+              <BarChart3 className="w-5 h-5" />
+              <span className="text-xs">Dashboard</span>
+            </button>
+          </div>
+        </div>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
+          {view === 'dashboard' && <CreditDashboard />}
+          {view === 'agents' && (
+            <AgentTemplates
+              credits={100}
+              onTaskComplete={(result) => console.log('Task complete:', result)}
+            />
+          )}
+          {view === 'councils' && <CouncilManager />}
+          {view === 'history' && (
+            <TaskHistory onTaskSelect={handleTaskSelect} />
           )}
         </main>
 
@@ -176,6 +267,15 @@ function App() {
               setShowPurchaseModal(false);
             }}
             onClose={() => setShowPurchaseModal(false)}
+          />
+        )}
+
+        {showTaskResults && selectedTask && (
+          <TaskResults
+            task={selectedTask}
+            onRateTask={(rating) => {
+              console.log('Rated task:', rating);
+            }}
           />
         )}
       </div>
@@ -236,7 +336,7 @@ function App() {
             <div className="md:hidden mt-4 bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20">
               <div className="flex flex-col gap-3">
                 <button
-n                  onClick={() => { openAuth('signin'); setMobileMenuOpen(false); }}
+                  onClick={() => { openAuth('signin'); setMobileMenuOpen(false); }}
                   className="text-white font-medium px-4 py-3 rounded-xl hover:bg-white/10 transition-all text-left"
                 >
                   Sign In
@@ -273,7 +373,7 @@ n                  onClick={() => { openAuth('signin'); setMobileMenuOpen(false)
           </h1>
           
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Deploy specialized AI agents that research, code, write, and analyze for you. 
+            Deploy specialized AI agents that research, code, write, and analyze for you.
             <span className="font-bold">Like having a team of experts on demand!</span> 🧠✨
           </p>
 
@@ -314,8 +414,8 @@ n                  onClick={() => { openAuth('signin'); setMobileMenuOpen(false)
             
             {waitlistMessage && (
               <div className={`mt-4 p-4 rounded-xl ${
-                waitlistStatus === 'success' 
-                  ? 'bg-green-500/20 border border-green-400/30 text-white' 
+                waitlistStatus === 'success'
+                  ? 'bg-green-500/20 border border-green-400/30 text-white'
                   : 'bg-red-500/20 border border-red-400/30 text-white'
               }`}>
                 {waitlistMessage}

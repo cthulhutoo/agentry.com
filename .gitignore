@@ -6,3 +6,4 @@ dist/
 *.log
 .DS_Store
 EOF && git reset HEAD && git add .gitignore package.json package-lock.json src/components/PricingSection.tsx supabase/functions/stripe-checkout/index.ts supabase/functions/stripe-webhook/index.ts supabase/migrations/20260220_credits_system.sql supabase/migrations/20260220_seed_credit_packages.sql && git status
+.env.backup
