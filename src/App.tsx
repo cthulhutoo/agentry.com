@@ -33,6 +33,8 @@ function App() {
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [showTaskResults, setShowTaskResults] = useState(false);
   const [selectedAgentIds, setSelectedAgentIds] = useState<string[]>([]);
+  const [credits, setCredits] = useState<number>(0);
+  const [creditsLoading, setCreditsLoading] = useState(false);
 
   // Waitlist state
   const [email, setEmail] = useState('');
@@ -59,6 +61,33 @@ function App() {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  const loadUserCredits = async () => {
+    if (!user?.id) return;
+    try {
+      setCreditsLoading(true);
+      const { data: creditsData, error: creditsError } = await supabase
+        .from('user_credits')
+        .select('credits')
+        .eq('user_id', user?.id)
+        .single();
+
+      if (creditsError && creditsError.code !== 'PGRST116') {
+        console.error('Error fetching credits:', creditsError);
+      }
+
+      setCredits(creditsData?.credits || 0);
+    } catch (error) {
+      console.error('Error loading credits:', error);
+      setCredits(0);
+    } finally {
+      setCreditsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadUserCredits();
+  }, [user?.id]);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -252,8 +281,11 @@ function App() {
           {view === 'dashboard' && <CreditDashboard />}
           {view === 'agents' && (
             <AgentTemplates
-              credits={100}
-              onTaskComplete={(result) => console.log('Task complete:', result)}
+              credits={credits}
+              onTaskComplete={async (result, creditsUsed) => {
+              console.log('Task complete:', result, creditsUsed);
+              await loadUserCredits(); // Refresh credits after task completion
+            }}
             />
           )}
           {view === 'councils' && (
