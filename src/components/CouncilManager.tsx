@@ -33,7 +33,7 @@ interface CouncilManagerProps {
 }
 
 const CouncilManager: React.FC<CouncilManagerProps> = ({
-  currentAgentIds,
+  currentAgentIds = [],
   onLoadCouncil,
   allAgents = []
 }) => {

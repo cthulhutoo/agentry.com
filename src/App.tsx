@@ -32,6 +32,7 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [showTaskResults, setShowTaskResults] = useState(false);
+  const [selectedAgentIds, setSelectedAgentIds] = useState<string[]>([]);
 
   // Waitlist state
   const [email, setEmail] = useState('');
@@ -255,7 +256,12 @@ function App() {
               onTaskComplete={(result) => console.log('Task complete:', result)}
             />
           )}
-          {view === 'councils' && <CouncilManager />}
+          {view === 'councils' && (
+            <CouncilManager 
+              currentAgentIds={selectedAgentIds} 
+              onLoadCouncil={setSelectedAgentIds} 
+            />
+          )}
           {view === 'history' && (
             <TaskHistory onTaskSelect={handleTaskSelect} />
           )}
