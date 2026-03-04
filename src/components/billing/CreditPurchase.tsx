@@ -63,20 +63,48 @@ export function CreditPurchase({ onSuccess, onClose }: CreditPurchaseProps) {
     setError('');
 
     try {
+      // Get session token
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+
+      if (!token) {
+        throw new Error('You must be signed in to purchase credits');
+      }
+
       // Call the stripe-checkout function
-      const { data, error: fetchError } = await fetch("${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout", {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${await supabase.auth.getSession().then(r => r.data.session?.access_token)}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           tier: selectedPackage.id.replace('pkg_', '')
         })
-      }).then(r => r.json());
+      });
 
-      if (fetchError || !data) {
-        throw new Error('Failed to create checkout session');
+      // Check if response is OK
+      if (!response.ok) {
+        let errorMessage = 'Failed to create checkout session';
+
+        try {
+          const errorData = await response.json();
+          if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch {
+          // If we can't parse error as JSON, use status text
+          errorMessage = `Error ${response.status}: ${response.statusText}`;
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      // Parse JSON response
+      const data = await response.json();
+
+      if (!data || !data.url) {
+        throw new Error('Invalid response from checkout service');
       }
 
       // Redirect to Stripe checkout
