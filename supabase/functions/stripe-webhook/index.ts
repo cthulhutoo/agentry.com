@@ -64,21 +64,23 @@ Deno.serve(async (req: Request) => {
         );
       }
 
-      // Get current credits from user_accounts table
-      const { data: userData, error: fetchError } = await supabase
-        .from("user_accounts")
+      console.log(`Processing payment: User ${userId}, Tier: ${tier}, Credits: ${credits}`);
+
+      // FIXED: Use user_credits table instead of user_accounts
+      const { data: currentCredits, error: fetchError } = await supabase
+        .from("user_credits")
         .select("credits")
         .eq("user_id", userId)
         .single();
 
       let newCredits = credits;
-      if (userData?.credits !== undefined) {
-        newCredits = userData.credits + credits;
+      if (currentCredits?.credits !== undefined) {
+        newCredits = currentCredits.credits + credits;
       }
 
-      // Upsert credits to user_accounts
+      // FIXED: Upsert to user_credits table
       const { error: upsertError } = await supabase
-        .from("user_accounts")
+        .from("user_credits")
         .upsert({
           user_id: userId,
           credits: newCredits,
@@ -90,24 +92,22 @@ Deno.serve(async (req: Request) => {
         throw upsertError;
       }
 
-      // Record transaction in credit_transactions
-      const { data: userAccount } = await supabase
-        .from("user_accounts")
-        .select("id")
-        .eq("user_id", userId)
-        .single();
-
-      if (userAccount) {
-        await supabase.from("credit_transactions").insert({
-          user_account_id: userAccount.id,
+      // FIXED: Insert into credit_transactions with user_id (not user_account_id)
+      const { error: transactionError } = await supabase
+        .from("credit_transactions")
+        .insert({
+          user_id: userId,
           amount: credits,
-          type: "purchase",
+          transaction_type: "purchase",
           description: `${tier} credit pack purchase`,
           created_at: new Date().toISOString(),
         });
+
+      if (transactionError) {
+        console.error("Failed to record transaction:", transactionError);
       }
 
-      console.log(`Added ${credits} credits to user ${userId}`);
+      console.log(`Successfully added ${credits} credits to user ${userId}. New balance: ${newCredits}`);
     }
 
     return new Response(
