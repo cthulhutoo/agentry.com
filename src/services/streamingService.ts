@@ -83,13 +83,29 @@ export class StreamingService {
 
   /**
    * Get authentication token from Supabase
+   * Refreshes the session if needed to ensure a valid token
    */
   private async getAuthToken(): Promise<string> {
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session?.access_token) {
+
+    if (!session) {
       throw new Error('Not authenticated. Please log in to continue.');
     }
-    return session.access_token;
+
+    // Refresh session to ensure we have a valid token
+    // This handles expired access tokens automatically
+    const { data: { session: refreshedSession }, error } = await supabase.auth.refreshSession();
+
+    if (error) {
+      console.error('Error refreshing session:', error);
+      throw new Error('Session expired. Please log in again.');
+    }
+
+    if (!refreshedSession?.access_token) {
+      throw new Error('Failed to obtain valid access token. Please log in again.');
+    }
+
+    return refreshedSession.access_token;
   }
 
   /**
