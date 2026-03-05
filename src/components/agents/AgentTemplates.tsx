@@ -7,7 +7,14 @@ import CommunicationAgent from './CommunicationAgent';
 
 interface AgentTemplatesProps {
   credits?: number;
-  onTaskComplete?: (result: string) => void;
+  onTaskComplete?: (taskData: {
+    agent_type: string;
+    prompt: string;
+    result: string;
+    credits_used: number;
+    status: string;
+    created_at: string;
+  }) => void;
 }
 
 type AgentType = 'research' | 'content' | 'code' | 'data' | 'communication';

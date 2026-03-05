@@ -282,9 +282,13 @@ function App() {
           {view === 'agents' && (
             <AgentTemplates
               credits={credits}
-              onTaskComplete={async (result, creditsUsed) => {
-              console.log('Task complete:', result, creditsUsed);
-              await loadUserCredits(); // Refresh credits after task completion
+              onTaskComplete={async (taskData) => {
+              console.log('Task complete:', taskData);
+              // Refresh credits after task completion
+              await loadUserCredits();
+              // Show task results
+              setSelectedTask(taskData);
+              setShowTaskResults(true);
             }}
             />
           )}

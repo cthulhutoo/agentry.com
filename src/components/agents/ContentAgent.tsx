@@ -4,7 +4,14 @@ import { streamAgentResponse, StreamingResult } from '../../services/streamingSe
 import { supabase } from '../../lib/supabase';
 
 interface ContentAgentProps {
-  onTaskComplete?: (result: string, creditsUsed: number) => void;
+  onTaskComplete?: (taskData: {
+    agent_type: string;
+    prompt: string;
+    result: string;
+    credits_used: number;
+    status: string;
+    created_at: string;
+  }) => void;
   credits?: number;
 }
 
@@ -74,7 +81,14 @@ const ContentAgent: React.FC<ContentAgentProps> = ({ onTaskComplete, credits = 0
       setCreditsUsed(streamingResult.creditsUsed || 0);
       setProgress(100);
 
-      onTaskComplete?.(streamingResult.text, streamingResult.creditsUsed || 0);
+      onTaskComplete?.({
+        agent_type: 'contentagent',
+        prompt: prompt.substring(0, 1000),
+        result: result || streamingResult?.text || '',
+        credits_used: creditsUsed || streamingResult?.creditsUsed || 0,
+        status: 'completed',
+        created_at: new Date().toISOString()
+      });
 
       await saveTaskToDatabase('content', task.input, streamingResult.text, streamingResult.creditsUsed || 0);
 

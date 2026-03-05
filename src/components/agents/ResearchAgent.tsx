@@ -4,7 +4,14 @@ import { streamAgentResponse, StreamingResult } from '../../services/streamingSe
 import { supabase } from '../../lib/supabase';
 
 interface ResearchAgentProps {
-  onTaskComplete?: (result: string, creditsUsed: number) => void;
+  onTaskComplete?: (taskData: {
+    agent_type: string;
+    prompt: string;
+    result: string;
+    credits_used: number;
+    status: string;
+    created_at: string;
+  }) => void;
   credits?: number;
 }
 
@@ -82,7 +89,14 @@ const ResearchAgent: React.FC<ResearchAgentProps> = ({ onTaskComplete, credits =
       setProgress(100);
 
       // Call completion callback
-      onTaskComplete?.(streamingResult.text, streamingResult.creditsUsed || 0);
+      onTaskComplete?.({
+        agent_type: 'research',
+        prompt: prompt.substring(0, 1000),
+        result: streamingResult.text,
+        credits_used: streamingResult.creditsUsed || 0,
+        status: 'completed',
+        created_at: new Date().toISOString()
+      });
 
       // Save task to database
       await saveTaskToDatabase('research', task.query, streamingResult.text, streamingResult.creditsUsed || 0);
