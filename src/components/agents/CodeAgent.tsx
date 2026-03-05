@@ -162,7 +162,7 @@ const CodeAgent: React.FC<CodeAgentProps> = ({ onTaskComplete, credits = 0 }) =>
         metadata: {
           action: task.action,
           language: task.language,
-          model: 'anthropic/claude-3-5-sonnet'
+          model: 'anthropic/claude-3.5-sonnet'
         }
       });
 

@@ -76,7 +76,7 @@ export class StreamingService {
   // Default configuration
   private readonly defaults = {
     provider: 'openrouter' as const,
-    model: 'anthropic/claude-3-5-sonnet',
+    model: 'anthropic/claude-3.5-sonnet',
     temperature: 0.7,
     maxTokens: 4096,
   };

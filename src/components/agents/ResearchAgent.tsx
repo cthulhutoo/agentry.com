@@ -172,7 +172,7 @@ const ResearchAgent: React.FC<ResearchAgentProps> = ({ onTaskComplete, credits =
         metadata: {
           depth: task.depth,
           sources: task.sources,
-          model: 'anthropic/claude-3-5-sonnet'
+          model: 'anthropic/claude-3.5-sonnet'
         }
       });
 
