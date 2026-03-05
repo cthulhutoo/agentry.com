@@ -272,7 +272,7 @@ const ResearchAgent: React.FC<ResearchAgentProps> = ({ onTaskComplete, credits =
 
         <div className="flex gap-2">
           {!isProcessing ? (
-            <button
+            <button type="button"
               onClick={handleResearch}
               disabled={!task.query.trim()}
               className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-medium flex items-center justify-center gap-2"
@@ -281,7 +281,7 @@ const ResearchAgent: React.FC<ResearchAgentProps> = ({ onTaskComplete, credits =
               Start Research
             </button>
           ) : (
-            <button
+            <button type="button"
               onClick={handleStop}
               className="flex-1 py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors font-medium flex items-center justify-center gap-2"
             >
