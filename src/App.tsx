@@ -35,6 +35,8 @@ function App() {
   const [selectedAgentIds, setSelectedAgentIds] = useState<string[]>([]);
   const [credits, setCredits] = useState<number>(0);
   const [creditsLoading, setCreditsLoading] = useState(false);
+n  // Track if initial auth redirect has been performed
+  const hasInitialRedirect = useRef(false);
 
   // Waitlist state
   const [email, setEmail] = useState('');
@@ -46,7 +48,10 @@ function App() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        setView('dashboard');
+        if (!hasInitialRedirect.current) {
+          setView('dashboard');
+          hasInitialRedirect.current = true;
+        }
       }
       setLoading(false);
     });
@@ -54,8 +59,10 @@ function App() {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
+      // Only redirect on initial load, not on token refreshes
+      if (session?.user && !hasInitialRedirect.current) {
         setView('dashboard');
+        hasInitialRedirect.current = true;
       }
     });
 
