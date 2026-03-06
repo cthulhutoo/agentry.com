@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Sparkles, Bot, Zap, Users, Star, Mail, ArrowRight,
   CheckCircle2, Menu, X, Heart, Rocket, Brain, Code,
@@ -35,8 +35,6 @@ function App() {
   const [selectedAgentIds, setSelectedAgentIds] = useState<string[]>([]);
   const [credits, setCredits] = useState<number>(0);
   const [creditsLoading, setCreditsLoading] = useState(false);
-  // Track if initial auth redirect has been performed
-  const hasInitialRedirect = useRef(false);
 
   // Waitlist state
   const [email, setEmail] = useState('');
@@ -48,10 +46,7 @@ function App() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        if (!hasInitialRedirect.current) {
-          setView('dashboard');
-          hasInitialRedirect.current = true;
-        }
+        setView('dashboard');
       }
       setLoading(false);
     });
@@ -59,10 +54,8 @@ function App() {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      // Only redirect on initial load, not on token refreshes
-      if (session?.user && !hasInitialRedirect.current) {
+      if (session?.user) {
         setView('dashboard');
-        hasInitialRedirect.current = true;
       }
     });
 
