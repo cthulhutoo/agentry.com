@@ -4,7 +4,7 @@ import {
   CheckCircle2, Menu, X, Heart, Rocket, Brain, Code,
   MessageCircle, BarChart3, LogIn, UserPlus, LogOut,
   CreditCard, Settings, ChevronDown, Play, PartyPopper,
-  History, Save, FileText, Download
+  History, Save, FileText, Download, Compass
 } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import { withRetry } from './lib/retry';
@@ -12,6 +12,7 @@ import { AuthModal } from './components/AuthModal';
 import { CreditDashboard } from './components/billing/CreditDashboard';
 import { CreditPurchase } from './components/billing/CreditPurchase';
 import { AgentTemplates } from './components/agents';
+import { AgentDirectory } from './components/AgentDirectory';
 import { Header } from './components/Header';
 import { DemoComparison } from './components/DemoComparison';
 import { PricingSection } from './components/PricingSection';
@@ -20,7 +21,7 @@ import TaskHistory from './components/TaskHistory';
 import CouncilManager from './components/CouncilManager';
 import { TaskResults } from './components/TaskResults';
 
-type View = 'landing' | 'dashboard' | 'agents' | 'history' | 'councils';
+type View = 'landing' | 'dashboard' | 'agents' | 'directory' | 'history' | 'councils';
 
 function App() {
   const [view, setView] = useState<View>('landing');
@@ -183,6 +184,19 @@ function App() {
                     </div>
                   </button>
                   <button
+                    onClick={() => setView('directory')}
+                    className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                      view === 'directory'
+                        ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-purple-500/30'
+                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Compass className="w-4 h-4" />
+                      Directory
+                    </div>
+                  </button>
+                  <button
                     onClick={() => setView('councils')}
                     className={`px-4 py-2 rounded-xl font-medium transition-all ${
                       view === 'councils'
@@ -255,6 +269,15 @@ function App() {
               <span className="text-xs">Agents</span>
             </button>
             <button
+              onClick={() => setView('directory')}
+              className={`flex flex-col items-center gap-1 ${
+                view === 'directory' ? 'text-violet-400' : 'text-white/60'
+              }`}
+            >
+              <Compass className="w-5 h-5" />
+              <span className="text-xs">Directory</span>
+            </button>
+            <button
               onClick={() => setView('councils')}
               className={`flex flex-col items-center gap-1 ${
                 view === 'councils' ? 'text-violet-400' : 'text-white/60'
@@ -286,6 +309,7 @@ function App() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
           {view === 'dashboard' && <CreditDashboard />}
+          {view === 'directory' && <AgentDirectory />}
           {view === 'agents' && (
             <AgentTemplates
               credits={credits}
