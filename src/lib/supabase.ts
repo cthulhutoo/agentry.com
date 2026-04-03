@@ -9,6 +9,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+export interface UcpCapabilities {
+  enabled: boolean;
+  version: string;
+  profile_url: string;
+  supported_capabilities: string[];
+  supported_transports: string[];
+  validation_status: 'valid' | 'invalid' | 'not_validated';
+  last_validated: string | null;
+}
+
 export interface Agent {
   id: string;
   name: string;
@@ -21,6 +31,11 @@ export interface Agent {
   avatar_url: string;
   is_active: boolean;
   created_at: string;
+  a2a_enabled?: boolean;
+  mcp_enabled?: boolean;
+  verified?: boolean;
+  category?: string;
+  ucp_capabilities?: UcpCapabilities | null;
 }
 
 export interface Council {
