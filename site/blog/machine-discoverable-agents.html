@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your AI Agent Directory Is Now Machine-Searchable — Here's What That Means — Agentry</title>
+<meta name="description" content="Agentry just shipped 5 machine-discovery layers — llms.txt, agents.json, A2A registry, structured search API, and MCP Registry listing. Here's what that means for agent developers and businesses.">
+<link rel="canonical" href="https://agentry.com/blog/machine-discoverable-agents">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Your AI Agent Directory Is Now Machine-Searchable — Here's What That Means">
+<meta property="og:description" content="Agentry just shipped 5 machine-discovery layers — llms.txt, agents.json, A2A registry, structured search API, and MCP Registry listing. Here's what that means for agent developers and businesses.">
+<meta property="og:url" content="https://agentry.com/blog/machine-discoverable-agents">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-03-18T10:00:00-04:00">
+<meta property="article:section" content="Product Update">
+<meta property="article:tag" content="machine-searchable agents">
+<meta property="article:tag" content="llms.txt">
+<meta property="article:tag" content="agents.json">
+<meta property="article:tag" content="A2A registry">
+<meta property="article:tag" content="MCP registry">
+<meta property="article:tag" content="agent discovery">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Your AI Agent Directory Is Now Machine-Searchable — Here's What That Means">
+<meta name="twitter:description" content="Agentry just shipped 5 machine-discovery layers — llms.txt, agents.json, A2A registry, structured search, and MCP Registry listing.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Code block styles -->
+<style>
+.code-block {
+  background: #1a1a2e;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-6) 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-5);
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.code-block__lang {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8892b0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.code-block__dots {
+  display: flex;
+  gap: 6px;
+}
+.code-block__dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+}
+.code-block__dots span:first-child { background: #ff5f57; }
+.code-block__dots span:nth-child(2) { background: #febc2e; }
+.code-block__dots span:last-child { background: #28c840; }
+.code-block pre {
+  margin: 0;
+  padding: var(--space-5);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.code-block code {
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #ccd6f6;
+  white-space: pre;
+  tab-size: 2;
+}
+.code-block .json-key { color: #82aaff; }
+.code-block .json-string { color: #c3e88d; }
+.code-block .json-bool,
+.code-block .json-null { color: #f78c6c; }
+.code-block .json-comment { color: #546e7a; font-style: italic; }
+.code-block .json-url { color: #89ddff; }
+.standards-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-6) 0;
+  font-size: 0.95rem;
+}
+.standards-table th,
+.standards-table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.standards-table th {
+  font-weight: 600;
+  color: var(--text-secondary, #8892b0);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.standards-table td {
+  color: var(--text-primary, #ccd6f6);
+}
+.standards-table tr:last-child td {
+  border-bottom: none;
+}
+[data-theme="light"] .standards-table th,
+[data-theme="light"] .standards-table td {
+  border-bottom-color: rgba(0,0,0,0.08);
+}
+[data-theme="light"] .standards-table th {
+  color: var(--text-secondary, #64748b);
+}
+[data-theme="light"] .standards-table td {
+  color: var(--text-primary, #1e293b);
+}
+</style>
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Your AI Agent Directory Is Now Machine-Searchable — Here's What That Means",
+  "description": "Agentry just shipped 5 machine-discovery layers — llms.txt, agents.json, A2A registry, structured search API, and MCP Registry listing. Here's what that means for agent developers and businesses.",
+  "datePublished": "2026-03-18T10:00:00-04:00",
+  "dateModified": "2026-03-18T10:00:00-04:00",
+  "author": {
+    "@type": "Organization",
+    "name": "Agentry Team",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/machine-discoverable-agents"
+  },
+  "keywords": ["machine-searchable agents", "llms.txt", "agents.json", "A2A registry", "MCP registry", "agent discovery", "agentic marketplace"],
+  "articleSection": "Product Update",
+  "wordCount": 2800,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Your AI Agent Directory Is Now Machine-Searchable" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Machine-Discoverable Agents</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Product Update</span>
+    <h1 class="article-header__title">Your AI Agent Directory Is Now Machine-Searchable — Here's What That Means</h1>
+    <div class="article-header__meta">
+      <span>By the Agentry Team</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-03-18">March 18, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#the-shift" class="toc__link">The Shift: From Browsing to Discovery</a></li>
+      <li><a href="#five-layers" class="toc__link">Five Discovery Layers</a></li>
+      <li><a href="#for-developers" class="toc__link">What This Means for Developers</a></li>
+      <li><a href="#for-businesses" class="toc__link">What This Means for Businesses</a></li>
+      <li><a href="#how-it-works" class="toc__link">How Agent Discovery Works</a></li>
+      <li><a href="#standards" class="toc__link">The Standards We Support</a></li>
+      <li><a href="#get-listed" class="toc__link">Get Your Agent Listed</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#the-shift">The Shift: From Browsing to Discovery</a></li>
+        <li><a href="#five-layers">Five Discovery Layers</a></li>
+        <li><a href="#for-developers">What This Means for Developers</a></li>
+        <li><a href="#for-businesses">What This Means for Businesses</a></li>
+        <li><a href="#how-it-works">How Agent Discovery Works</a></li>
+        <li><a href="#standards">The Standards We Support</a></li>
+        <li><a href="#get-listed">Get Your Agent Listed</a></li>
+      </ul>
+    </nav>
+
+    <p>Agent directories have always been built for humans. You open a web page, you scan a list, you click through profiles, you compare features. That's how Agentry started — and it still works for the people who use it every day.</p>
+
+    <p>But the next wave of "users" won't be people. They'll be AI agents — LangChain orchestrators, Claude tool-use chains, AWS Bedrock agents, custom AutoGPT setups — tasked with finding and calling other agents. And agents don't browse web pages. They read structured data.</p>
+
+    <p>Today, Agentry is shipping five machine-discovery layers that make every agent in our directory programmatically findable, queryable, and callable — by other agents.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="the-shift">The Shift: From Human Browsing to Agent Discovery</h2>
+
+    <p>When a developer needs a customer service bot, they Google it, browse a directory, read some reviews, and make a call. When an AI agent needs a customer service bot, the process is fundamentally different.</p>
+
+    <p>An orchestrator agent doesn't have eyes. It doesn't click buttons. It needs a URL it can fetch, a schema it can parse, and structured metadata it can evaluate. If your agent isn't discoverable through machine-readable endpoints, it doesn't exist in the agentic world — no matter how good your landing page looks.</p>
+
+    <p>This is the gap we just closed. Agentry now serves two audiences simultaneously: humans who browse our directory to find agents, and machines that query our APIs to discover them. Same directory, same listings, same trust scores — but now with five distinct machine-readable surfaces that conform to the emerging standards for agent discovery.</p>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="five-layers">Five Discovery Layers, One Directory</h2>
+
+    <p>Each layer serves a different consumer at a different stage of the discovery process. Here's what we shipped and why.</p>
+
+    <h3>1. <code>/llms.txt</code> — The AI-Readable Front Door</h3>
+
+    <p>Think of <code>robots.txt</code>, but for AI models. The <a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer">llms.txt standard</a> is a plain-text markdown file at the root of a domain that tells any LLM what the site does, what APIs exist, and how to use them.</p>
+
+    <p>Agentry now serves this file at both <code><a href="https://agentry.com/llms.txt" target="_blank" rel="noopener noreferrer">https://agentry.com/llms.txt</a></code> and <code><a href="https://api.agentry.com/llms.txt" target="_blank" rel="noopener noreferrer">https://api.agentry.com/llms.txt</a></code>. When an LLM or AI agent encounters our domain — during retrieval-augmented generation, tool-use exploration, or autonomous browsing — it can consult this file to understand the site. It may learn that Agentry is an agent directory, that we have a public API, and which endpoints to call.</p>
+
+    <h3>2. <code>/.well-known/agents.json</code> — The API Descriptor</h3>
+
+    <p>A machine-readable API capability file at <code><a href="https://api.agentry.com/.well-known/agents.json" target="_blank" rel="noopener noreferrer">https://api.agentry.com/.well-known/agents.json</a></code>. This follows the emerging <a href="https://github.com/nicholasgriffintn/agents-json" target="_blank" rel="noopener noreferrer">agents.json standard</a> — a JSON file that describes all API capabilities with full parameter schemas, return types, and usage examples.</p>
+
+    <p>An agent reads this file and instantly knows how to call the Agentry API. No documentation parsing. No guesswork. The file describes all 6 API capabilities — from searching agents to filtering by category to retrieving individual agent cards — with enough detail for an LLM to construct valid API calls on the first try.</p>
+
+    <h3>3. <code>/api/agents/public</code> — A2A-Compatible Open Discovery</h3>
+
+    <p>This is the big one. An open discovery endpoint at <code><a href="https://api.agentry.com/api/agents/public" target="_blank" rel="noopener noreferrer">https://api.agentry.com/api/agents/public</a></code> that follows the proposed A2A Registry standard from <a href="https://github.com/google/A2A/discussions/741" target="_blank" rel="noopener noreferrer">Google A2A Discussion #741</a>.</p>
+
+    <p>This endpoint returns proper A2A Agent Cards for every agent in our directory — complete with name, description, capabilities, skills, provider info, and Agentry-specific metadata like trust scores and pricing. It supports full-text search via <code>?q=</code>, category filtering, and cursor-based pagination. Any A2A-compliant client can query it.</p>
+
+    <h3>4. <code>/api/agents/search</code> — Structured Search API</h3>
+
+    <p>A purpose-built search endpoint at <code><a href="https://api.agentry.com/api/agents/search" target="_blank" rel="noopener noreferrer">https://api.agentry.com/api/agents/search</a></code> that returns JSON with full metadata: name, description, category, pricing model, trust score, integrations, and A2A/MCP support flags. Optimized for programmatic consumption with query parameters for filtering by category, pricing model, and minimum trust score.</p>
+
+    <h3>5. MCP Registry — Native Discovery for MCP Clients</h3>
+
+    <p>Agentry is now listed in the official <a href="https://registry.modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Registry</a> (currently in preview) at <code>registry.modelcontextprotocol.io</code> as <code>io.github.cthulhutoo/agentry</code>. MCP clients and downstream aggregators can discover Agentry through the official MCP Registry, which provides a standardized API for server metadata. The MCP integration exposes agent search, category browsing, and agent card retrieval as MCP tools.</p>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="for-developers">What This Means for Agent Developers</h2>
+
+    <p>If you've listed your agent on Agentry, it's now discoverable by other agents — not just humans. Here's what that looks like in practice:</p>
+
+    <ul>
+      <li><strong>A LangChain agent</strong> searching for "customer service automation" will find your listing via the <code>/api/agents/public</code> endpoint, parse your Agent Card, and evaluate whether your capabilities match its task.</li>
+      <li><strong>An MCP client</strong> like Claude or Cursor, looking for agent tools, will find Agentry in the MCP Registry and query your capabilities through our search tools.</li>
+      <li><strong>An enterprise orchestrator</strong> evaluating agent options will call <code>/api/agents/search</code>, rank results by trust score, and recommend your agent — all without a human in the loop.</li>
+    </ul>
+
+    <p>Your paid listing (Pro, Featured, or Premium) now serves double duty. It's visible to humans browsing the directory <em>and</em> to machines querying the API. The same trust score that ranks you in the web directory ranks you in programmatic search results.</p>
+
+    <p>Here's how another agent would query the API to find your listing:</p>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">bash</span>
+      </div>
+      <pre><code><span class="json-comment"># Find customer service agents via A2A discovery</span>
+curl <span class="json-url">"https://api.agentry.com/api/agents/public?q=customer+service&amp;top=5"</span>
+
+<span class="json-comment"># Search by category</span>
+curl <span class="json-url">"https://api.agentry.com/api/agents/search?q=analytics&amp;category=Data+%26+Analytics"</span>
+
+<span class="json-comment"># Get a specific agent's full card</span>
+curl <span class="json-url">"https://api.agentry.com/api/agents/public?q=SupportBot+Pro&amp;top=1"</span></code></pre>
+    </div>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="for-businesses">What This Means for Businesses</h2>
+
+    <p>If you're deploying AI agents in your workflows — whether for customer support, sales outreach, data analysis, or internal operations — this matters for three reasons.</p>
+
+    <p><strong>Your agents can now discover specialized tools programmatically.</strong> Instead of a human researcher manually evaluating agent options, your orchestrator agent can query Agentry's API, compare trust scores and capabilities, and surface the best candidates automatically.</p>
+
+    <p><strong>No more manual research loops.</strong> When your workflow needs a new capability — say, a document-processing agent or a compliance-checking agent — your existing agents can search for it, evaluate options based on structured metadata (trust score, pricing model, supported features), and recommend the best fit. The evaluation criteria are in the data, not locked in someone's head.</p>
+
+    <p><strong>Enterprise registries can sync with Agentry's public endpoint.</strong> If you maintain an internal agent catalog — a list of approved third-party agents your teams can use — you can now pull directly from Agentry's <code>/api/agents/public</code> endpoint to populate and refresh that catalog. Filter by minimum trust score, required capabilities, or specific categories. The data is structured, paginated, and ready for automated ingestion.</p>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="how-it-works">How Agent Discovery Actually Works</h2>
+
+    <p>Let's walk through a concrete scenario. An orchestrator agent is given the task: <em>"Find me a sales outreach AI agent with email integration."</em></p>
+
+    <p><strong>Step 1:</strong> The agent may read <code>agentry.com/llms.txt</code> to learn about the directory. If consulted, it learns that Agentry is an agent directory with a public API.</p>
+
+    <p><strong>Step 2:</strong> The agent reads <code>api.agentry.com/.well-known/agents.json</code>. It parses the API capability descriptor and understands the available endpoints, parameters, and response formats.</p>
+
+    <p><strong>Step 3:</strong> The agent calls <code>GET /api/agents/search?q=sales+outreach&amp;category=Sales+%26+Marketing</code>. It receives a structured JSON response with matching agents.</p>
+
+    <p><strong>Step 4:</strong> The agent evaluates results based on <code>trust_score</code>, <code>pricing_model</code>, <code>key_features</code>, and whether the agent supports the required email integration.</p>
+
+    <p><strong>Step 5:</strong> The agent returns a recommendation to the user — or, if authorized, calls the chosen agent directly via its A2A endpoint.</p>
+
+    <p>Here's what the response from <code>/api/agents/public</code> looks like for a single agent card, including the <code>x-agentry</code> metadata extension:</p>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">json</span>
+      </div>
+      <pre><code>{
+  <span class="json-key">"name"</span>: <span class="json-string">"OutreachPilot"</span>,
+  <span class="json-key">"description"</span>: <span class="json-string">"AI sales outreach agent that drafts personalized cold emails, manages follow-up sequences, and integrates with Gmail, Outlook, and HubSpot."</span>,
+  <span class="json-key">"provider"</span>: {
+    <span class="json-key">"organization"</span>: <span class="json-string">"PilotAI Inc."</span>,
+    <span class="json-key">"url"</span>: <span class="json-url">"https://outreachpilot.ai"</span>
+  },
+  <span class="json-key">"version"</span>: <span class="json-string">"3.2.1"</span>,
+  <span class="json-key">"supportedInterfaces"</span>: [
+    {
+      <span class="json-key">"url"</span>: <span class="json-url">"https://api.outreachpilot.ai/a2a/v1"</span>,
+      <span class="json-key">"protocolBinding"</span>: <span class="json-string">"JSONRPC"</span>,
+      <span class="json-key">"protocolVersion"</span>: <span class="json-string">"1.0"</span>
+    }
+  ],
+  <span class="json-key">"capabilities"</span>: {
+    <span class="json-key">"streaming"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"pushNotifications"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"stateTransitionHistory"</span>: <span class="json-bool">false</span>
+  },
+  <span class="json-key">"skills"</span>: [
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"cold-email-draft"</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Cold Email Drafting"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Generates personalized cold outreach emails based on prospect data and ICP criteria."</span>,
+      <span class="json-key">"tags"</span>: [<span class="json-string">"sales"</span>, <span class="json-string">"outreach"</span>, <span class="json-string">"email"</span>, <span class="json-string">"cold-email"</span>]
+    },
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"follow-up-sequence"</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Follow-Up Sequence Manager"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Manages multi-step follow-up sequences with configurable timing and escalation."</span>,
+      <span class="json-key">"tags"</span>: [<span class="json-string">"sales"</span>, <span class="json-string">"follow-up"</span>, <span class="json-string">"automation"</span>]
+    }
+  ],
+  <span class="json-comment">// Agentry-specific metadata extension</span>
+  <span class="json-key">"x-agentry"</span>: {
+    <span class="json-key">"trust_score"</span>: <span class="json-bool">87</span>,
+    <span class="json-key">"category"</span>: <span class="json-string">"Sales &amp; Marketing"</span>,
+    <span class="json-key">"pricing_model"</span>: <span class="json-string">"usage-based"</span>,
+    <span class="json-key">"listing_tier"</span>: <span class="json-string">"featured"</span>,
+    <span class="json-key">"integrations"</span>: [<span class="json-string">"Gmail"</span>, <span class="json-string">"Outlook"</span>, <span class="json-string">"HubSpot"</span>, <span class="json-string">"Salesforce"</span>],
+    <span class="json-key">"a2a_verified"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"mcp_supported"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"listing_url"</span>: <span class="json-url">"https://agentry.com/agents/outreachpilot"</span>
+  }
+}</code></pre>
+    </div>
+
+    <p>Notice the <code>x-agentry</code> extension. This is where Agentry adds value beyond the base A2A spec: trust scores, pricing metadata, integration lists, and verification flags that help an evaluating agent make a decision — not just discover an option.</p>
+
+    <!-- ========== SECTION 6 ========== -->
+    <h2 id="standards">The Standards We Support</h2>
+
+    <p>Agentry's machine-discovery layers are built on four emerging standards. Each operates at a different layer of the stack. As <a href="https://nullpath.com" target="_blank" rel="noopener noreferrer">nullpath.com</a> put it: <em>"MCP is discovery, A2A is communication, x402 is money. Different layers."</em></p>
+
+    <table class="standards-table">
+      <thead>
+        <tr>
+          <th>Standard</th>
+          <th>Created By</th>
+          <th>Purpose</th>
+          <th>Agentry Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>llms.txt</strong></td>
+          <td><a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer">llmstxt.org</a></td>
+          <td>Plain-text site descriptor for AI models</td>
+          <td>Served at <code>/llms.txt</code> on both <code>agentry.com</code> and <code>api.agentry.com</code></td>
+        </tr>
+        <tr>
+          <td><strong>agents.json</strong></td>
+          <td><a href="https://github.com/nicholasgriffintn/agents-json" target="_blank" rel="noopener noreferrer">Community standard</a></td>
+          <td>Machine-readable API capability descriptor</td>
+          <td>Full API schema at <code>/.well-known/agents.json</code> with 6 capabilities</td>
+        </tr>
+        <tr>
+          <td><strong>A2A Protocol</strong></td>
+          <td><a href="https://a2a-protocol.org/" target="_blank" rel="noopener noreferrer">Google / Linux Foundation</a></td>
+          <td>Agent-to-agent communication and discovery</td>
+          <td>A2A Registry endpoint at <code>/api/agents/public</code> with full Agent Cards</td>
+        </tr>
+        <tr>
+          <td><strong>MCP</strong></td>
+          <td><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">Anthropic</a></td>
+          <td>Tool and context discovery for LLM clients</td>
+          <td>Listed in MCP Registry (preview) as <code>io.github.cthulhutoo/agentry</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>These standards are complementary, not competing. An agent might discover Agentry via MCP, learn the API structure from <code>agents.json</code>, query the A2A Registry endpoint for matching agents, and then communicate with a discovered agent directly over A2A. Each standard handles one layer of the interaction.</p>
+
+    <!-- ========== SECTION 7 ========== -->
+    <h2 id="get-listed">Get Your Agent Listed</h2>
+
+    <p>If you're building an AI agent, listing it on Agentry now means it's discoverable by both humans and machines — across all five discovery layers.</p>
+
+    <p>Here's how to maximize your visibility:</p>
+
+    <ul>
+      <li><strong>Add an A2A Agent Card</strong> to your agent at <code>/.well-known/agent.json</code>. Agents with valid A2A cards get a <strong>+25 trust score boost</strong> and higher placement in both human and programmatic search results. See our <a href="./a2a-agent-card-guide.html">step-by-step guide</a>.</li>
+      <li><strong>Include detailed skills with examples.</strong> The <code>skills</code> array in your Agent Card is what other agents use to decide whether to route tasks to you. Vague descriptions get skipped. Specific, example-rich descriptions get called.</li>
+      <li><strong>Declare MCP support</strong> if your agent exposes MCP tools. Agents that support both A2A and MCP are accessible to the widest range of clients and orchestrators.</li>
+      <li><strong>Keep your listing metadata current.</strong> Pricing model, integration list, and capability flags all feed into the structured data that machines evaluate. Stale data means missed opportunities.</li>
+    </ul>
+
+    <p>Listing is free. Pro, Featured, and Premium tiers increase your visibility in both human-facing and machine-facing search results. <a href="https://agentry.com/#list-agent">Submit your agent here</a>.</p>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">Machine Discovery</span>
+      <span class="article-tag">llms.txt</span>
+      <span class="article-tag">agents.json</span>
+      <span class="article-tag">A2A Registry</span>
+      <span class="article-tag">MCP</span>
+      <span class="article-tag">Product Update</span>
+      <span class="article-tag">Agent Discovery</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Make Your Agent Machine-Discoverable</h3>
+      <p class="article-cta__text">List your agent on Agentry and reach both human decision-makers and AI orchestrators. Agents with A2A cards and MCP support rank higher in programmatic discovery.</p>
+      <div class="article-cta__buttons">
+        <a href="https://agentry.com/#list-agent" class="btn btn--primary btn--lg">List Your Agent</a>
+        <a href="https://api.agentry.com/.well-known/agents.json" class="btn btn--secondary btn--lg">View API Docs</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: A2A Agent Card Guide -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M7 8h10M7 12h6M7 16h8" opacity="0.7"/>
+            <circle cx="18" cy="16" r="3"/>
+            <path d="M17 16l1 1 2-2" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Tutorial</span>
+          <span>March 18, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./a2a-agent-card-guide.html">How to Create an A2A Agent Card in 5 Minutes</a></h3>
+        <p class="article-card__excerpt">Learn how to create an A2A Agent Card for your AI agent — the JSON file that makes your agent discoverable, interoperable, and trusted. Step-by-step tutorial with a complete agent.json example.</p>
+        <div class="article-card__footer">
+          <a href="./a2a-agent-card-guide.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">10 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: Ship Your Agent Card -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Developer Guide</span>
+          <span>March 15, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./ship-your-agent-card.html">Ship Your Agent Card in 5 Minutes: A Developer's Guide</a></h3>
+        <p class="article-card__excerpt">Add an A2A Agent Card to your agent in minutes. Step-by-step guide with Express.js, FastAPI, and nginx examples — plus how Agentry's registry makes your agent discoverable.</p>
+        <div class="article-card__footer">
+          <a href="./ship-your-agent-card.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">8 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 3: A2A Protocol Explained -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Protocol Deep Dive</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./a2a-protocol-explained.html">The A2A Protocol Explained: How AI Agents Will Discover Each Other</a></h3>
+        <p class="article-card__excerpt">A deep dive into Google's Agent2Agent protocol — how Agent Cards work, how discovery happens via well-known URLs, and why the registry gap matters for business interoperability.</p>
+        <div class="article-card__footer">
+          <a href="./a2a-protocol-explained.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">10 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developer Tools — Agentry | A2A Agent Card Generator &amp; Validator</title>
+<meta name="description" content="Generate and validate A2A Agent Cards, list your AI agent in the Agentry registry, and get discovered by businesses searching for automation solutions.">
+<link rel="canonical" href="https://agentry.com/developers/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Developer Tools — Agentry">
+<meta property="og:description" content="Generate and validate A2A Agent Cards. List your AI agent and get discovered by businesses.">
+<meta property="og:url" content="https://agentry.com/developers/">
+<meta property="og:site_name" content="Agentry">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Developer Tools — Agentry">
+<meta name="twitter:description" content="Generate and validate A2A Agent Cards. List your AI agent and get discovered by businesses.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./developers.css">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Developer Tools — Agentry",
+  "description": "Generate and validate A2A Agent Cards. List your AI agent and get discovered by businesses.",
+  "url": "https://agentry.com/developers/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/nostr/">Nostr</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/nostr/" onclick="closeMobileMenu()">Nostr</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== SECTION 1: HERO ==================== -->
+<section class="dev-hero">
+  <div class="dev-hero__bg">
+    <div class="dev-hero__grid"></div>
+    <div class="dev-hero__gradient"></div>
+    <div class="dev-hero__symbols" id="hero-symbols"></div>
+  </div>
+  <div class="dev-hero__content">
+    <div class="dev-hero__badge">
+      <span class="dev-hero__badge-dot"></span>
+      For Agent Developers
+    </div>
+    <h1 class="dev-hero__title">The Registry for<br>Agent Developers</h1>
+    <p class="dev-hero__subtitle">Get discovered by businesses searching for AI agents. List your agent, earn trust badges, and track who's looking for what you've built.</p>
+    <div class="dev-hero__ctas">
+      <a href="#tool" class="btn btn--primary btn--lg">Build Your Agent Card</a>
+      <a href="/#list-agent" class="btn btn--secondary btn--lg">List Your Agent Free</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VALUE PROPS ==================== -->
+<section class="value-props section" id="why-list">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Why List on Agentry
+      </div>
+      <h2 class="section-header__title">Everything You Need to Get Discovered</h2>
+      <p class="section-header__desc">Agentry gives your AI agent visibility, credibility, and a direct line to the businesses that need it.</p>
+    </div>
+
+    <div class="value-props__grid">
+      <div class="value-prop reveal">
+        <div class="value-prop__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="value-prop__title">Trust Score &amp; Verification Badges</h3>
+        <p class="value-prop__desc">Every listed agent gets a transparent trust score based on A2A compliance, provider info, auth configuration, and more. Verified badges build buyer confidence.</p>
+      </div>
+
+      <div class="value-prop reveal">
+        <div class="value-prop__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3 class="value-prop__title">Profile View Analytics</h3>
+        <p class="value-prop__desc">See who's viewing your agent profile, which search queries lead to you, and how your listing performs over time with detailed analytics dashboards.</p>
+      </div>
+
+      <div class="value-prop reveal">
+        <div class="value-prop__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <h3 class="value-prop__title">Lead Alerts</h3>
+        <p class="value-prop__desc">Get notified when businesses search for agents in your category. Know exactly when a potential customer is evaluating solutions like yours.</p>
+      </div>
+
+      <div class="value-prop reveal">
+        <div class="value-prop__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3 class="value-prop__title">A2A Protocol Compatibility</h3>
+        <p class="value-prop__desc">Agents with valid A2A Agent Cards get a trust boost and protocol compatibility badge. Businesses prefer agents that speak the standard.</p>
+      </div>
+
+      <div class="value-prop reveal">
+        <div class="value-prop__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3 class="value-prop__title">SEO Benefits</h3>
+        <p class="value-prop__desc">Agentry.com ranks for agent-related searches. Your listing gets indexed and surfaces when businesses search for "AI customer support agent" and similar terms.</p>
+      </div>
+
+      <div class="value-prop reveal">
+        <div class="value-prop__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+        </div>
+        <h3 class="value-prop__title">Competitive Positioning</h3>
+        <p class="value-prop__desc">See how your agent compares against alternatives in your category. Understand where you stand on trust, features, and visibility so you can optimize.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SOCIAL PROOF ==================== -->
+<section class="social-proof section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Growing Ecosystem
+      </div>
+      <h2 class="section-header__title">Join 122+ Agents Already Listed</h2>
+      <p class="section-header__desc">Leading AI agent providers are listing on Agentry to reach businesses evaluating automation solutions.</p>
+    </div>
+
+    <div class="social-proof__agents">
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #5046E5;">IF</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">Intercom Fin</span>
+          <span class="social-proof__agent-category">Customer Support</span>
+        </div>
+      </div>
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #03363D;">ZA</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">Zendesk AI</span>
+          <span class="social-proof__agent-category">Customer Support</span>
+        </div>
+      </div>
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #1B8A5A;">Si</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">Sierra</span>
+          <span class="social-proof__agent-category">Conversational AI</span>
+        </div>
+      </div>
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #E64980;">Ad</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">Ada</span>
+          <span class="social-proof__agent-category">Customer Support</span>
+        </div>
+      </div>
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #0176D3;">SE</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">Salesforce Einstein</span>
+          <span class="social-proof__agent-category">Sales &amp; CRM</span>
+        </div>
+      </div>
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #FF6C37;">HB</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">HubSpot Breeze</span>
+          <span class="social-proof__agent-category">Marketing</span>
+        </div>
+      </div>
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #6B46C1;">DA</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">Decagon</span>
+          <span class="social-proof__agent-category">Customer Support</span>
+        </div>
+      </div>
+      <div class="social-proof__agent reveal">
+        <div class="social-proof__agent-icon" style="background: #059669;">CV</div>
+        <div class="social-proof__agent-info">
+          <span class="social-proof__agent-name">Cognigy</span>
+          <span class="social-proof__agent-category">Voice AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS STEPS ==================== -->
+<section class="dev-steps section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Three Steps
+      </div>
+      <h2 class="section-header__title">Get Listed in Minutes</h2>
+      <p class="section-header__desc">From Agent Card to live listing — the whole process takes less than five minutes.</p>
+    </div>
+
+    <div class="dev-steps__grid">
+      <div class="dev-step reveal">
+        <div class="dev-step__number">1</div>
+        <h3 class="dev-step__title">Create Your A2A Agent Card</h3>
+        <p class="dev-step__desc">Use our generator below to build a valid agent-card.json file, or validate an existing one. Host it at <code>/.well-known/agent-card.json</code>. The older path <code>/.well-known/agent.json</code> is also supported for backward compatibility.</p>
+      </div>
+      <div class="dev-step reveal">
+        <div class="dev-step__number">2</div>
+        <h3 class="dev-step__title">List on Agentry (Free)</h3>
+        <p class="dev-step__desc">Submit your agent URL. We'll verify your Agent Card, calculate a trust score, and publish your listing in the directory.</p>
+      </div>
+      <div class="dev-step reveal">
+        <div class="dev-step__number">3</div>
+        <h3 class="dev-step__title">Get Discovered by Businesses</h3>
+        <p class="dev-step__desc">Businesses search, filter, and compare agents. You get analytics, lead alerts, and a growing presence in agent-related searches.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRICING CTA ==================== -->
+<section class="dev-cta section">
+  <div class="container">
+    <div class="dev-cta__inner reveal">
+      <h2 class="dev-cta__title">Want Priority Placement &amp; Analytics?</h2>
+      <p class="dev-cta__desc">Free listings get you discovered. Paid tiers unlock analytics, priority search placement, lead alerts, and featured rotation.</p>
+      <div class="dev-cta__buttons">
+        <a href="/pricing/#developers" class="btn btn--primary btn--lg">View Pricing Plans</a>
+        <a href="/#list-agent" class="btn btn--secondary btn--lg">List for Free</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 2: A2A TOOL ==================== -->
+<section class="tool-section section" id="tool">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+        Developer Tools
+      </div>
+      <h2 class="section-header__title">A2A Agent Card Generator &amp; Validator</h2>
+      <p class="section-header__desc">Build a spec-compliant agent.json or validate an existing one. No backend required — everything runs in your browser.</p>
+    </div>
+
+    <div class="tool-section__inner">
+      <!-- Tabs -->
+      <div class="tool-tabs" role="tablist">
+        <button class="tool-tab active" role="tab" aria-selected="true" data-tab="generator" id="tab-generator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          Generator
+        </button>
+        <button class="tool-tab" role="tab" aria-selected="false" data-tab="validator" id="tab-validator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Validator
+        </button>
+      </div>
+
+      <!-- ====== GENERATOR PANEL ====== -->
+      <div class="tool-panel active" id="panel-generator" role="tabpanel" aria-labelledby="tab-generator">
+        <div class="generator">
+          <!-- Form -->
+          <div class="generator__form">
+            <div class="tool-form-group">
+              <label>Agent Name <span class="required">*</span></label>
+              <input type="text" id="gen-name" placeholder="e.g., Recipe Advisor Agent" oninput="updatePreview()">
+            </div>
+
+            <div class="tool-form-group">
+              <label>Description <span class="required">*</span></label>
+              <textarea id="gen-description" placeholder="A human-readable description of what your agent does..." oninput="updatePreview()"></textarea>
+            </div>
+
+            <div class="tool-form-group">
+              <label>Agent URL <span class="required">*</span></label>
+              <input type="url" id="gen-url" placeholder="https://agent.example.com/a2a/api" oninput="updatePreview()">
+            </div>
+
+            <div class="tool-form-row">
+              <div class="tool-form-group">
+                <label>Provider Name</label>
+                <input type="text" id="gen-provider-name" placeholder="e.g., Acme AI Inc." oninput="updatePreview()">
+              </div>
+              <div class="tool-form-group">
+                <label>Provider URL</label>
+                <input type="url" id="gen-provider-url" placeholder="https://acme-ai.com" oninput="updatePreview()">
+              </div>
+            </div>
+
+            <div class="tool-form-row">
+              <div class="tool-form-group">
+                <label>Version</label>
+                <input type="text" id="gen-version" placeholder="1.0.0" value="1.0.0" oninput="updatePreview()">
+              </div>
+              <div class="tool-form-group">
+                <label>Contact Email</label>
+                <input type="email" id="gen-email" placeholder="dev@example.com" oninput="updatePreview()">
+              </div>
+            </div>
+
+            <div class="tool-form-group">
+              <label>Documentation URL</label>
+              <input type="url" id="gen-docs-url" placeholder="https://docs.example.com/agent" oninput="updatePreview()">
+            </div>
+
+            <div class="tool-form-group">
+              <label>Capabilities</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-cap-streaming" onchange="updatePreview()">
+                  streaming
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-cap-push" onchange="updatePreview()">
+                  pushNotifications
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-cap-history" onchange="updatePreview()">
+                  stateTransitionHistory
+                </label>
+              </div>
+            </div>
+
+            <div class="tool-form-group">
+              <label>Default Input Modes</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-input-text" checked onchange="updatePreview()">
+                  text/plain
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-input-json" checked onchange="updatePreview()">
+                  application/json
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-input-image" onchange="updatePreview()">
+                  image/*
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-input-audio" onchange="updatePreview()">
+                  audio/*
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-input-video" onchange="updatePreview()">
+                  video/*
+                </label>
+              </div>
+            </div>
+
+            <div class="tool-form-group">
+              <label>Default Output Modes</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-output-text" checked onchange="updatePreview()">
+                  text/plain
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-output-json" checked onchange="updatePreview()">
+                  application/json
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-output-image" onchange="updatePreview()">
+                  image/*
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-output-audio" onchange="updatePreview()">
+                  audio/*
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="gen-output-video" onchange="updatePreview()">
+                  video/*
+                </label>
+              </div>
+            </div>
+
+            <div class="tool-form-group">
+              <label>Authentication</label>
+              <select id="gen-auth" onchange="updatePreview()">
+                <option value="none">None</option>
+                <option value="apiKey">API Key</option>
+                <option value="oauth2">OAuth 2.0</option>
+                <option value="bearer">Bearer Token</option>
+                <option value="openIdConnect">OpenID Connect</option>
+              </select>
+            </div>
+
+            <!-- Skills Builder -->
+            <div class="skills-builder">
+              <div class="skills-builder__header">
+                <span class="skills-builder__title">Skills</span>
+                <button class="skills-builder__add" onclick="addSkill()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                  Add Skill
+                </button>
+              </div>
+              <div id="skills-container">
+                <div class="skills-empty" id="skills-empty">No skills added yet. Click "Add Skill" to get started.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- JSON Preview -->
+          <div class="generator__preview">
+            <div class="json-preview">
+              <div class="json-preview__header">
+                <div class="json-preview__dots">
+                  <span class="json-preview__dot json-preview__dot--red"></span>
+                  <span class="json-preview__dot json-preview__dot--yellow"></span>
+                  <span class="json-preview__dot json-preview__dot--green"></span>
+                </div>
+                <span class="json-preview__title">agent.json</span>
+                <div class="json-preview__actions">
+                  <button class="json-preview__btn" onclick="copyJSON()" id="copy-btn" title="Copy to clipboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy
+                  </button>
+                  <button class="json-preview__btn" onclick="downloadJSON()" title="Download agent.json">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download
+                  </button>
+                </div>
+              </div>
+              <div class="json-preview__content">
+                <pre id="json-output"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== VALIDATOR PANEL ====== -->
+      <div class="tool-panel" id="panel-validator" role="tabpanel" aria-labelledby="tab-validator">
+        <div class="validator">
+          <div class="validator__input-group">
+            <label>Fetch from URL</label>
+            <div class="validator__url-row">
+              <input type="url" id="validate-url" placeholder="https://example.com (we'll check /.well-known/agent.json)">
+              <button class="btn btn--primary" onclick="fetchAgentCard()">Fetch</button>
+            </div>
+            <p class="validator__note">Due to CORS restrictions, fetching may not work for all domains. You can paste the JSON directly below instead.</p>
+          </div>
+
+          <div class="validator__input-group">
+            <label>Or paste your agent.json</label>
+            <textarea class="validator__textarea" id="validate-json" placeholder='Paste your agent.json content here...
+
+{
+  "name": "My Agent",
+  "description": "...",
+  "url": "https://...",
+  ...
+}'></textarea>
+          </div>
+
+          <div class="validator__actions">
+            <button class="btn btn--primary" onclick="validateAgentCard()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Validate
+            </button>
+            <button class="btn btn--secondary" onclick="clearValidator()">Clear</button>
+          </div>
+
+          <!-- Validation Results -->
+          <div class="validation-results" id="validation-results">
+            <div class="validation-results__header">
+              <div class="validation-results__status" id="validation-status"></div>
+            </div>
+
+            <div class="checks-grid" id="checks-grid"></div>
+
+            <!-- Trust Score Preview -->
+            <div class="trust-preview" id="trust-preview">
+              <div class="trust-preview__header">
+                <span class="trust-preview__label">Agentry Trust Score Preview</span>
+                <span class="trust-preview__score" id="trust-score">0</span>
+              </div>
+              <div class="trust-preview__bar">
+                <div class="trust-preview__bar-fill" id="trust-bar-fill" style="width: 0%; background: var(--color-text-faint);"></div>
+              </div>
+              <div class="trust-preview__breakdown" id="trust-breakdown"></div>
+            </div>
+
+            <div class="validator__cta">
+              <a href="/#list-agent" class="btn btn--primary btn--lg">List This Agent on Agentry</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="/" class="footer__logo" aria-label="Agentry home">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          <span>Agentry</span>
+        </a>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/developers/">Developer Tools</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ==================== THEME ====================
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // ==================== MOBILE MENU ====================
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // ==================== HEADER SCROLL ====================
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // ==================== SCROLL REVEAL ====================
+  var revealElements = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(function (el, i) {
+      el.style.transitionDelay = (i % 6) * 80 + 'ms';
+      revealObserver.observe(el);
+    });
+  } else {
+    revealElements.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  // ==================== HERO FLOATING SYMBOLS ====================
+  var symbolsContainer = document.getElementById('hero-symbols');
+  var symbols = ['{ }', '< />', 'A2A', '[ ]', '://', 'JSON', 'fn()', '=> ', '0x', '/**/', '...'];
+  for (var i = 0; i < 12; i++) {
+    var span = document.createElement('span');
+    span.className = 'dev-hero__symbol';
+    span.textContent = symbols[i % symbols.length];
+    span.style.left = (Math.random() * 100) + '%';
+    span.style.animationDelay = (Math.random() * 20) + 's';
+    span.style.animationDuration = (15 + Math.random() * 15) + 's';
+    span.style.fontSize = (12 + Math.random() * 8) + 'px';
+    symbolsContainer.appendChild(span);
+  }
+
+})();
+
+// ==================== TABS ====================
+document.querySelectorAll('.tool-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tool-tab').forEach(function(t) {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tool-panel').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    this.classList.add('active');
+    this.setAttribute('aria-selected', 'true');
+    var panelId = 'panel-' + this.getAttribute('data-tab');
+    document.getElementById(panelId).classList.add('active');
+  });
+});
+
+// ==================== GENERATOR ====================
+var skillCount = 0;
+
+window.addSkill = function() {
+  skillCount++;
+  var emptyMsg = document.getElementById('skills-empty');
+  if (emptyMsg) emptyMsg.style.display = 'none';
+
+  var container = document.getElementById('skills-container');
+  var entry = document.createElement('div');
+  entry.className = 'skill-entry';
+  entry.id = 'skill-' + skillCount;
+  entry.innerHTML =
+    '<button class="skill-entry__remove" onclick="removeSkill(' + skillCount + ')" title="Remove skill">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
+    '</button>' +
+    '<div class="skill-entry__fields">' +
+      '<div class="skill-entry__row">' +
+        '<div><label>Skill ID</label><input type="text" placeholder="my-skill" oninput="updatePreview()" data-field="id"></div>' +
+        '<div><label>Skill Name</label><input type="text" placeholder="My Skill" oninput="updatePreview()" data-field="name"></div>' +
+      '</div>' +
+      '<div><label>Description</label><textarea placeholder="What this skill does..." oninput="updatePreview()" data-field="description"></textarea></div>' +
+      '<div><label>Tags (comma-separated)</label><input type="text" placeholder="search, analysis, reporting" oninput="updatePreview()" data-field="tags"></div>' +
+    '</div>';
+
+  container.appendChild(entry);
+  updatePreview();
+};
+
+window.removeSkill = function(id) {
+  var entry = document.getElementById('skill-' + id);
+  if (entry) entry.remove();
+
+  var container = document.getElementById('skills-container');
+  var remaining = container.querySelectorAll('.skill-entry');
+  if (remaining.length === 0) {
+    var emptyMsg = document.getElementById('skills-empty');
+    if (emptyMsg) emptyMsg.style.display = 'block';
+  }
+  updatePreview();
+};
+
+function getSkillsData() {
+  var skills = [];
+  document.querySelectorAll('.skill-entry').forEach(function(entry) {
+    var skill = {};
+    entry.querySelectorAll('[data-field]').forEach(function(field) {
+      var key = field.getAttribute('data-field');
+      var val = field.value.trim();
+      if (key === 'tags' && val) {
+        skill[key] = val.split(',').map(function(t) { return t.trim(); }).filter(Boolean);
+      } else if (val) {
+        skill[key] = val;
+      }
+    });
+    if (skill.id || skill.name) skills.push(skill);
+  });
+  return skills;
+}
+
+function getCheckedModes(prefix) {
+  var modes = [];
+  var types = { text: 'text/plain', json: 'application/json', image: 'image/*', audio: 'audio/*', video: 'video/*' };
+  Object.keys(types).forEach(function(key) {
+    var cb = document.getElementById(prefix + key);
+    if (cb && cb.checked) modes.push(types[key]);
+  });
+  return modes;
+}
+
+function buildAgentCard() {
+  var card = {};
+
+  var name = document.getElementById('gen-name').value.trim();
+  var desc = document.getElementById('gen-description').value.trim();
+  var url = document.getElementById('gen-url').value.trim();
+  var version = document.getElementById('gen-version').value.trim() || '1.0.0';
+
+  card.name = name || 'My Agent';
+  card.description = desc || 'An AI agent.';
+  card.url = url || 'https://agent.example.com/a2a/api';
+  card.version = version;
+
+  // Provider
+  var provName = document.getElementById('gen-provider-name').value.trim();
+  var provUrl = document.getElementById('gen-provider-url').value.trim();
+  if (provName || provUrl) {
+    card.provider = {};
+    if (provName) card.provider.organization = provName;
+    if (provUrl) card.provider.url = provUrl;
+  }
+
+  // Documentation URL
+  var docsUrl = document.getElementById('gen-docs-url').value.trim();
+  if (docsUrl) card.documentationUrl = docsUrl;
+
+  // Capabilities
+  card.capabilities = {
+    streaming: document.getElementById('gen-cap-streaming').checked,
+    pushNotifications: document.getElementById('gen-cap-push').checked,
+    stateTransitionHistory: document.getElementById('gen-cap-history').checked
+  };
+
+  // Auth
+  var authType = document.getElementById('gen-auth').value;
+  if (authType !== 'none') {
+    var scheme = { type: authType };
+    if (authType === 'apiKey') {
+      scheme.in = 'header';
+      scheme.name = 'X-API-Key';
+    }
+    card.securitySchemes = { default: scheme };
+    card.security = [{ default: [] }];
+  }
+
+  // Input/Output modes
+  card.defaultInputModes = getCheckedModes('gen-input-');
+  card.defaultOutputModes = getCheckedModes('gen-output-');
+
+  if (card.defaultInputModes.length === 0) card.defaultInputModes = ['text/plain'];
+  if (card.defaultOutputModes.length === 0) card.defaultOutputModes = ['text/plain'];
+
+  // Skills
+  var skills = getSkillsData();
+  card.skills = skills.length > 0 ? skills : [{
+    id: 'default',
+    name: card.name,
+    description: card.description
+  }];
+
+  // Contact email (non-spec but useful)
+  var email = document.getElementById('gen-email').value.trim();
+  if (email) {
+    if (!card.provider) card.provider = {};
+    card.provider.contactEmail = email;
+  }
+
+  return card;
+}
+
+function highlightJSON(json) {
+  return json
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/("(?:\\.|[^"\\])*")\s*:/g, '<span class="hl-key">$1</span>:')
+    .replace(/:\s*("(?:\\.|[^"\\])*")/g, ': <span class="hl-string">$1</span>')
+    .replace(/:\s*(\d+\.?\d*)/g, ': <span class="hl-number">$1</span>')
+    .replace(/:\s*(true|false)/g, ': <span class="hl-bool">$1</span>')
+    .replace(/:\s*(null)/g, ': <span class="hl-null">$1</span>')
+    .replace(/([\[\]{}])/g, '<span class="hl-bracket">$1</span>')
+    .replace(/("(?:\\.|[^"\\])*")(?=[,\n\r\s]*[\]}])/g, '<span class="hl-string">$1</span>');
+}
+
+window.updatePreview = function() {
+  var card = buildAgentCard();
+  var jsonStr = JSON.stringify(card, null, 2);
+  document.getElementById('json-output').innerHTML = highlightJSON(jsonStr);
+};
+
+window.copyJSON = function() {
+  var card = buildAgentCard();
+  var jsonStr = JSON.stringify(card, null, 2);
+  navigator.clipboard.writeText(jsonStr).then(function() {
+    var btn = document.getElementById('copy-btn');
+    btn.classList.add('json-preview__btn--success');
+    btn.innerHTML =
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    setTimeout(function() {
+      btn.classList.remove('json-preview__btn--success');
+      btn.innerHTML =
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
+    }, 2000);
+  });
+};
+
+window.downloadJSON = function() {
+  var card = buildAgentCard();
+  var jsonStr = JSON.stringify(card, null, 2);
+  var blob = new Blob([jsonStr], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'agent.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+// ==================== VALIDATOR ====================
+window.fetchAgentCard = function() {
+  var urlInput = document.getElementById('validate-url').value.trim();
+  if (!urlInput) return alert('Please enter a URL.');
+
+  // Normalize URL
+  if (!urlInput.startsWith('http')) urlInput = 'https://' + urlInput;
+  // Remove trailing slash and add well-known path
+  urlInput = urlInput.replace(/\/+$/, '');
+  var fetchUrl = urlInput + '/.well-known/agent.json';
+
+  var textarea = document.getElementById('validate-json');
+  textarea.value = 'Fetching ' + fetchUrl + '...';
+
+  fetch(fetchUrl)
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(function(text) {
+      textarea.value = text;
+      // Auto-format if valid JSON
+      try {
+        var obj = JSON.parse(text);
+        textarea.value = JSON.stringify(obj, null, 2);
+      } catch(e) { /* keep as-is */ }
+    })
+    .catch(function(err) {
+      textarea.value = 'Error fetching agent card: ' + err.message + '\n\nThis is likely due to CORS restrictions. Try:\n1. Paste the JSON directly into this field\n2. Use curl in your terminal: curl ' + fetchUrl;
+    });
+};
+
+window.validateAgentCard = function() {
+  var textarea = document.getElementById('validate-json');
+  var jsonStr = textarea.value.trim();
+
+  if (!jsonStr || jsonStr.startsWith('Fetching') || jsonStr.startsWith('Error')) {
+    return alert('Please paste a valid agent.json or fetch one first.');
+  }
+
+  var card;
+  try {
+    card = JSON.parse(jsonStr);
+  } catch(e) {
+    showValidationResults(null, 'Invalid JSON: ' + e.message);
+    return;
+  }
+
+  performValidation(card);
+};
+
+function performValidation(card) {
+  var checks = [];
+  var trustScore = 0;
+
+  // Required fields
+  checks.push({
+    name: 'name',
+    label: 'Agent Name',
+    pass: !!(card.name && typeof card.name === 'string' && card.name.trim()),
+    detail: card.name ? '"' + card.name + '"' : 'Missing (required)'
+  });
+
+  checks.push({
+    name: 'description',
+    label: 'Description',
+    pass: !!(card.description && typeof card.description === 'string' && card.description.trim()),
+    detail: card.description ? (card.description.length > 60 ? card.description.substring(0, 60) + '...' : card.description) : 'Missing (required)'
+  });
+
+  checks.push({
+    name: 'url',
+    label: 'Agent URL',
+    pass: !!(card.url && typeof card.url === 'string' && card.url.startsWith('http')),
+    detail: card.url ? card.url : 'Missing (required, must be absolute URL)'
+  });
+
+  checks.push({
+    name: 'version',
+    label: 'Version',
+    pass: !!(card.version && typeof card.version === 'string'),
+    detail: card.version || 'Missing (required)'
+  });
+
+  // Valid A2A card (all required fields present)
+  var validA2A = checks.every(function(c) { return c.pass; });
+
+  checks.push({
+    name: 'capabilities',
+    label: 'Capabilities',
+    pass: !!(card.capabilities && typeof card.capabilities === 'object'),
+    detail: card.capabilities ? Object.keys(card.capabilities).filter(function(k) { return card.capabilities[k]; }).join(', ') || 'Defined (none enabled)' : 'Missing (required)'
+  });
+
+  checks.push({
+    name: 'defaultInputModes',
+    label: 'Input Modes',
+    pass: !!(card.defaultInputModes && Array.isArray(card.defaultInputModes) && card.defaultInputModes.length > 0),
+    detail: card.defaultInputModes ? card.defaultInputModes.join(', ') : 'Missing (required)'
+  });
+
+  checks.push({
+    name: 'defaultOutputModes',
+    label: 'Output Modes',
+    pass: !!(card.defaultOutputModes && Array.isArray(card.defaultOutputModes) && card.defaultOutputModes.length > 0),
+    detail: card.defaultOutputModes ? card.defaultOutputModes.join(', ') : 'Missing (required)'
+  });
+
+  var hasProvider = !!(card.provider && (card.provider.organization || card.provider.url));
+  checks.push({
+    name: 'provider',
+    label: 'Provider Info',
+    pass: hasProvider,
+    detail: hasProvider ? (card.provider.organization || '') + (card.provider.url ? ' (' + card.provider.url + ')' : '') : 'Not provided (optional but recommended)',
+    type: hasProvider ? 'pass' : 'warn'
+  });
+
+  var hasSkills = !!(card.skills && Array.isArray(card.skills) && card.skills.length > 0);
+  checks.push({
+    name: 'skills',
+    label: 'Skills',
+    pass: hasSkills,
+    detail: hasSkills ? card.skills.length + ' skill(s) defined' : 'No skills defined (required)'
+  });
+
+  var hasAuth = !!(card.securitySchemes || card.security);
+  checks.push({
+    name: 'auth',
+    label: 'Authentication',
+    pass: hasAuth,
+    detail: hasAuth ? 'Configured' : 'Not configured (optional)',
+    type: hasAuth ? 'pass' : 'warn'
+  });
+
+  // Trust Score calculation
+  var trustItems = [
+    { label: 'Valid A2A Agent Card', points: 25, earned: validA2A },
+    { label: 'Provider Information', points: 15, earned: hasProvider },
+    { label: 'Skills Listed', points: 10, earned: hasSkills },
+    { label: 'Authentication Configured', points: 10, earned: hasAuth },
+    { label: 'Capabilities Declared', points: 10, earned: !!(card.capabilities && typeof card.capabilities === 'object') },
+    { label: 'Input/Output Modes', points: 10, earned: !!(card.defaultInputModes && card.defaultOutputModes) },
+    { label: 'Version Specified', points: 5, earned: !!(card.version) },
+    { label: 'Documentation URL', points: 10, earned: !!(card.documentationUrl) },
+    { label: 'Multiple Skills', points: 5, earned: !!(card.skills && card.skills.length > 1) }
+  ];
+
+  trustItems.forEach(function(item) {
+    if (item.earned) trustScore += item.points;
+  });
+
+  showValidationResults(checks, null, trustScore, trustItems);
+}
+
+function showValidationResults(checks, errorMsg, trustScore, trustItems) {
+  var resultsDiv = document.getElementById('validation-results');
+  var statusDiv = document.getElementById('validation-status');
+  var checksGrid = document.getElementById('checks-grid');
+
+  resultsDiv.classList.add('active');
+
+  if (errorMsg) {
+    statusDiv.className = 'validation-results__status validation-results__status--fail';
+    statusDiv.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> ' + errorMsg;
+    checksGrid.innerHTML = '';
+    document.getElementById('trust-preview').style.display = 'none';
+    return;
+  }
+
+  var allPass = checks.every(function(c) { return c.pass; });
+  var failCount = checks.filter(function(c) { return !c.pass && c.type !== 'warn'; }).length;
+
+  if (failCount === 0) {
+    statusDiv.className = 'validation-results__status validation-results__status--pass';
+    statusDiv.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> All required fields valid';
+  } else {
+    statusDiv.className = 'validation-results__status validation-results__status--fail';
+    statusDiv.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> ' + failCount + ' issue(s) found';
+  }
+
+  checksGrid.innerHTML = '';
+  checks.forEach(function(check) {
+    var type = check.type || (check.pass ? 'pass' : 'fail');
+    var iconSvg = type === 'pass'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'
+      : type === 'warn'
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+
+    var item = document.createElement('div');
+    item.className = 'check-item check-item--' + type;
+    item.innerHTML =
+      '<div class="check-item__icon">' + iconSvg + '</div>' +
+      '<div class="check-item__info">' +
+        '<div class="check-item__name">' + check.label + '</div>' +
+        '<div class="check-item__detail">' + check.detail + '</div>' +
+      '</div>';
+    checksGrid.appendChild(item);
+  });
+
+  // Trust Score
+  var trustPreview = document.getElementById('trust-preview');
+  trustPreview.style.display = 'block';
+
+  var scoreEl = document.getElementById('trust-score');
+  scoreEl.textContent = trustScore + '/100';
+  scoreEl.className = 'trust-preview__score ' +
+    (trustScore >= 70 ? 'trust-preview__score--high' : trustScore >= 40 ? 'trust-preview__score--medium' : 'trust-preview__score--low');
+
+  var barFill = document.getElementById('trust-bar-fill');
+  barFill.style.width = trustScore + '%';
+  barFill.style.background = trustScore >= 70 ? 'var(--color-success)' : trustScore >= 40 ? '#3b82f6' : 'var(--color-text-faint)';
+
+  var breakdownDiv = document.getElementById('trust-breakdown');
+  breakdownDiv.innerHTML = '';
+  trustItems.forEach(function(item) {
+    var row = document.createElement('div');
+    row.className = 'trust-preview__item';
+    row.innerHTML =
+      '<span class="trust-preview__item-label">' +
+        '<span style="width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;' +
+        (item.earned ? 'background:var(--color-success-light);color:var(--color-success)' : 'background:var(--color-surface-2);color:var(--color-text-faint)') +
+        '">' + (item.earned ? '&#10003;' : '&mdash;') + '</span> ' +
+        item.label +
+      '</span>' +
+      '<span class="trust-preview__item-value ' +
+        (item.earned ? 'trust-preview__item-value--earned' : 'trust-preview__item-value--missed') +
+      '">' + (item.earned ? '+' + item.points : '0') + '/' + item.points + '</span>';
+    breakdownDiv.appendChild(row);
+  });
+
+  // Scroll to results
+  resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+window.clearValidator = function() {
+  document.getElementById('validate-json').value = '';
+  document.getElementById('validate-url').value = '';
+  document.getElementById('validation-results').classList.remove('active');
+};
+
+// Initial preview
+window.updatePreview();
+</script>
+</body>
+</html>

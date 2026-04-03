@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise Private Registries — Agentry | The Registry for the Agent Economy</title>
+<meta name="description" content="Catalog, govern, and discover your internal AI agents with private registries. API-first, A2A protocol-aware trust scoring, team ownership, and environment tracking.">
+<link rel="canonical" href="https://agentry.com/enterprise/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Enterprise Private Registries — Agentry">
+<meta property="og:description" content="Catalog, govern, and discover your internal AI agents with private registries.">
+<meta property="og:url" content="https://agentry.com/enterprise/">
+<meta property="og:site_name" content="Agentry">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Enterprise Private Registries — Agentry">
+<meta name="twitter:description" content="Catalog, govern, and discover your internal AI agents with private registries.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./enterprise.css">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Enterprise Private Registries — Agentry",
+  "description": "Catalog, govern, and discover your internal AI agents with private registries.",
+  "url": "https://agentry.com/enterprise/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/nostr/">Nostr</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/nostr/" onclick="closeMobileMenu()">Nostr</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="ent-hero">
+  <div class="ent-hero__bg">
+    <div class="ent-hero__grid"></div>
+    <div class="ent-hero__gradient"></div>
+  </div>
+  <div class="ent-hero__content">
+    <div class="ent-hero__badge">
+      <span class="ent-hero__badge-dot"></span>
+      Enterprise Private Registries
+    </div>
+    <h1 class="ent-hero__title">Private Agent Registries for Enterprise</h1>
+    <p class="ent-hero__subtitle">Catalog, govern, and discover your internal AI agents — with the same A2A protocol-aware trust scoring that powers the public registry.</p>
+    <div class="ent-hero__ctas">
+      <a href="#signup" class="btn btn--primary btn--lg">Get Started Free</a>
+      <a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer" class="btn btn--secondary btn--lg">View API Docs</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section class="ent-how section" id="how-it-works">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        How It Works
+      </div>
+      <h2 class="section-header__title">Up and running in three steps</h2>
+      <p class="section-header__desc">From sign-up to full agent discovery in minutes — no infrastructure to manage.</p>
+    </div>
+
+    <div class="ent-how__steps">
+      <div class="ent-step reveal">
+        <span class="ent-step__number">1</span>
+        <div class="ent-step__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        </div>
+        <h3 class="ent-step__title">Create Your Registry</h3>
+        <p class="ent-step__desc">Sign up, get an API key, start registering agents in seconds.</p>
+      </div>
+
+      <div class="ent-step reveal">
+        <span class="ent-step__number">2</span>
+        <div class="ent-step__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3 class="ent-step__title">Register Internal Agents</h3>
+        <p class="ent-step__desc">Add agents with metadata: team ownership, environment (prod/staging/dev), categories, and tags.</p>
+      </div>
+
+      <div class="ent-step reveal">
+        <span class="ent-step__number">3</span>
+        <div class="ent-step__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="ent-step__title">Scan &amp; Score</h3>
+        <p class="ent-step__desc">Our trust engine scans your agents for A2A Agent Cards and assigns trust tiers automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FEATURES GRID ==================== -->
+<section class="ent-features section" id="features">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Features
+      </div>
+      <h2 class="section-header__title">Everything you need to govern your agents</h2>
+      <p class="section-header__desc">Built for platform teams who need visibility and control across their AI agent fleet.</p>
+    </div>
+
+    <div class="ent-features__grid">
+      <!-- API-First -->
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3 class="feature-card__title">API-First</h3>
+        <p class="feature-card__desc">Full REST API with X-API-Key auth. Integrate into your CI/CD pipeline.</p>
+      </div>
+
+      <!-- A2A Discovery -->
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3 class="feature-card__title">A2A Discovery</h3>
+        <p class="feature-card__desc">Automatic scanning of /.well-known/agent-card.json endpoints for all your private agents. Also checks the legacy /.well-known/agent.json path.</p>
+      </div>
+
+      <!-- Trust Scoring -->
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="feature-card__title">Trust Scoring</h3>
+        <p class="feature-card__desc">Same trust tier system (Verified, Basic, Unverified) applied to your internal agents.</p>
+      </div>
+
+      <!-- Team Ownership -->
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="feature-card__title">Team Ownership</h3>
+        <p class="feature-card__desc">Tag agents by team, environment, and category for clear organizational visibility.</p>
+      </div>
+
+      <!-- Environment Tracking -->
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        </div>
+        <h3 class="feature-card__title">Environment Tracking</h3>
+        <p class="feature-card__desc">Separate production, staging, and development agents with environment labels.</p>
+      </div>
+
+      <!-- Usage Analytics -->
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3 class="feature-card__title">Usage Analytics</h3>
+        <p class="feature-card__desc">Dashboard view of your private registry: agent counts by tier, environment, and status.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRICING ==================== -->
+<section class="ent-pricing section" id="pricing">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Pricing
+      </div>
+      <h2 class="section-header__title">Simple, transparent pricing</h2>
+      <p class="section-header__desc">Start free. Scale when you're ready.</p>
+      <p style="font-size:0.85rem;color:#d4a017;margin-top:0.75rem;opacity:0.9;">Early adopter pricing — these rates are locked for teams that sign up before Q3 2026.</p>
+    </div>
+
+    <div class="ent-pricing__grid">
+      <!-- Starter (Free) -->
+      <div class="pricing-card reveal">
+        <span class="pricing-card__badge" style="background:rgba(1,212,219,0.15);color:#01D4DB;font-size:0.65rem;">BETA</span>
+        <h3 class="pricing-card__name">Starter</h3>
+        <div class="pricing-card__price">
+          <span class="pricing-card__amount">$0</span>
+          <span class="pricing-card__period">/mo</span>
+        </div>
+        <div class="pricing-card__agents">Up to 5 agents</div>
+        <ul class="pricing-card__features" role="list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> API access</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Basic trust scoring</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Single environment</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Community support</li>
+        </ul>
+        <a href="#signup" class="btn btn--secondary">Start Free</a>
+      </div>
+
+      <!-- Team -->
+      <div class="pricing-card reveal">
+        <h3 class="pricing-card__name">Team</h3>
+        <div class="pricing-card__price">
+          <span class="pricing-card__amount">$299</span>
+          <span class="pricing-card__period">/mo</span>
+        </div>
+        <div class="pricing-card__agents">Up to 25 agents</div>
+        <ul class="pricing-card__features" role="list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Everything in Starter</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Full trust scoring + observability</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 3 environments (dev, staging, prod)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Team ownership + RBAC</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Email support</li>
+        </ul>
+        <button onclick="startCheckout('ent_basic')" class="btn btn--secondary">Start Team</button>
+      </div>
+
+      <!-- Platform (Most Popular) -->
+      <div class="pricing-card pricing-card--popular reveal">
+        <span class="pricing-card__badge">Most Popular</span>
+        <h3 class="pricing-card__name">Platform</h3>
+        <div class="pricing-card__price">
+          <span class="pricing-card__amount">$999</span>
+          <span class="pricing-card__period">/mo</span>
+        </div>
+        <div class="pricing-card__agents">Up to 100 agents</div>
+        <ul class="pricing-card__features" role="list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Everything in Team</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced analytics + usage dashboards</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Unlimited environments</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Webhook notifications</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom trust policies</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Priority support + onboarding</li>
+        </ul>
+        <button onclick="startCheckout('ent_pro')" class="btn btn--primary">Start Platform</button>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card reveal">
+        <h3 class="pricing-card__name">Enterprise</h3>
+        <div class="pricing-card__price">
+          <span class="pricing-card__amount" style="font-size:1.8rem;">Custom</span>
+        </div>
+        <div class="pricing-card__agents">Unlimited agents</div>
+        <ul class="pricing-card__features" role="list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Everything in Platform</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> SLA + dedicated support</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> SSO / SAML integration</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Audit log retention</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Private relay instance</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom onboarding + training</li>
+        </ul>
+        <a href="mailto:hello@agentry.com?subject=Enterprise%20inquiry" class="btn btn--secondary">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== API PREVIEW ==================== -->
+<section class="ent-api section" id="api-preview">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        API Preview
+      </div>
+      <h2 class="section-header__title">Developer-friendly from day one</h2>
+      <p class="section-header__desc">Three API calls to go from zero to a fully discoverable private agent registry.</p>
+    </div>
+
+    <div class="ent-api__inner reveal">
+      <div class="ent-code-block">
+        <div class="ent-code-block__header">
+          <div class="ent-code-block__dots">
+            <span class="ent-code-block__dot ent-code-block__dot--red"></span>
+            <span class="ent-code-block__dot ent-code-block__dot--yellow"></span>
+            <span class="ent-code-block__dot ent-code-block__dot--green"></span>
+            <span class="ent-code-block__title">terminal</span>
+          </div>
+          <button class="ent-code-block__copy" onclick="copyCode()" id="copy-code-btn">Copy</button>
+        </div>
+        <div class="ent-code-block__content">
+          <pre id="api-code"><span class="code-comment"># Create your registry</span>
+<span class="code-cmd">curl</span> <span class="code-flag">-X POST</span> <span class="code-url">https://api.agentry.com/api/orgs</span> \
+  <span class="code-flag">-H</span> <span class="code-header-val">"Content-Type: application/json"</span> \
+  <span class="code-flag">-d</span> <span class="code-json-val">'{"name": "Acme Corp", "email": "admin@acme.com"}'</span>
+
+<span class="code-comment"># Register an agent</span>
+<span class="code-cmd">curl</span> <span class="code-flag">-X POST</span> <span class="code-url">https://api.agentry.com/api/orgs/{org_id}/agents</span> \
+  <span class="code-flag">-H</span> <span class="code-header-val">"X-API-Key: your_api_key"</span> \
+  <span class="code-flag">-H</span> <span class="code-header-val">"Content-Type: application/json"</span> \
+  <span class="code-flag">-d</span> <span class="code-json-val">'{"name": "Support Bot", "url": "https://support.acme.com", "environment": "production", "owner_team": "engineering"}'</span>
+
+<span class="code-comment"># Trigger A2A discovery scan</span>
+<span class="code-cmd">curl</span> <span class="code-flag">-X POST</span> <span class="code-url">https://api.agentry.com/api/orgs/{org_id}/agents/{agent_id}/discover</span> \
+  <span class="code-flag">-H</span> <span class="code-header-val">"X-API-Key: your_api_key"</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SIGNUP FORM ==================== -->
+<section class="ent-signup section" id="signup">
+  <div class="container">
+    <div class="ent-signup__inner">
+      <h2 class="ent-signup__title">Create Your Free Registry</h2>
+      <p class="ent-signup__subtitle">No credit card required. Get your API key instantly.</p>
+
+      <form class="ent-form" id="signup-form" novalidate>
+        <div class="ent-form__row">
+          <div class="ent-form__group">
+            <label class="ent-form__label" for="org-name">Organization Name <span style="color:#FCA5A5">*</span></label>
+            <input class="ent-form__input" type="text" id="org-name" name="name" required placeholder="Acme Corp" autocomplete="organization">
+          </div>
+          <div class="ent-form__group">
+            <label class="ent-form__label" for="org-email">Email <span style="color:#FCA5A5">*</span></label>
+            <input class="ent-form__input" type="email" id="org-email" name="email" required placeholder="admin@acme.com" autocomplete="email">
+          </div>
+        </div>
+        <div class="ent-form__group">
+          <label class="ent-form__label" for="org-slug">Custom Slug <span style="color:rgba(255,255,255,0.3);font-weight:400">(optional)</span></label>
+          <input class="ent-form__input" type="text" id="org-slug" name="slug" placeholder="acme-corp" pattern="[a-z0-9\-]+">
+          <span class="ent-form__hint">Lowercase letters, numbers, and hyphens only. Used in your registry URL.</span>
+        </div>
+        <div class="ent-form-error" id="form-error"></div>
+        <div class="ent-form__submit">
+          <button type="submit" class="btn btn--primary btn--lg" id="submit-btn">Create Free Registry</button>
+        </div>
+      </form>
+
+      <div class="ent-form-success" id="form-success">
+        <div class="ent-form-success__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 class="ent-form-success__title">Registry Created!</h3>
+        <p class="ent-form-success__text">Your private registry is ready. Save your credentials below — you'll need them to authenticate API requests.</p>
+
+        <div class="ent-form-success__credential">
+          <div class="ent-form-success__credential-label">Organization ID</div>
+          <div class="ent-form-success__credential-value">
+            <code id="result-org-id">—</code>
+          </div>
+        </div>
+
+        <div class="ent-form-success__credential">
+          <div class="ent-form-success__credential-label">API Key</div>
+          <div class="ent-form-success__credential-value">
+            <code id="result-api-key">—</code>
+            <button onclick="copyApiKey()" id="copy-key-btn">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer">API Documentation</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ==================== THEME ====================
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // ==================== MOBILE MENU ====================
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // ==================== HEADER SCROLL ====================
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // ==================== SCROLL REVEAL ====================
+  var revealElements = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(function (el, i) {
+      el.style.transitionDelay = (i % 6) * 80 + 'ms';
+      revealObserver.observe(el);
+    });
+  } else {
+    revealElements.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  // ==================== COPY CODE ====================
+  window.copyCode = function () {
+    var codeEl = document.getElementById('api-code');
+    var text = codeEl.innerText || codeEl.textContent;
+    navigator.clipboard.writeText(text).then(function () {
+      var btn = document.getElementById('copy-code-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 2000);
+    });
+  };
+
+  // ==================== COPY API KEY ====================
+  window.copyApiKey = function () {
+    var keyEl = document.getElementById('result-api-key');
+    var text = keyEl.innerText || keyEl.textContent;
+    navigator.clipboard.writeText(text).then(function () {
+      var btn = document.getElementById('copy-key-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 2000);
+    });
+  };
+
+  // ==================== SIGNUP FORM ====================
+  var signupForm = document.getElementById('signup-form');
+  var formSuccess = document.getElementById('form-success');
+  var formError = document.getElementById('form-error');
+  var submitBtn = document.getElementById('submit-btn');
+
+  signupForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    formError.classList.remove('active');
+    formError.textContent = '';
+
+    var name = document.getElementById('org-name').value.trim();
+    var email = document.getElementById('org-email').value.trim();
+    var slug = document.getElementById('org-slug').value.trim();
+
+    if (!name || !email) {
+      formError.textContent = 'Please fill in all required fields.';
+      formError.classList.add('active');
+      return;
+    }
+
+    // Email validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      formError.textContent = 'Please enter a valid email address.';
+      formError.classList.add('active');
+      return;
+    }
+
+    // Build payload
+    var payload = { name: name, email: email };
+    if (slug) payload.slug = slug;
+
+    // Set loading state
+    submitBtn.classList.add('btn--loading');
+    submitBtn.disabled = true;
+
+    fetch('https://api.agentry.com/api/orgs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (res) {
+      if (!res.ok) {
+        return res.json().then(function (data) {
+          throw new Error(data.detail || data.message || 'Something went wrong. Please try again.');
+        });
+      }
+      return res.json();
+    })
+    .then(function (data) {
+      // Show success
+      document.getElementById('result-org-id').textContent = data.id || data.org_id || '—';
+      document.getElementById('result-api-key').textContent = data.api_key || '—';
+      signupForm.style.display = 'none';
+      formSuccess.classList.add('active');
+    })
+    .catch(function (err) {
+      formError.textContent = err.message || 'Network error. Please check your connection and try again.';
+      formError.classList.add('active');
+    })
+    .finally(function () {
+      submitBtn.classList.remove('btn--loading');
+      submitBtn.disabled = false;
+    });
+  });
+
+})();
+
+  // Stripe checkout for paid plans
+  window.startCheckout = function(plan) {
+    var btn = event.target;
+    var origText = btn.textContent;
+    btn.textContent = 'Redirecting...';
+    btn.disabled = true;
+
+    var email = prompt('Enter your email for the receipt:');
+    if (!email) { btn.textContent = origText; btn.disabled = false; return; }
+
+    fetch('https://api.agentry.com/api/payments/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier: plan, customer_email: email, success_url: 'https://agentry.com/enterprise/?payment=success', cancel_url: 'https://agentry.com/enterprise/?payment=cancelled' })
+    })
+    .then(function(res) {
+      if (!res.ok) return res.json().then(function(d) { throw new Error(d.detail || 'Error'); });
+      return res.json();
+    })
+    .then(function(data) {
+      if (data.checkout_url) window.location.href = data.checkout_url;
+    })
+    .catch(function(err) {
+      alert('Could not start checkout: ' + err.message);
+      btn.textContent = origText;
+      btn.disabled = false;
+    });
+  };
+</script>
+</body>
+</html>

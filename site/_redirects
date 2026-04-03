@@ -1,0 +1,16 @@
+# Netlify redirects
+
+# Machine-readable discovery files — serve as-is
+/.well-known/mcp-registry-auth  /.well-known/mcp-registry-auth  200
+/.well-known/agents.json         /.well-known/agents.json         200
+/llms.txt                        /llms.txt                        200
+
+# Sub-pages — serve their own index.html
+/developers/    /developers/index.html    200
+/enterprise/    /enterprise/index.html    200
+/pricing/       /pricing/index.html       200
+/blog/          /blog/index.html          200
+/nostr/         /nostr/index.html         200
+
+# Single-page site — all other paths serve index.html
+/*    /index.html   200

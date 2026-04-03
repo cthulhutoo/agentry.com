@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship Your Agent Card in 5 Minutes: A Developer's Guide to A2A Discovery — Agentry</title>
+<meta name="description" content="Add an A2A Agent Card to your agent in minutes. Step-by-step guide with Express.js, FastAPI, and nginx examples — plus how Agentry's registry makes your agent discoverable.">
+<link rel="canonical" href="https://agentry.com/blog/ship-your-agent-card">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ship Your Agent Card in 5 Minutes: A Developer's Guide to A2A Discovery">
+<meta property="og:description" content="Add an A2A Agent Card to your agent in minutes. Step-by-step guide with Express.js, FastAPI, and nginx examples — plus how Agentry's registry makes your agent discoverable.">
+<meta property="og:url" content="https://agentry.com/blog/ship-your-agent-card">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-03-15T10:00:00-07:00">
+<meta property="article:section" content="Developer Guide">
+<meta property="article:tag" content="Agent Card">
+<meta property="article:tag" content="A2A Protocol">
+<meta property="article:tag" content="Agent Discovery">
+<meta property="article:tag" content="Developer Guide">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ship Your Agent Card in 5 Minutes: A Developer's Guide to A2A Discovery">
+<meta name="twitter:description" content="Add an A2A Agent Card to your agent in minutes. Step-by-step guide with Express.js, FastAPI, and nginx examples.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Code block styles -->
+<style>
+.code-block {
+  background: #1a1a2e;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-6) 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-5);
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.code-block__lang {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8892b0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.code-block__dots {
+  display: flex;
+  gap: 6px;
+}
+.code-block__dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+}
+.code-block__dots span:first-child { background: #ff5f57; }
+.code-block__dots span:nth-child(2) { background: #febc2e; }
+.code-block__dots span:last-child { background: #28c840; }
+.code-block pre {
+  margin: 0;
+  padding: var(--space-5);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.code-block code {
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #ccd6f6;
+  white-space: pre;
+  tab-size: 2;
+}
+.code-block .json-key { color: #82aaff; }
+.code-block .json-string { color: #c3e88d; }
+.code-block .json-bool,
+.code-block .json-null { color: #f78c6c; }
+.code-block .json-comment { color: #546e7a; font-style: italic; }
+.code-block .json-url { color: #89ddff; }
+</style>
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ship Your Agent Card in 5 Minutes: A Developer's Guide to A2A Discovery",
+  "description": "Add an A2A Agent Card to your agent in minutes. Step-by-step guide with Express.js, FastAPI, and nginx examples — plus how Agentry's registry makes your agent discoverable.",
+  "datePublished": "2026-03-15T10:00:00-07:00",
+  "dateModified": "2026-03-15T10:00:00-07:00",
+  "author": {
+    "@type": "Organization",
+    "name": "Agentry Team",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/ship-your-agent-card"
+  },
+  "keywords": ["agent card", "A2A protocol", "agent discovery", "agent-to-agent", "well-known agent card"],
+  "articleSection": "Developer Guide",
+  "wordCount": 1800,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Ship Your Agent Card in 5 Minutes" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Ship Your Agent Card in 5 Minutes</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Developer Guide</span>
+    <h1 class="article-header__title">Ship Your Agent Card in 5 Minutes: A Developer's Guide to A2A Discovery</h1>
+    <div class="article-header__meta">
+      <span>By the Agentry Team</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-03-15">March 15, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#discovery-problem" class="toc__link">The Discovery Problem</a></li>
+      <li><a href="#what-is-agent-card" class="toc__link">What Is an Agent Card?</a></li>
+      <li><a href="#minimal-agent-card" class="toc__link">The Minimal Agent Card</a></li>
+      <li><a href="#implementation" class="toc__link">Implementation in 3 Frameworks</a></li>
+      <li><a href="#why-this-matters" class="toc__link">Why This Matters</a></li>
+      <li><a href="#agentry-scanning" class="toc__link">How Agentry Scans for Cards</a></li>
+      <li><a href="#get-started" class="toc__link">Get Started Now</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#discovery-problem">The Discovery Problem</a></li>
+        <li><a href="#what-is-agent-card">What Is an Agent Card?</a></li>
+        <li><a href="#minimal-agent-card">The Minimal Agent Card</a></li>
+        <li><a href="#implementation">Implementation in 3 Frameworks</a></li>
+        <li><a href="#why-this-matters">Why This Matters</a></li>
+        <li><a href="#agentry-scanning">How Agentry Scans for Cards</a></li>
+        <li><a href="#get-started">Get Started Now</a></li>
+      </ul>
+    </nav>
+
+    <p>There are thousands of AI agents being built right now. Most of them are invisible. Not because they don't work — but because there's no standard way for other agents, registries, or platforms to discover what they can do. If your agent doesn't have a public capability manifest, it might as well not exist.</p>
+
+    <p>The fix takes about five minutes. The <a href="https://a2a-protocol.org/latest/specification/" target="_blank" rel="noopener noreferrer">A2A protocol</a> — backed by Google, the Linux Foundation, and <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">50+ partners</a> including Salesforce, SAP, and LangChain — defines a simple JSON file called an <strong>Agent Card</strong> that you serve at a well-known URL. That's it. One file, one endpoint, and your agent goes from invisible to discoverable.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="discovery-problem">The Discovery Problem</h2>
+
+    <p>Think about the early web before search engines. Websites existed, but finding them meant someone had to hand you a URL. That's where AI agents are today. Your agent might be the best invoice processor on the planet, but if another agent — or a registry like Agentry — can't programmatically find it and read what it does, no one will ever know.</p>
+
+    <p>The <a href="https://a2a-protocol.org/latest/specification/" target="_blank" rel="noopener noreferrer">A2A protocol</a> solves this with a pattern borrowed directly from the web: a well-known URL. Just like <code>robots.txt</code> tells search engines how to crawl a site, or <code>/.well-known/openid-configuration</code> tells auth clients where to authenticate, an Agent Card at <code>/.well-known/agent-card.json</code> tells other agents what yours can do.</p>
+
+    <div class="callout">
+      <p><strong>Key point:</strong> The A2A spec defines two valid paths: <code>/.well-known/agent-card.json</code> (v0.3.0+, preferred) and <code>/.well-known/agent.json</code> (original, also supported). Serve at either — or both. Agentry checks both when scanning.</p>
+    </div>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="what-is-agent-card">What Is an Agent Card?</h2>
+
+    <p>An Agent Card is a JSON document that describes your agent's identity, capabilities, skills, and how to interact with it. Think of it as a machine-readable business card — or <code>robots.txt</code> for AI agents. It follows the <a href="https://a2a-protocol.org/latest/specification/" target="_blank" rel="noopener noreferrer">A2A specification</a> and is designed to be read by other agents, registries, and developer tools.</p>
+
+    <p>The required fields are:</p>
+
+    <ul>
+      <li><strong>name</strong> — Your agent's display name.</li>
+      <li><strong>description</strong> — A clear, concise description of what your agent does.</li>
+      <li><strong>version</strong> — Semantic version of your agent (e.g., <code>1.0.0</code>).</li>
+      <li><strong>capabilities</strong> — Protocol features: <code>streaming</code>, <code>pushNotifications</code>.</li>
+      <li><strong>skills</strong> — What your agent can actually do, each with an ID, name, description, and tags.</li>
+      <li><strong>defaultInputModes / defaultOutputModes</strong> — MIME types your agent accepts and returns.</li>
+      <li><strong>supportedInterfaces</strong> — The endpoint URL, protocol binding (JSONRPC), and protocol version.</li>
+    </ul>
+
+    <p>Optional but valuable fields include <code>provider</code> (your organization info), <code>securitySchemes</code> (authentication methods), <code>iconUrl</code>, and <code>documentationUrl</code>. The more you fill in, the higher your <a href="./a2a-protocol-explained.html">trust score</a> in registries like Agentry.</p>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="minimal-agent-card">The Minimal Agent Card</h2>
+
+    <p>Here's a complete, valid Agent Card. Copy it, change the values, and you're done:</p>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">agent-card.json</span>
+      </div>
+      <pre><code>{
+  <span class="json-key">"name"</span>: <span class="json-string">"Acme Invoice Agent"</span>,
+  <span class="json-key">"description"</span>: <span class="json-string">"Extracts and processes invoice data from PDFs and images."</span>,
+  <span class="json-key">"version"</span>: <span class="json-string">"1.0.0"</span>,
+  <span class="json-key">"supportedInterfaces"</span>: [
+    {
+      <span class="json-key">"url"</span>: <span class="json-url">"https://api.acme.com/a2a"</span>,
+      <span class="json-key">"protocolBinding"</span>: <span class="json-string">"JSONRPC"</span>,
+      <span class="json-key">"protocolVersion"</span>: <span class="json-string">"1.0"</span>
+    }
+  ],
+  <span class="json-key">"capabilities"</span>: {
+    <span class="json-key">"streaming"</span>: <span class="json-bool">false</span>,
+    <span class="json-key">"pushNotifications"</span>: <span class="json-bool">false</span>
+  },
+  <span class="json-key">"defaultInputModes"</span>: [<span class="json-string">"application/pdf"</span>, <span class="json-string">"image/png"</span>, <span class="json-string">"text/plain"</span>],
+  <span class="json-key">"defaultOutputModes"</span>: [<span class="json-string">"application/json"</span>, <span class="json-string">"text/plain"</span>],
+  <span class="json-key">"skills"</span>: [
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"extract-invoice"</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Invoice Extraction"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Extracts line items, totals, dates, and vendor info from invoices."</span>,
+      <span class="json-key">"tags"</span>: [<span class="json-string">"invoice"</span>, <span class="json-string">"extraction"</span>, <span class="json-string">"ocr"</span>, <span class="json-string">"accounting"</span>]
+    }
+  ]
+}</code></pre>
+    </div>
+
+    <p>That's 25 lines of JSON. No SDK, no build step, no dependencies. Every field maps directly to the <a href="https://a2a-protocol.org/latest/specification/" target="_blank" rel="noopener noreferrer">A2A specification</a>. Now you just need to serve it.</p>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="implementation">Implementation in 3 Frameworks</h2>
+
+    <p>Serving your Agent Card means making it accessible at <code>/.well-known/agent-card.json</code> over HTTPS. Here's how to do it in the three most common setups.</p>
+
+    <h3>Express.js</h3>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">JavaScript</span>
+      </div>
+      <pre><code><span class="json-key">const</span> express = require(<span class="json-string">'express'</span>);
+<span class="json-key">const</span> app = express();
+
+<span class="json-key">const</span> agentCard = {
+  name: <span class="json-string">"Acme Invoice Agent"</span>,
+  description: <span class="json-string">"Extracts and processes invoice data from PDFs and images."</span>,
+  version: <span class="json-string">"1.0.0"</span>,
+  supportedInterfaces: [{
+    url: <span class="json-string">"https://api.acme.com/a2a"</span>,
+    protocolBinding: <span class="json-string">"JSONRPC"</span>,
+    protocolVersion: <span class="json-string">"1.0"</span>
+  }],
+  capabilities: { streaming: <span class="json-bool">false</span>, pushNotifications: <span class="json-bool">false</span> },
+  defaultInputModes: [<span class="json-string">"application/pdf"</span>, <span class="json-string">"image/png"</span>, <span class="json-string">"text/plain"</span>],
+  defaultOutputModes: [<span class="json-string">"application/json"</span>, <span class="json-string">"text/plain"</span>],
+  skills: [{
+    id: <span class="json-string">"extract-invoice"</span>,
+    name: <span class="json-string">"Invoice Extraction"</span>,
+    description: <span class="json-string">"Extracts line items, totals, dates, and vendor info from invoices."</span>,
+    tags: [<span class="json-string">"invoice"</span>, <span class="json-string">"extraction"</span>, <span class="json-string">"ocr"</span>, <span class="json-string">"accounting"</span>]
+  }]
+};
+
+app.get(<span class="json-string">'/.well-known/agent-card.json'</span>, (req, res) =&gt; {
+  res.json(agentCard);
+});
+<span class="json-comment">// The older path is also supported for backward compatibility. Agentry checks both.</span>
+app.get(<span class="json-string">'/.well-known/agent.json'</span>, (req, res) =&gt; {
+  res.json(agentCard);
+});
+
+app.listen(<span class="json-bool">3000</span>);</code></pre>
+    </div>
+
+    <h3>FastAPI</h3>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">Python</span>
+      </div>
+      <pre><code><span class="json-key">from</span> fastapi <span class="json-key">import</span> FastAPI
+<span class="json-key">from</span> fastapi.responses <span class="json-key">import</span> JSONResponse
+
+app = FastAPI()
+
+agent_card = {
+    <span class="json-string">"name"</span>: <span class="json-string">"Acme Invoice Agent"</span>,
+    <span class="json-string">"description"</span>: <span class="json-string">"Extracts and processes invoice data from PDFs and images."</span>,
+    <span class="json-string">"version"</span>: <span class="json-string">"1.0.0"</span>,
+    <span class="json-string">"supportedInterfaces"</span>: [{
+        <span class="json-string">"url"</span>: <span class="json-string">"https://api.acme.com/a2a"</span>,
+        <span class="json-string">"protocolBinding"</span>: <span class="json-string">"JSONRPC"</span>,
+        <span class="json-string">"protocolVersion"</span>: <span class="json-string">"1.0"</span>,
+    }],
+    <span class="json-string">"capabilities"</span>: {<span class="json-string">"streaming"</span>: <span class="json-bool">False</span>, <span class="json-string">"pushNotifications"</span>: <span class="json-bool">False</span>},
+    <span class="json-string">"defaultInputModes"</span>: [<span class="json-string">"application/pdf"</span>, <span class="json-string">"image/png"</span>, <span class="json-string">"text/plain"</span>],
+    <span class="json-string">"defaultOutputModes"</span>: [<span class="json-string">"application/json"</span>, <span class="json-string">"text/plain"</span>],
+    <span class="json-string">"skills"</span>: [{
+        <span class="json-string">"id"</span>: <span class="json-string">"extract-invoice"</span>,
+        <span class="json-string">"name"</span>: <span class="json-string">"Invoice Extraction"</span>,
+        <span class="json-string">"description"</span>: <span class="json-string">"Extracts line items, totals, dates, and vendor info from invoices."</span>,
+        <span class="json-string">"tags"</span>: [<span class="json-string">"invoice"</span>, <span class="json-string">"extraction"</span>, <span class="json-string">"ocr"</span>, <span class="json-string">"accounting"</span>],
+    }],
+}
+
+<span class="json-comment">@app.get("/.well-known/agent-card.json")</span>
+<span class="json-key">async def</span> get_agent_card():
+    <span class="json-key">return</span> JSONResponse(content=agent_card)
+
+<span class="json-comment"># The older path /.well-known/agent.json is also supported for backward compatibility. Agentry checks both.</span>
+<span class="json-comment">@app.get("/.well-known/agent.json")</span>
+<span class="json-key">async def</span> get_agent_card_legacy():
+    <span class="json-key">return</span> JSONResponse(content=agent_card)</code></pre>
+    </div>
+
+    <h3>nginx</h3>
+
+    <p>If your agent runs behind nginx, you can serve a static JSON file directly:</p>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">nginx</span>
+      </div>
+      <pre><code><span class="json-key">server</span> {
+    listen <span class="json-bool">443</span> ssl;
+    server_name api.acme.com;
+
+    <span class="json-key">location</span> = /.well-known/agent-card.json {
+        alias /var/www/agent-card.json;
+    }
+    <span class="json-comment"># The older path /.well-known/agent.json is also supported for backward compatibility. Agentry checks both.</span>
+    <span class="json-key">location</span> = /.well-known/agent.json {
+        alias /var/www/agent-card.json;
+        default_type application/json;
+        add_header Access-Control-Allow-Origin *;
+        add_header Cache-Control <span class="json-string">"public, max-age=3600"</span>;
+    }
+}</code></pre>
+    </div>
+
+    <div class="callout">
+      <p><strong>Pro tip:</strong> Set CORS headers (<code>Access-Control-Allow-Origin: *</code>) on your Agent Card endpoint. Other agents and registries will be fetching it cross-origin. Without CORS, browser-based agent clients can't read your card.</p>
+    </div>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="why-this-matters">Why This Matters</h2>
+
+    <p>Shipping an Agent Card isn't just a protocol checkbox. It has direct, compounding benefits for your agent's reach and credibility.</p>
+
+    <h3>Discoverability</h3>
+    <p>Registries like Agentry and other A2A-compatible platforms automatically scan for Agent Cards at well-known URLs. Once your card is live, you're indexed — no manual submission required. Other agents can find you programmatically, the same way search engines find websites by crawling <code>robots.txt</code> and sitemaps.</p>
+
+    <h3>Trust scoring</h3>
+    <p>Agentry builds <a href="./a2a-protocol-explained.html">trust profiles</a> for every agent it discovers. Agents with valid, schema-compliant Agent Cards rank higher. Having provider info, authentication schemes, versioning, and well-defined skills all contribute to a higher trust score — which means higher visibility in the directory.</p>
+
+    <h3>Interoperability</h3>
+    <p>Any <a href="https://a2a-protocol.org/latest/specification/" target="_blank" rel="noopener noreferrer">A2A-compatible client</a> can discover your agent, read its capabilities, negotiate authentication, and send it tasks — all without custom integration code. Your agent becomes a first-class citizen in the multi-agent ecosystem.</p>
+
+    <h3>Future-proofing</h3>
+    <p>The A2A protocol is governed by the <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">Linux Foundation</a> with backing from Google, Salesforce, SAP, and 50+ major technology companies. Building on A2A means you're investing in the standard that the industry has converged on — not a proprietary format that might disappear.</p>
+
+    <div class="pull-quote">
+      "Just like websites need to be crawlable, agents need to be discoverable. The agents that are discoverable first win."
+    </div>
+
+    <!-- ========== SECTION 6 ========== -->
+    <h2 id="agentry-scanning">How Agentry Scans for Cards</h2>
+
+    <p>Agentry runs automated discovery cycles every 6 hours across all registered agent domains. Here's what happens during each scan:</p>
+
+    <ol>
+      <li><strong>Fetch</strong> — We request <code>/.well-known/agent.json</code> and <code>/.well-known/agent-card.json</code> from your domain.</li>
+      <li><strong>Validate</strong> — The response is checked against the A2A Agent Card schema. Invalid cards are flagged but still indexed.</li>
+      <li><strong>Diff</strong> — We compare the current card against the last snapshot. Changes to skills, capabilities, or version are tracked.</li>
+      <li><strong>Score</strong> — A trust score (0–100) is computed based on weighted signals.</li>
+    </ol>
+
+    <p>The trust scoring weights:</p>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">Trust Signals</span>
+      </div>
+      <pre><code><span class="json-key">Card resolves</span>             <span class="json-bool">25 pts</span>   <span class="json-comment">// Your card is accessible</span>
+<span class="json-key">Schema valid</span>              <span class="json-bool">15 pts</span>   <span class="json-comment">// Passes A2A validation</span>
+<span class="json-key">Uptime ratio</span>              <span class="json-bool">15 pts</span>   <span class="json-comment">// Consistent availability</span>
+<span class="json-key">Domain matches URL</span>        <span class="json-bool">10 pts</span>   <span class="json-comment">// Card domain = agent endpoint</span>
+<span class="json-key">Has skills defined</span>        <span class="json-bool">10 pts</span>   <span class="json-comment">// At least one skill listed</span>
+<span class="json-key">Has provider info</span>         <span class="json-bool"> 5 pts</span>   <span class="json-comment">// Organization name and URL</span>
+<span class="json-key">Has auth scheme</span>           <span class="json-bool"> 5 pts</span>   <span class="json-comment">// Security defined</span>
+<span class="json-key">Has version</span>               <span class="json-bool"> 5 pts</span>   <span class="json-comment">// Semantic versioning</span>
+<span class="json-key">Has protocol version</span>      <span class="json-bool"> 5 pts</span>   <span class="json-comment">// A2A version declared</span>
+<span class="json-key">Response time</span>             <span class="json-bool"> 5 pts</span>   <span class="json-comment">// Fast card delivery</span></code></pre>
+    </div>
+
+    <p>Agents are placed into tiers based on their score:</p>
+
+    <ul>
+      <li><strong>Verified</strong> (80+) — Full trust profile, featured in search results.</li>
+      <li><strong>Basic</strong> (50–79) — Card resolves and validates, but missing optional fields.</li>
+      <li><strong>Unverified</strong> (20–49) — Card has issues or is incomplete.</li>
+      <li><strong>Suspicious</strong> (&lt;20) — Card fails to resolve or has significant problems.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Churn penalty:</strong> If your Agent Card version changes more than 10 times in 30 days, you'll receive a –10 point penalty. Stable, predictable agents earn more trust.</p>
+    </div>
+
+    <!-- ========== SECTION 7 ========== -->
+    <h2 id="get-started">Get Started Now</h2>
+
+    <p>Here's the fastest path from zero to discoverable:</p>
+
+    <ol>
+      <li><strong>Create your Agent Card JSON</strong> — Copy the <a href="#minimal-agent-card">minimal example above</a> and fill in your agent's details.</li>
+      <li><strong>Serve it at <code>/.well-known/agent-card.json</code></strong> — Use any of the <a href="#implementation">framework examples</a> above. Make sure it returns <code>Content-Type: application/json</code> and allows CORS.</li>
+      <li><strong>Add optional fields</strong> — Provider info, auth schemes, documentation URL, and additional skills will boost your trust score.</li>
+      <li><strong>Register with Agentry</strong> — <a href="/#list-agent">Add your agent</a> to the directory. Our scanner will pick up your Agent Card automatically within the next discovery cycle.</li>
+    </ol>
+
+    <p>That's it. Four steps, five minutes, and your agent joins the discoverable web of AI agents built on the <a href="https://a2a-protocol.org/latest/specification/" target="_blank" rel="noopener noreferrer">A2A protocol</a>. The ecosystem is growing fast — the <a href="https://codelabs.developers.google.com/intro-a2a-purchasing-concierge" target="_blank" rel="noopener noreferrer">Google A2A Codelab</a> is a great next step if you want to build a full A2A server, and the <a href="https://www.descope.com/learn/post/a2a" target="_blank" rel="noopener noreferrer">Descope guide</a> covers authentication patterns in depth.</p>
+
+    <p>The agents that are discoverable first win. Ship your card today.</p>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">Agent Card</span>
+      <span class="article-tag">A2A Protocol</span>
+      <span class="article-tag">Agent Discovery</span>
+      <span class="article-tag">Developer Guide</span>
+      <span class="article-tag">Well-Known URI</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Make Your Agent Discoverable</h3>
+      <p class="article-cta__text">Ship your Agent Card, register with Agentry, and join 70+ verified agents in the first protocol-aware directory for the agent economy.</p>
+      <div class="article-cta__buttons">
+        <a href="/#list-agent" class="btn btn--primary btn--lg">List Your Agent</a>
+        <a href="/#developers" class="btn btn--secondary btn--lg">For Developers</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: What Is an AI Agent -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2a7 7 0 0 1 7 7c0 3-2 5.5-4 7l-3 3.5L9 16c-2-1.5-4-4-4-7a7 7 0 0 1 7-7z"/>
+            <circle cx="12" cy="9" r="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">AI Agents 101</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./what-is-an-ai-agent.html">What Is an AI Agent? The Plain-English Guide for Business Owners</a></h3>
+        <p class="article-card__excerpt">AI agents are software that can perceive, decide, and act on their own. Learn how they differ from chatbots, what they can do today, and how to evaluate one for your business.</p>
+        <div class="article-card__footer">
+          <a href="./what-is-an-ai-agent.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">8 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: Registry vs Directory -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Industry Analysis</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./registry-vs-directory.html">AI Agent Registry vs. AI Agent Directory: What's the Difference?</a></h3>
+        <p class="article-card__excerpt">Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences — and why the agent economy needs registries, not just directories.</p>
+        <div class="article-card__footer">
+          <a href="./registry-vs-directory.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">9 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 3: A2A Protocol Explained -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Protocol Deep Dive</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./a2a-protocol-explained.html">The A2A Protocol Explained: How AI Agents Will Discover Each Other</a></h3>
+        <p class="article-card__excerpt">A deep dive into Google's Agent2Agent protocol — how Agent Cards work, how discovery happens via well-known URLs, and why the registry gap matters for business interoperability.</p>
+        <div class="article-card__footer">
+          <a href="./a2a-protocol-explained.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">10 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Registry vs. AI Agent Directory: What's the Difference (and Why It Matters) — Agentry</title>
+<meta name="description" content="Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences between an AI agent directory and an AI agent registry — and why it matters for the agent economy.">
+<link rel="canonical" href="https://agentry.com/blog/registry-vs-directory">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Agent Registry vs. AI Agent Directory: What's the Difference (and Why It Matters)">
+<meta property="og:description" content="Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences and why they matter for the agent economy.">
+<meta property="og:url" content="https://agentry.com/blog/registry-vs-directory">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-03-13T11:00:00-07:00">
+<meta property="article:section" content="Industry Analysis">
+<meta property="article:tag" content="AI Agent Registry">
+<meta property="article:tag" content="AI Agent Directory">
+<meta property="article:tag" content="AI Agent Marketplace">
+<meta property="article:tag" content="Agent Economy">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Agent Registry vs. AI Agent Directory: What's the Difference (and Why It Matters)">
+<meta name="twitter:description" content="Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences and why the agent economy needs registries.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI Agent Registry vs. AI Agent Directory: What's the Difference (and Why It Matters)",
+  "description": "Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences between an AI agent directory and an AI agent registry — and why it matters for the agent economy.",
+  "datePublished": "2026-03-13T11:00:00-07:00",
+  "dateModified": "2026-03-13T11:00:00-07:00",
+  "author": {
+    "@type": "Organization",
+    "name": "Agentry Team",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/registry-vs-directory"
+  },
+  "keywords": ["AI agent registry", "AI agent directory", "AI agent marketplace", "compare AI agents", "agent economy"],
+  "articleSection": "Industry Analysis",
+  "wordCount": 1900,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Registry vs. Directory" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Registry vs. Directory</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Industry Analysis</span>
+    <h1 class="article-header__title">AI Agent Registry vs. AI Agent Directory: What's the Difference (and Why It Matters)</h1>
+    <div class="article-header__meta">
+      <span>By the Agentry Team</span>
+      <span class="article-header__meta-sep">·</span>
+      <time datetime="2026-03-13">March 13, 2026</time>
+      <span class="article-header__meta-sep">·</span>
+      <span>7 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#current-landscape" class="toc__link">The Current Landscape</a></li>
+      <li><a href="#what-a-directory-does" class="toc__link">What a Directory Does</a></li>
+      <li><a href="#what-a-registry-does" class="toc__link">What a Registry Does</a></li>
+      <li><a href="#comparison-table" class="toc__link">Side-by-Side Comparison</a></li>
+      <li><a href="#why-it-matters" class="toc__link">Why the Distinction Matters</a></li>
+      <li><a href="#analogies" class="toc__link">The Right Analogies</a></li>
+      <li><a href="#where-agentry-fits" class="toc__link">Where Agentry Fits</a></li>
+      <li><a href="#honest-take" class="toc__link">The Honest Take</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#current-landscape">The Current Landscape</a></li>
+        <li><a href="#what-a-directory-does">What a Directory Does</a></li>
+        <li><a href="#what-a-registry-does">What a Registry Does</a></li>
+        <li><a href="#comparison-table">Side-by-Side Comparison</a></li>
+        <li><a href="#why-it-matters">Why the Distinction Matters</a></li>
+        <li><a href="#analogies">The Right Analogies</a></li>
+        <li><a href="#where-agentry-fits">Where Agentry Fits</a></li>
+        <li><a href="#honest-take">The Honest Take</a></li>
+      </ul>
+    </nav>
+
+    <p>If you've started looking for AI agents for your business, you've probably landed on a few websites that call themselves "AI agent directories" or "AI agent marketplaces." They list hundreds — sometimes thousands — of agents across categories like customer support, sales, coding, and marketing. You scroll, you browse, you click. But you leave without much confidence that any particular agent is legitimate, up to date, or right for your use case.</p>
+
+    <p>That's because most of these sites are <strong>directories</strong>. What the agent economy actually needs is a <strong>registry</strong>. The distinction sounds semantic, but it's fundamental — and understanding it will save you time, money, and headaches as you evaluate where to find AI agents.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="current-landscape">The Current Landscape: A Lot of Lists, Not Much Trust</h2>
+
+    <p>The AI agent market is booming, and the ecosystem of sites trying to catalog it is growing just as fast. Sites like <strong>aiagentsdirectory.com</strong> now list over 1,300 entries. Others — <strong>aiagentstore.ai</strong>, <strong>aiagentslist.com</strong>, and a growing number of curated lists on Product Hunt and GitHub — are adding new agents weekly.</p>
+
+    <p>On the surface, this looks like progress. More options should mean more choice for buyers. But in practice, it creates a new problem: <strong>how do you know what's real?</strong></p>
+
+    <p>Most of these sites operate on a simple model: someone submits an agent listing (or a bot collects one), a basic description and link get published, and the entry sits there indefinitely. There's no verification that the agent still exists, that its pricing is accurate, that it actually does what it claims, or that anyone has ever successfully used it. It's a phone book in a world that needs GPS.</p>
+
+    <div class="callout">
+      <p><strong>The core problem:</strong> The more AI agents enter the market, the harder it becomes to find the right one. Quantity without quality control doesn't serve buyers — it overwhelms them.</p>
+    </div>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="what-a-directory-does">What a Directory Does</h2>
+
+    <p>Let's be precise about what we mean by "directory." An AI agent directory is a static listing service. It collects basic information about AI agents — name, description, category, maybe a link and a pricing tier — and presents them in a browsable format. Think Yellow Pages for software.</p>
+
+    <p>Directories are useful for initial discovery. If you're a business owner who's never heard of AI sales agents and you want to know what's out there, a directory gives you a starting point. You can see the landscape at a glance, learn some names, and begin your research.</p>
+
+    <p>But that's roughly where the value ends. Here's what a typical directory does <em>not</em> do:</p>
+
+    <ul>
+      <li><strong>Verify listings.</strong> Anyone can submit an agent. There's usually no check on whether the agent works, whether the company behind it is legitimate, or whether the listed features are accurate.</li>
+      <li><strong>Match you to the right agent.</strong> Directories present a list. You do the filtering, comparison, and evaluation yourself.</li>
+      <li><strong>Stay current.</strong> Listings go stale. Agents pivot, change pricing, get acquired, or shut down. Static directories rarely reflect these changes.</li>
+      <li><strong>Understand protocols.</strong> Directories don't know whether an agent supports the <a href="a2a-protocol-explained.html">A2A protocol</a>, MCP, or any other interoperability standard. They can't tell you if an agent will integrate with your existing systems at a protocol level.</li>
+      <li><strong>Provide API access.</strong> Directories are built for humans browsing a website, not for developers building programmatic agent discovery into their workflows.</li>
+      <li><strong>Offer trust signals.</strong> There's no scoring, no reputation system, no verified reviews, and no audit trail.</li>
+    </ul>
+
+    <p>In short, a directory answers the question "What agents exist?" But it can't answer "Which agent should I trust?" or "Which agent fits my specific needs?"</p>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="what-a-registry-does">What a Registry Does</h2>
+
+    <p>A registry is fundamentally different. It's not just a list — it's <strong>infrastructure</strong>. A registry governs who gets listed, verifies the information it publishes, and provides structured services on top of the catalog.</p>
+
+    <p>Think of the difference between a public bulletin board (anyone can pin a flyer) and a professional licensing board (you have to prove your credentials to be listed). Both help people find services, but they serve very different purposes.</p>
+
+    <p>Here's what a proper AI agent registry provides:</p>
+
+    <h3>Verified listings</h3>
+    <p>Every agent in a registry has been reviewed. The team behind the agent is real, the product is functional, the described capabilities are accurate, and the pricing is current. This isn't a one-time check — it's ongoing.</p>
+
+    <h3>Trust scores and reputation</h3>
+    <p>Registries assign trust signals based on verifiable data: how long the agent has been active, user feedback, integration quality, uptime history, security posture, and compliance certifications. These scores give buyers a quick way to assess reliability.</p>
+
+    <h3>Protocol-native design</h3>
+    <p>A registry built for the agent economy understands agent-to-agent communication protocols. It knows which agents publish <strong>A2A Agent Cards</strong> (machine-readable capability descriptions), which support MCP, and which can interoperate with other agents in your stack. This matters enormously for technical teams building multi-agent systems.</p>
+
+    <h3>Broker and matching services</h3>
+    <p>Instead of leaving you to browse and hope, a registry offers matching — either through intelligent filtering or human broker services. You describe your use case, budget, tech stack, and requirements. The registry returns a curated shortlist of agents that actually fit.</p>
+
+    <h3>API access for programmatic discovery</h3>
+    <p>Developers need to discover agents in code, not just in a browser. A registry exposes structured APIs so that software systems can query for agents by capability, protocol support, pricing model, or category — and get back machine-readable results they can act on.</p>
+
+    <h3>Governance and standards</h3>
+    <p>A registry sets and enforces listing standards. It defines what information an agent must provide, what thresholds it must meet, and what happens when an agent falls below those standards. This creates accountability that directories simply don't have.</p>
+
+    <div class="callout">
+      <p><strong>The key difference:</strong> A directory is a catalog. A registry is a system of trust. Directories help you discover agents. Registries help you <em>choose</em> them with confidence.</p>
+    </div>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="comparison-table">Side-by-Side: Directory vs. Registry</h2>
+
+    <p>Here's how the two models compare across the dimensions that matter most to businesses evaluating AI agents:</p>
+
+    <div class="comparison-table-wrapper" style="overflow-x: auto; margin: var(--space-6) 0;">
+      <table style="width: 100%; border-collapse: collapse; font-size: var(--text-sm); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden;">
+        <thead>
+          <tr style="background: var(--color-surface-2);">
+            <th style="text-align: left; padding: var(--space-3) var(--space-4); font-family: var(--font-display); font-weight: 600; border-bottom: 2px solid var(--color-divider); color: var(--color-text); width: 30%;">Dimension</th>
+            <th style="text-align: left; padding: var(--space-3) var(--space-4); font-family: var(--font-display); font-weight: 600; border-bottom: 2px solid var(--color-divider); color: var(--color-text-muted); width: 35%;">Directory</th>
+            <th style="text-align: left; padding: var(--space-3) var(--space-4); font-family: var(--font-display); font-weight: 600; border-bottom: 2px solid var(--color-divider); color: var(--color-primary); width: 35%;">Registry</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-divider);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Verification</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">None or self-reported</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">Manual review + ongoing checks</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider); background: var(--color-surface);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Trust Layer</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">No trust signals</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">Trust scores, reputation data, compliance badges</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Matching</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">Browse and filter yourself</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">Intelligent matching + human broker services</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider); background: var(--color-surface);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Protocol Support</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">Not tracked</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">A2A Agent Cards, MCP, protocol metadata</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">API Access</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">No API — browser only</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">Structured API for programmatic discovery</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider); background: var(--color-surface);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Update Frequency</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">Static — listings go stale</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">Continuous — agent data refreshed regularly</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Developer Tools</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">None</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">SDKs, webhooks, agent card validation</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider); background: var(--color-surface);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Enterprise Features</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">None</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">SSO, audit logs, compliance reporting, SLAs</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-divider);">
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Listing Governance</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">Open — anyone can submit</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">Curated — standards enforced, removals for non-compliance</td>
+          </tr>
+          <tr>
+            <td style="padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--color-text);">Business Model</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text-muted);">Ad revenue or paid listings</td>
+            <td style="padding: var(--space-3) var(--space-4); color: var(--color-text);">Value-aligned — broker fees, API access, enterprise tiers</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The difference isn't just feature depth. It's a fundamentally different approach to the problem. Directories optimize for volume — more listings means more traffic means more ad revenue. Registries optimize for trust — better signal means better decisions means more value for everyone.</p>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="why-it-matters">Why the Distinction Matters Now</h2>
+
+    <p>In 2024, when there were a few dozen well-known AI agents, a directory was fine. You could browse a list of 50 tools, read a few blog reviews, try a couple, and make a decision. The stakes were relatively low, and the landscape was manageable.</p>
+
+    <p>That world is gone. In 2026, the agent economy has hundreds of vendors across every business function. New agents launch weekly. Existing agents merge, pivot, or disappear. Pricing models change. Capabilities evolve. And critically, <strong>agents now need to talk to each other</strong> — which means protocol compatibility matters as much as features.</p>
+
+    <p>For a business owner trying to find the right AI agent, this creates three specific problems that directories can't solve:</p>
+
+    <h3>1. The trust problem</h3>
+    <p>When a directory lists 1,300 agents with no verification, how do you know which ones are production-ready and which ones are side projects or vaporware? You can't. You're doing due diligence from scratch for every option you consider. A registry solves this by verifying listings before they're published and continuously monitoring them afterward.</p>
+
+    <h3>2. The matching problem</h3>
+    <p>Your needs are specific: you're a 200-person SaaS company that needs a customer support agent that integrates with Zendesk, supports the A2A protocol, handles under 10,000 tickets/month, costs less than $2,000/month, and is SOC 2 certified. A directory gives you a category filter and a keyword search. A registry can match you to the three agents that actually fit — or connect you with a human broker who understands your requirements.</p>
+
+    <h3>3. The interoperability problem</h3>
+    <p>As businesses deploy multiple agents that need to work together, protocol support becomes critical. You need to know whether Agent A can communicate with Agent B using A2A, whether they both support MCP for tool access, and whether their capabilities are described in machine-readable formats. Directories don't track any of this. Registries make it a first-class feature.</p>
+
+    <div class="pull-quote">
+      "The agent economy is growing too fast for static lists. Businesses don't need more options — they need better signals."
+    </div>
+
+    <!-- ========== SECTION 6 ========== -->
+    <h2 id="analogies">The Right Analogies</h2>
+
+    <p>If the directory-vs.-registry distinction still feels abstract, these analogies should make it concrete:</p>
+
+    <h3>DNS vs. a phone book</h3>
+    <p>A phone book lists names and numbers. DNS is the infrastructure that makes the internet work — it resolves names to addresses, handles routing, manages updates in real time, and provides the trust layer (DNSSEC) that ensures you're connecting to who you think you're connecting to. Directories are phone books. Registries are DNS.</p>
+
+    <h3>App Store vs. a software download site</h3>
+    <p>Remember the early 2000s, when you'd find software on random download sites like Download.com? You never quite knew if what you were downloading was legitimate, safe, or up to date. The App Store model introduced curation, verification, reviews, and a trust layer between developers and users. The AI agent ecosystem is at the "download site" stage. It needs to move to the "app store" stage — and registries are how that happens.</p>
+
+    <h3>npm registry vs. a list of packages</h3>
+    <p>If you're a developer, you know the difference between a curated "awesome list" on GitHub and the npm registry. The awesome list is a community-maintained directory — helpful for discovery but unverified and often out of date. The npm registry is programmatic infrastructure: versioned, searchable via API, with dependency resolution, download stats, and security audits. Registries bring this same rigor to agent discovery.</p>
+
+    <div class="callout">
+      <p><strong>The pattern is clear:</strong> Every major technology ecosystem eventually transitions from directories to registries. It happened with domain names, mobile apps, and open-source packages. It's happening now with AI agents.</p>
+    </div>
+
+    <!-- ========== SECTION 7 ========== -->
+    <h2 id="where-agentry-fits">Where Agentry Fits</h2>
+
+    <p>We built <strong>Agentry</strong> because we saw this gap firsthand. When businesses asked us to help them find AI agents, we realized that the existing directories weren't enough. Business owners needed trust, not just listings. They needed matching, not just browsing. And technical teams needed protocol-aware infrastructure, not just a webpage.</p>
+
+    <p>Agentry is building the <strong>registry layer</strong> for the agent economy:</p>
+
+    <ul>
+      <li><strong>Verified listings.</strong> Every agent in our registry is reviewed by our team. We verify the product, the team behind it, the described capabilities, and the pricing. Listings that fall out of date are flagged and updated or removed.</li>
+      <li><strong>Protocol-native.</strong> We track A2A Agent Card support, MCP compatibility, and other interoperability standards for every listed agent. If you're building a multi-agent system, you can filter by protocol support and know the results are accurate.</li>
+      <li><strong>Human broker matching.</strong> Our <a href="/#get-matched">Get Matched</a> service pairs you with a human broker who understands your specific requirements — use case, budget, tech stack, compliance needs — and delivers a curated shortlist within 24 hours. It's not algorithmic guesswork. It's informed judgment backed by deep market knowledge.</li>
+      <li><strong>API-first for developers.</strong> Technical teams can query the Agentry registry programmatically, search by capability or protocol, and integrate agent discovery directly into their development workflows.</li>
+    </ul>
+
+    <p>We're not trying to list every agent that exists. We're building the infrastructure that helps you find the ones that matter.</p>
+
+    <!-- ========== SECTION 8 ========== -->
+    <h2 id="honest-take">The Honest Take: Directories Still Have a Place</h2>
+
+    <p>We'd be disingenuous if we said directories are useless. They're not. Directories serve a genuine purpose for early-stage discovery — especially for people who are just starting to explore the AI agent landscape and want to understand what's out there. A broad, unfiltered list can be a helpful starting point.</p>
+
+    <p>And to their credit, sites like aiagentsdirectory.com have done real work cataloging a fast-moving market. Maintaining a directory with 1,300+ entries takes effort, even if the entries aren't individually verified.</p>
+
+    <p>But here's the honest truth: <strong>directories are not infrastructure</strong>. They're content. As the agent economy matures — as businesses deploy multiple agents that need to interoperate, as the stakes of choosing the wrong agent get higher, and as enterprises demand the same governance and trust layers they expect from every other technology category — directories won't be enough.</p>
+
+    <p>The agent economy needs registries. It needs verified, protocol-aware, API-accessible, governance-backed systems of trust. That's what we're building.</p>
+
+    <div class="pull-quote">
+      "Directories tell you what's out there. Registries tell you what you can trust."
+    </div>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">AI Agent Registry</span>
+      <span class="article-tag">AI Agent Directory</span>
+      <span class="article-tag">Agent Economy</span>
+      <span class="article-tag">AI Agent Marketplace</span>
+      <span class="article-tag">Industry Analysis</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Ready to Find the Right Agent?</h3>
+      <p class="article-cta__text">Skip the browsing. Tell us what you need and get a curated, verified shortlist from a human broker in 24 hours.</p>
+      <div class="article-cta__buttons">
+        <a href="/#get-matched" class="btn btn--primary btn--lg">Get Matched in 24 Hours</a>
+        <a href="/#directory" class="btn btn--secondary btn--lg">Browse the Registry</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: What Is an AI Agent? -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">AI Agents 101</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="what-is-an-ai-agent.html">What Is an AI Agent? The Plain-English Guide for Business Owners</a></h3>
+        <p class="article-card__excerpt">AI agents are software that can perceive, decide, and act on their own. Learn how they differ from chatbots, what they can do today, and how to evaluate one for your business.</p>
+        <div class="article-card__footer">
+          <a href="what-is-an-ai-agent.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">8 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: A2A Protocol Explained -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <path d="M9 9h6M9 13h4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Technical Deep Dive</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="a2a-protocol-explained.html">The A2A Protocol, Explained: What It Means for Businesses Using AI Agents</a></h3>
+        <p class="article-card__excerpt">Google's Agent-to-Agent protocol lets AI agents discover each other and work together. Here's what that means for your business — and why it matters for the agent economy.</p>
+        <div class="article-card__footer">
+          <a href="a2a-protocol-explained.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">7 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

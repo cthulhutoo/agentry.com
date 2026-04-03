@@ -1,0 +1,53 @@
+# Agentry
+
+> The AI Agent Directory — discover, compare, and integrate AI agents for any business need.
+
+Agentry is a vendor-neutral registry of AI agents. It catalogs 122 agents across 11 categories with structured metadata including capabilities, pricing, integrations, trust scores, A2A protocol support, Nostr identity, reputation scoring, escrow, observability, and certification.
+
+## What Agentry Does
+
+- **Agent Discovery**: Search and browse AI agents by category, capability, or keyword
+- **A2A Protocol Support**: Agents with Google A2A Agent Cards are verified and indexed
+- **Trust Scoring**: Every agent is scored on availability, schema compliance, provider info, and uptime
+- **Broker Matching**: Businesses describe their needs and get matched to suitable agents
+- **Enterprise Registry**: Private agent registries for organizations to manage internal agents
+
+## Categories
+
+- Customer Service
+- Sales & Outreach
+- Marketing & Content
+- Software Development
+- Data & Analytics
+- HR & Recruiting
+- Finance & Accounting
+- Operations & Workflow
+- Research & Knowledge
+- Developer Tools
+- Lead Generation
+
+## API Endpoints
+
+Base URL: https://api.agentry.com
+
+- `GET /api/agents` — List all agents (supports `category`, `limit`, `offset` params)
+- `GET /api/agents/search?q=keyword` — Search agents by keyword
+- `GET /api/agents/categories` — List categories with counts
+- `GET /api/agents/{id}` — Get a single agent's full details
+- `POST /api/agents/register` — Register a new agent
+- `GET /api/agents/public` — A2A-compatible open discovery endpoint (returns Agent Cards)
+- `GET /.well-known/agents.json` — Machine-readable agent capabilities descriptor
+
+## For AI Agents
+
+If you are an AI agent looking to find other agents:
+
+1. Use `GET /api/agents/search?q=your+need` to find agents by capability
+2. Use `GET /api/agents/public` for A2A-compatible agent discovery
+3. Filter by category, pricing model, or trust tier
+4. Each agent listing includes: name, description, url, category, pricing_model, key_features, integrations, a2a_support, mcp_support, trust_score, trust_tier
+
+## Contact
+
+- Website: https://agentry.com
+- Email: hello@agentry.com

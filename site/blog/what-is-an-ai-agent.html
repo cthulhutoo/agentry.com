@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is an AI Agent? The Plain-English Guide for Business Owners — Agentry</title>
+<meta name="description" content="AI agents are software that can perceive, decide, and act on their own. Learn how they differ from chatbots, what they can do today, and how to evaluate one for your business.">
+<link rel="canonical" href="https://agentry.com/blog/what-is-an-ai-agent.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="What Is an AI Agent? The Plain-English Guide for Business Owners">
+<meta property="og:description" content="AI agents are software that can perceive, decide, and act on their own. Learn how they differ from chatbots, what they can do today, and how to evaluate one for your business.">
+<meta property="og:url" content="https://agentry.com/blog/what-is-an-ai-agent.html">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-03-13T10:00:00-07:00">
+<meta property="article:section" content="AI Agents 101">
+<meta property="article:tag" content="AI Agents">
+<meta property="article:tag" content="Business Automation">
+<meta property="article:tag" content="AI vs Chatbot">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Is an AI Agent? The Plain-English Guide for Business Owners">
+<meta name="twitter:description" content="AI agents are software that can perceive, decide, and act on their own. Learn how they differ from chatbots and how to evaluate one for your business.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "What Is an AI Agent? The Plain-English Guide for Business Owners",
+  "description": "AI agents are software that can perceive, decide, and act on their own. Learn how they differ from chatbots, what they can do today, and how to evaluate one for your business.",
+  "datePublished": "2026-03-13T10:00:00-07:00",
+  "dateModified": "2026-03-13T10:00:00-07:00",
+  "author": {
+    "@type": "Organization",
+    "name": "Agentry Team",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/what-is-an-ai-agent.html"
+  },
+  "keywords": ["what is an AI agent", "AI agent vs chatbot", "AI agent for business", "AI automation", "business AI"],
+  "articleSection": "AI Agents 101",
+  "wordCount": 1800,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "What Is an AI Agent?" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>What Is an AI Agent?</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">AI Agents 101</span>
+    <h1 class="article-header__title">What Is an AI Agent? The Plain-English Guide for Business Owners</h1>
+    <div class="article-header__meta">
+      <span>By the Agentry Team</span>
+      <span class="article-header__meta-sep">·</span>
+      <time datetime="2026-03-13">March 13, 2026</time>
+      <span class="article-header__meta-sep">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#what-is-an-ai-agent" class="toc__link">What Is an AI Agent?</a></li>
+      <li><a href="#agent-vs-chatbot" class="toc__link">Agent vs. Chatbot</a></li>
+      <li><a href="#what-they-can-do" class="toc__link">What They Can Do Today</a></li>
+      <li><a href="#business-use-cases" class="toc__link">Business Use Cases</a></li>
+      <li><a href="#how-to-evaluate" class="toc__link">How to Evaluate One</a></li>
+      <li><a href="#where-to-find-them" class="toc__link">Where to Find Them</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#what-is-an-ai-agent">What Is an AI Agent?</a></li>
+        <li><a href="#agent-vs-chatbot">How They Differ from Chatbots</a></li>
+        <li><a href="#what-they-can-do">What They Can Actually Do Today</a></li>
+        <li><a href="#business-use-cases">How Businesses Are Using Them</a></li>
+        <li><a href="#how-to-evaluate">How to Evaluate One</a></li>
+        <li><a href="#where-to-find-them">Where to Find Them</a></li>
+      </ul>
+    </nav>
+
+    <p>You've probably heard the term "AI agent" thrown around in board meetings, vendor pitches, and LinkedIn posts. But behind the buzzword is a genuinely new category of software — one that's already changing how companies handle customer support, sales, hiring, and back-office work.</p>
+
+    <p>This guide cuts through the hype. We'll explain what AI agents actually are, how they differ from the chatbots you're used to, what they can realistically do today, and how to figure out if one is right for your business.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="what-is-an-ai-agent">What Is an AI Agent, Exactly?</h2>
+
+    <p>An <strong>AI agent</strong> is a software program that can perceive its environment, make decisions, and take actions to accomplish goals — without you telling it what to do at every step.</p>
+
+    <p>Think of it like the difference between a calculator and an accountant. A calculator does exactly what you tell it to do: press buttons, get an answer. An accountant understands your financial goals, gathers the information they need, makes judgment calls, and takes action — filing reports, flagging anomalies, suggesting changes. An AI agent is closer to the accountant.</p>
+
+    <div class="callout">
+      <p><strong>The simple definition:</strong> An AI agent is software that can understand a goal, figure out the steps needed to achieve it, use tools and data sources along the way, and complete the task with minimal human intervention.</p>
+    </div>
+
+    <p>What makes agents different from earlier AI tools is the combination of three capabilities:</p>
+
+    <ol>
+      <li><strong>Perception</strong> — They can read emails, understand documents, listen to calls, parse spreadsheets, and monitor dashboards. They take in information from the real world, not just pre-structured data.</li>
+      <li><strong>Reasoning</strong> — They can plan a sequence of steps, weigh tradeoffs, and adjust their approach when something doesn't work. This is powered by large language models (LLMs) like GPT-4, Claude, or Gemini.</li>
+      <li><strong>Action</strong> — They can actually <em>do</em> things: send emails, update CRM records, schedule meetings, process refunds, generate reports, and interact with other software through APIs.</li>
+    </ol>
+
+    <p>That last point is critical. A chatbot can suggest that you process a refund. An AI agent can actually process it.</p>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="agent-vs-chatbot">How AI Agents Differ from Chatbots</h2>
+
+    <p>This is the question we hear most often. If you've used a chatbot on a website — the kind that pops up in the corner and asks "How can I help?" — you already have a mental model for conversational AI. But AI agents are a fundamentally different beast.</p>
+
+    <div class="comparison-box">
+      <div class="comparison-box__header">Chatbot vs. AI Agent — Key Differences</div>
+      <div class="comparison-box__grid">
+        <div class="comparison-box__col">
+          <p class="comparison-box__col-title">Traditional Chatbot</p>
+          <ul>
+            <li>Follows scripted decision trees</li>
+            <li>Handles one question at a time</li>
+            <li>Can only retrieve pre-written answers</li>
+            <li>Needs a human when things go off-script</li>
+            <li>No memory between conversations</li>
+          </ul>
+        </div>
+        <div class="comparison-box__col">
+          <p class="comparison-box__col-title">AI Agent</p>
+          <ul>
+            <li>Reasons through novel situations</li>
+            <li>Manages multi-step workflows</li>
+            <li>Connects to tools, databases, and APIs</li>
+            <li>Escalates intelligently with full context</li>
+            <li>Learns and retains context over time</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p>Here's a concrete example. A customer emails your support team: "I ordered the blue jacket in medium, but I need a large instead, and I'd like to use the credit from my returned shoes toward this order."</p>
+
+    <p>A traditional chatbot would probably say: "I'd be happy to help with your order! Please contact our support team at support@example.com." Or at best, it would pull up a generic FAQ about exchanges.</p>
+
+    <p>An AI agent, on the other hand, would:</p>
+
+    <ol>
+      <li>Look up the customer's order history</li>
+      <li>Find the blue jacket order and the returned shoes</li>
+      <li>Check inventory for a size large</li>
+      <li>Calculate the credit from the return</li>
+      <li>Process the exchange and apply the credit</li>
+      <li>Send the customer a confirmation email with the updated details</li>
+    </ol>
+
+    <p>All of that happens without a human touching it. That's the difference.</p>
+
+    <div class="pull-quote">
+      "The leap from chatbot to AI agent is like the leap from a vending machine to a concierge. One dispenses pre-packaged options. The other understands what you need and goes and gets it."
+    </div>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="what-they-can-do">What AI Agents Can Actually Do Today</h2>
+
+    <p>Let's be specific. AI agents in 2026 aren't science fiction — they're shipping products that real companies use daily. Here's what they can reliably do right now:</p>
+
+    <h3>Handle complex customer conversations</h3>
+    <p>Modern AI agents can resolve 40–70% of customer support tickets without any human involvement. They understand nuance, check policies, access order data, and process actions like refunds, exchanges, and account changes. Companies like <strong>Intercom (Fin)</strong>, <strong>Zendesk AI</strong>, and <strong>Sierra</strong> are leading here.</p>
+
+    <h3>Qualify and nurture sales leads</h3>
+    <p>Sales agents can respond to inbound inquiries within seconds (not hours), qualify leads based on your ICP criteria, book meetings on your team's calendar, and follow up with personalized sequences. Tools like <strong>11x.ai (Alice)</strong> and <strong>Artisan (Ava)</strong> handle this end-to-end.</p>
+
+    <h3>Automate back-office workflows</h3>
+    <p>AI agents can process invoices, reconcile accounts, manage data entry, handle HR onboarding tasks, and route documents for approval. They connect to your existing systems — ERP, HRIS, accounting software — and work within your established processes.</p>
+
+    <h3>Research and analyze information</h3>
+    <p>Research agents can monitor competitors, summarize market trends, compile due diligence reports, and track regulatory changes. They pull information from multiple sources, synthesize it, and deliver structured outputs — work that previously took a junior analyst days.</p>
+
+    <h3>Write, edit, and manage content</h3>
+    <p>Content agents go beyond simple text generation. They can maintain brand voice across channels, optimize for SEO, repurpose long-form content into social posts, and manage publishing calendars. They're most effective when given clear brand guidelines and examples.</p>
+
+    <div class="callout">
+      <p><strong>A reality check:</strong> AI agents are excellent at structured, repeatable tasks with clear success criteria. They're less reliable for high-stakes decisions that require deep domain expertise, emotional intelligence, or creative judgment. The best implementations pair agents with human oversight for edge cases.</p>
+    </div>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="business-use-cases">How Businesses Are Using AI Agents Right Now</h2>
+
+    <p>Let's walk through the four departments where AI agents are making the most immediate impact.</p>
+
+    <h3>Customer Support</h3>
+    <p>This is the most mature use case. AI agents handle tier-1 support queries — order tracking, password resets, billing questions, product information — and escalate complex issues to human agents with full context attached. The economics are compelling: resolution costs drop from $5–15 per human-handled ticket to under $1 per agent-resolved ticket, with response times measured in seconds rather than hours.</p>
+
+    <p>Large support teams are seeing 40–60% of inbound volume resolved autonomously, which frees human agents to focus on complex, high-value interactions that actually require empathy and judgment.</p>
+
+    <h3>Sales and Lead Generation</h3>
+    <p>AI agents are transforming the top of the sales funnel. They monitor inbound leads 24/7, respond to inquiries instantly, qualify prospects against your ideal customer profile, and book meetings directly on your sales reps' calendars. The best implementations see a 2–3x increase in qualified meetings booked, primarily because speed-to-lead drops from hours to seconds.</p>
+
+    <p>Some teams are also using agents for outbound: personalized email sequences, LinkedIn outreach, and follow-up cadences that adapt based on prospect behavior.</p>
+
+    <h3>Human Resources</h3>
+    <p>HR teams are deploying agents for employee self-service — answering benefits questions, processing time-off requests, guiding new hires through onboarding checklists, and managing routine compliance tasks. These agents connect to HRIS systems, policy documents, and benefit portals to provide accurate, personalized answers.</p>
+
+    <p>The result: HR teams spend less time on repetitive inquiries and more time on strategic initiatives like culture, retention, and workforce planning.</p>
+
+    <h3>Finance and Operations</h3>
+    <p>Finance agents handle invoice processing, expense categorization, accounts payable workflows, and financial reporting. They can flag anomalies in spending, reconcile accounts, and prepare data for month-end close. Operations teams use agents for procurement workflows, vendor management, and compliance monitoring.</p>
+
+    <p>The key value here isn't just speed — it's accuracy. AI agents reduce human error in data-entry-heavy processes and create consistent audit trails.</p>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="how-to-evaluate">How to Evaluate an AI Agent for Your Business</h2>
+
+    <p>Not all AI agents are created equal. If you're considering adopting one, here are the questions you should ask:</p>
+
+    <h3>1. What problem are you actually solving?</h3>
+    <p>Start with the pain point, not the technology. Identify a specific workflow that's high-volume, repetitive, and well-documented. "We want AI" is not a business case. "We need to cut our average first-response time from 4 hours to 5 minutes" is.</p>
+
+    <h3>2. How does it integrate with your existing tools?</h3>
+    <p>An AI agent that can't connect to your CRM, helpdesk, or ERP is just a fancy chatbot. Look for native integrations with your current stack, and ask about API access for custom connections. Check whether the agent supports modern interoperability standards like the <strong>A2A (Agent-to-Agent) protocol</strong> and <strong>MCP (Model Context Protocol)</strong> — these are emerging standards that allow agents to communicate with each other and with external tools in a structured way.</p>
+
+    <h3>3. What's the accuracy and how is it measured?</h3>
+    <p>Ask vendors for hard numbers: What percentage of tasks does the agent resolve correctly? How do they measure accuracy? What happens when the agent gets something wrong? Look for agents that have built-in confidence scoring, where low-confidence responses are automatically escalated to humans rather than delivered to customers.</p>
+
+    <h3>4. How does pricing work?</h3>
+    <p>AI agent pricing varies widely. Some charge per-resolution (you pay only when the agent successfully handles a query), some charge per-seat (like traditional SaaS), and some charge based on usage volume. Make sure you understand the total cost of ownership, including setup, training, and ongoing optimization.</p>
+
+    <h3>5. What are the guardrails?</h3>
+    <p>AI agents need boundaries. Ask about: What data can the agent access? Can it perform irreversible actions (like processing refunds) without approval? How are hallucinations handled? What compliance certifications does the vendor hold (SOC 2, GDPR, HIPAA)? The best agents have configurable guardrails that let you control the autonomy level.</p>
+
+    <h3>6. Can you see it working before you buy?</h3>
+    <p>Demand a proof of concept or pilot period. The best vendors will set up a trial with your actual data and workflows — not just a polished demo with cherry-picked examples. Pay attention to how the agent handles edge cases and failures, not just the happy path.</p>
+
+    <div class="callout">
+      <p><strong>Pro tip:</strong> Start with one well-defined use case, measure results for 30–60 days, and expand from there. Companies that try to deploy agents across every department simultaneously almost always struggle with change management and data quality issues.</p>
+    </div>
+
+    <!-- ========== SECTION 6 ========== -->
+    <h2 id="where-to-find-them">Where to Find the Right AI Agent</h2>
+
+    <p>The AI agent landscape is expanding rapidly. There are now hundreds of vendors across every business function, from customer support to code review to financial analysis. Finding the right fit for your specific needs, budget, and tech stack can be overwhelming.</p>
+
+    <p>That's exactly why we built <strong>Agentry</strong>.</p>
+
+    <p>The <a href="/#directory">Agentry Directory</a> is the first protocol-aware registry for the agent economy. We catalog AI agents across 9 categories — including customer service, sales, HR, finance, coding, and more — with detailed information on pricing, features, integrations, and protocol support (A2A and MCP). Every listing is verified and kept current.</p>
+
+    <p>If you're not sure which agent is right for your use case, our <a href="/#get-matched">Get Matched</a> service connects you with a curated shortlist based on your specific requirements. Tell us your industry, budget, use case, and current tech stack, and we'll recommend the agents most likely to deliver results.</p>
+
+    <p>Whether you're a business owner exploring AI for the first time or a technical team evaluating your next integration, the <a href="/">Agentry directory</a> is the best place to start your search.</p>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">AI Agents</span>
+      <span class="article-tag">AI for Business</span>
+      <span class="article-tag">Chatbot vs Agent</span>
+      <span class="article-tag">Business Automation</span>
+      <span class="article-tag">AI Buyer's Guide</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Ready to Find the Right AI Agent?</h3>
+      <p class="article-cta__text">Browse 70+ verified AI agents across 9 categories, or tell us what you need and get a curated shortlist in 24 hours.</p>
+      <div class="article-cta__buttons">
+        <a href="/#directory" class="btn btn--primary btn--lg">Browse the Directory</a>
+        <a href="/#get-matched" class="btn btn--secondary btn--lg">Get Matched</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: A2A Protocol Explained -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Protocol Deep Dive</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./a2a-protocol-explained.html">The A2A Protocol Explained: How AI Agents Will Discover Each Other</a></h3>
+        <p class="article-card__excerpt">A deep dive into Google's Agent2Agent (A2A) protocol — how Agent Cards work, how agent discovery happens, and why the registry gap matters for business interoperability.</p>
+        <div class="article-card__footer">
+          <a href="./a2a-protocol-explained.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">10 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: Registry vs Directory -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Industry Analysis</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./registry-vs-directory.html">AI Agent Registry vs. AI Agent Directory: What's the Difference?</a></h3>
+        <p class="article-card__excerpt">Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences — and why the agent economy needs registries, not just directories.</p>
+        <div class="article-card__footer">
+          <a href="./registry-vs-directory.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">9 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

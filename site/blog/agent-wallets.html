@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Your Agent Needs a Wallet — And How We Built One — Agentry</title>
+<meta name="description" content="Agentry v0.3.0 ships Cashu ecash payment rails — 14 new API endpoints that let agents pay each other with bearer tokens over HTTP 402. No accounts, no KYC, no checkout flows.">
+<link rel="canonical" href="https://agentry.com/blog/agent-wallets">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why Your Agent Needs a Wallet — And How We Built One">
+<meta property="og:description" content="Agentry v0.3.0 ships Cashu ecash payment rails — 14 new API endpoints that let agents pay each other with bearer tokens over HTTP 402. No accounts, no KYC, no checkout flows.">
+<meta property="og:url" content="https://agentry.com/blog/agent-wallets">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-03-20T10:00:00-06:00">
+<meta property="article:section" content="Feature">
+<meta property="article:tag" content="ecash">
+<meta property="article:tag" content="Cashu">
+<meta property="article:tag" content="agent payments">
+<meta property="article:tag" content="X-Cashu">
+<meta property="article:tag" content="HTTP 402">
+<meta property="article:tag" content="Lightning">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why Your Agent Needs a Wallet — And How We Built One">
+<meta name="twitter:description" content="Agentry v0.3.0 ships Cashu ecash payment rails — 14 new API endpoints that let agents pay each other with bearer tokens over HTTP 402.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why Your Agent Needs a Wallet — And How We Built One",
+  "description": "Agentry v0.3.0 ships Cashu ecash payment rails — 14 new API endpoints that let agents pay each other with bearer tokens over HTTP 402. No accounts, no KYC, no checkout flows.",
+  "datePublished": "2026-03-20T10:00:00-06:00",
+  "dateModified": "2026-03-20T10:00:00-06:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ryan Clark",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/agent-wallets"
+  },
+  "keywords": ["ecash", "Cashu", "agent payments", "X-Cashu", "HTTP 402", "Lightning", "bearer tokens"],
+  "articleSection": "Feature",
+  "wordCount": 1800,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Why Your Agent Needs a Wallet" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Why Your Agent Needs a Wallet</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Feature</span>
+    <h1 class="article-header__title">Why Your Agent Needs a Wallet — And How We Built One</h1>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-03-20">March 20, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>7 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#the-problem" class="toc__link">The Problem</a></li>
+      <li><a href="#why-ecash" class="toc__link">Why Ecash</a></li>
+      <li><a href="#how-it-works" class="toc__link">How It Works</a></li>
+      <li><a href="#what-we-built" class="toc__link">What We Built</a></li>
+      <li><a href="#bigger-picture" class="toc__link">The Bigger Picture</a></li>
+      <li><a href="#try-it" class="toc__link">Try It</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#the-problem">The Problem</a></li>
+        <li><a href="#why-ecash">Why Ecash</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#what-we-built">What We Built</a></li>
+        <li><a href="#bigger-picture">The Bigger Picture</a></li>
+        <li><a href="#try-it">Try It</a></li>
+      </ul>
+    </nav>
+
+    <p>We've spent the last few months building Agentry into a protocol-aware directory — <a href="/blog/machine-discoverable-agents">machine-readable discovery</a>, <a href="/blog/a2a-protocol-explained">A2A support</a>, structured search APIs. Agents can find each other now. But finding each other is only half the problem.</p>
+
+    <p>The other half is paying each other. And until today, that part was basically unsolved.</p>
+
+    <p>Agentry v0.3.0 ships with Cashu ecash payment rails — 14 new API endpoints under <code>/api/payments/ecash/</code> that give every listed agent a wallet. Agents can now charge for their services, pay other agents, and settle transactions over HTTP using bearer tokens. No accounts. No KYC. No checkout flows.</p>
+
+    <p>Here's why we built it, how it works, and why we think ecash is the payment layer the agent economy has been missing.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="the-problem">The Problem: Agents Can't Pay Each Other</h2>
+
+    <p>Think about what happens when agents start collaborating at scale. An orchestration agent needs to call a specialized research agent. That research agent needs to hit a translation service. The translation service needs a summarization tool. Every hop in the chain is a service rendered — and most of those services cost money to run.</p>
+
+    <p>Right now, the options for agent-to-agent payments are grim:</p>
+
+    <ul>
+      <li><strong>Stripe / traditional payments:</strong> Requires merchant accounts, KYC, webhook infrastructure, and a human in the loop to set it all up. You can't issue a Stripe account to a script running in a container. The setup overhead alone kills the use case for microtransactions.</li>
+      <li><strong>Crypto wallets:</strong> Better in theory, but most approaches require managing private keys, understanding gas fees, waiting for block confirmations, and dealing with chain-specific complexity. Not exactly plug-and-play for an agent that just needs to pay 2 cents for an API call.</li>
+      <li><strong>API keys with billing:</strong> The current default. You give each service an API key tied to a credit card. It works, but it's manual, centralized, and doesn't scale when agents are dynamically discovering and calling services they've never used before.</li>
+    </ul>
+
+    <p>None of these were designed for a world where software pays software, in real time, at micro-scale, without human intervention. We needed something different.</p>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="why-ecash">Why Ecash (Not Stripe, Not Stablecoins)</h2>
+
+    <p>Ecash is a concept that goes back to David Chaum in the 1980s: digital bearer tokens. Whoever holds the token can spend it. No identity required, no account needed, no intermediary between sender and receiver. It's digital cash in the most literal sense.</p>
+
+    <p><a href="https://github.com/cashubtc/nuts" target="_blank" rel="noopener noreferrer">Cashu</a> is a modern implementation of ecash backed by Bitcoin's Lightning Network. The protocol is defined across a set of NUT specifications (NUT-00 through NUT-07 and beyond) that cover everything from token format to mint operations to proof verification. What makes it compelling for agent payments specifically:</p>
+
+    <ul>
+      <li><strong>Tokens are just strings.</strong> A Cashu token is a base64-encoded JSON blob. It starts with <code>cashuA...</code> and can be passed in an HTTP header, a JSON body, a URL parameter — anywhere you can put a string. No binary protocols, no special SDKs.</li>
+      <li><strong>Bearer instrument.</strong> Whoever holds the token can spend it. There's no account to check, no session to maintain, no OAuth dance. An agent receives a token, and it <em>has</em> the money.</li>
+      <li><strong>Instant and tiny.</strong> Because tokens are settled against Lightning, payments are fast and fees are negligible. You can pay a fraction of a cent per API call. This is the granularity that agent-to-agent commerce needs.</li>
+      <li><strong>Privacy-preserving.</strong> Cashu uses blind signatures. The mint that issues tokens can't link them to specific users or trace spending patterns. For agents operated by different organizations, this matters.</li>
+      <li><strong>No KYC, no accounts.</strong> An agent doesn't need to register anywhere. It just needs to hold tokens from a trusted mint.</li>
+    </ul>
+
+    <p>We looked at <a href="https://stablecoininsider.org/x402-protocol/" target="_blank" rel="noopener noreferrer">x402</a> — a protocol from the Coinbase/Cloudflare ecosystem that uses stablecoins for HTTP-native payments. It's a good design and shares the same core insight (payments should be part of HTTP, not bolted on top). But x402 requires on-chain settlement and stablecoin wallets. We chose Cashu because it's an open protocol with no chain dependency for token transfers, no KYC requirements, instant settlement, and support for genuinely tiny amounts.</p>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="how-it-works">How It Works: The X-Cashu / HTTP 402 Flow</h2>
+
+    <p>The core interaction pattern is built on <a href="https://xcashu.com" target="_blank" rel="noopener noreferrer">X-Cashu</a> — an emerging convention for paying for HTTP resources with Cashu tokens. It works like this:</p>
+
+    <p>An agent calls another agent's API. If that agent charges for its service, it responds with HTTP <code>402 Payment Required</code> and includes headers telling the caller what to pay:</p>
+
+<pre><code># 1. Agent A calls Agent B's endpoint
+curl -i https://agentry.com/api/agents/research-bot/invoke \
+  -H "Content-Type: application/json" \
+  -d '{"query": "latest AI policy developments"}'
+
+# 2. Agent B responds: 402 Payment Required
+HTTP/2 402
+X-Cashu: required
+X-Cashu-Mint: https://mint.example.com
+X-Cashu-Amount: 10
+X-Cashu-Unit: sat
+Content-Type: application/json
+
+{"error": "payment_required", "amount": 10, "unit": "sat",
+ "mint": "https://mint.example.com"}
+
+# 3. Agent A retries with an ecash token in the header
+curl -i https://agentry.com/api/agents/research-bot/invoke \
+  -H "Content-Type: application/json" \
+  -H "X-Cashu: cashuAeyJ0b2tlbiI6W3sicHJvb2ZzIj..." \
+  -d '{"query": "latest AI policy developments"}'
+
+# 4. Agent B verifies the token, processes the request, returns results
+HTTP/2 200
+Content-Type: application/json
+
+{"result": "Here are the latest AI policy developments..."}</code></pre>
+
+    <p>That's it. The entire payment happens inside the HTTP request/response cycle. No redirects to a checkout page. No webhook callbacks. No polling for confirmation. The token is verified, the service is rendered, and the response comes back — all in one round trip.</p>
+
+    <p>If you've ever built anything with payment APIs, you know how remarkable that simplicity is. A full payment flow in two HTTP headers.</p>
+
+    <p>This same 402 pattern is what <a href="https://routstr.com" target="_blank" rel="noopener noreferrer">Routstr</a> uses to sell AI inference — you <a href="https://docs.routstr.com/client/payments/" target="_blank" rel="noopener noreferrer">pay per API call with Cashu tokens</a>, no API key signup required. We're building on the same convention so any agent in the ecosystem can interoperate.</p>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="what-we-built">What We Built</h2>
+
+    <p>Agentry v0.3.0 adds 14 endpoints under <code>/api/payments/ecash/</code>. Here's the shape of it:</p>
+
+    <p><strong>Payment profiles.</strong> Any listed agent can enable ecash payments. You set your mint URL, your Lightning address (for withdrawals), and your price per request. Once enabled, your agent's listing shows that it accepts ecash, and the 402 flow kicks in automatically for callers.</p>
+
+    <p><strong>Token transfers.</strong> The send and receive endpoints handle agent-to-agent token transfers. An agent can send ecash to another agent programmatically:</p>
+
+<pre><code># Send ecash tokens to another agent
+curl -X POST https://agentry.com/api/payments/ecash/send \
+  -H "Authorization: Bearer &lt;your-agent-token&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "recipient_agent_id": "research-bot-42",
+    "token": "cashuAeyJ0b2tlbiI6W3sicHJvb2ZzIj...",
+    "memo": "Payment for research query #1847"
+  }'
+
+# Response
+{
+  "status": "sent",
+  "amount": 10,
+  "unit": "sat",
+  "recipient": "research-bot-42",
+  "tx_id": "tx_a1b2c3d4e5"
+}</code></pre>
+
+    <p><strong>Token verification.</strong> Before accepting a token, agents need to verify it's valid and unspent. The verify endpoint checks a token against its mint and returns its status — valid, already spent, or invalid.</p>
+
+    <p><strong>Mint operations.</strong> Agents can fund their wallets by requesting Lightning invoices (mint ecash from sats) or withdraw by melting ecash back into Lightning payments. This bridges the ecash layer to the broader Lightning/Bitcoin network.</p>
+
+    <p><strong>Discovery.</strong> A new query parameter on the directory API lets you filter for ecash-enabled agents. If you're building an orchestrator that needs to pay for services dynamically, you can discover which agents accept ecash before you call them. Transaction history and payment summaries are available per-agent for accounting.</p>
+
+    <p>All of this is built on the <a href="https://github.com/cashubtc/nuts" target="_blank" rel="noopener noreferrer">Cashu NUT specifications</a> — NUT-00 for token format, NUT-03 for swaps, NUT-04 for minting, NUT-05 for melting, NUT-07 for token state checks. We're not inventing a new protocol. We're implementing an existing one and connecting it to the agent directory.</p>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="bigger-picture">The Bigger Picture: Open Payment Rails for the Agent Economy</h2>
+
+    <p>Step back and look at what's converging. Agents can <a href="/blog/agents-are-searching">discover each other</a> through machine-readable registries. They can communicate over <a href="/blog/a2a-protocol-explained">standardized protocols like A2A</a>. And now they can pay each other with bearer tokens over HTTP.</p>
+
+    <p>Discovery. Communication. Payment. Those are the three primitives you need for an economy. And all three are now running on open protocols, not walled gardens.</p>
+
+    <p>This matters because the alternative is bleak. Without open payment rails, the agent economy consolidates around a few platforms that control both the marketplace and the money flow. Every agent has to use the same payment provider. Every transaction gets a platform cut. Every new agent needs to apply for an account and get approved before it can earn anything.</p>
+
+    <p>Ecash breaks that pattern. An agent running on any infrastructure, built by anyone, can receive payment from any other agent. No platform permission needed. The token is the authorization. If you can parse an HTTP header, you can participate in the agent economy.</p>
+
+    <p>We're not the only ones thinking about this. The <a href="https://x.com/CashuBTC/status/2021663493678878887" target="_blank" rel="noopener noreferrer">Cashu community has been discussing agent payments</a> as a natural application of the protocol. Routstr is already running a production system where agents pay for inference with ecash. The <a href="https://stablecoininsider.org/x402-protocol/" target="_blank" rel="noopener noreferrer">x402 protocol</a> is pushing the same vision from the stablecoin side. The HTTP 402 status code — "Payment Required" — has been in the HTTP spec since 1997, reserved for exactly this kind of future. It took nearly 30 years, but that future is arriving.</p>
+
+    <p>The bet we're making is simple: agents should transact using open, permissionless protocols — not walled-garden payment systems. Ecash is the closest thing we've found to digital cash that actually works for machine-to-machine payments at the scale and speed agents need.</p>
+
+    <!-- ========== SECTION 6 ========== -->
+    <h2 id="try-it">Try It</h2>
+
+    <p>Ecash payment rails are live in Agentry v0.3.0. If you already have an agent listed, you can enable ecash in your agent's settings — set a mint URL, configure your price, and your agent starts accepting payments immediately.</p>
+
+    <p>If you haven't listed your agent yet, <a href="https://agentry.com/#list-agent">start there</a>. It's free. Once listed, enabling ecash takes about two minutes.</p>
+
+    <p>For developers who want to integrate the 402 flow into their own agents, the API docs cover all 14 endpoints with request/response examples. The pattern is simple enough that most integrations are under 50 lines of code — check for a 402, parse the X-Cashu headers, attach a token, retry.</p>
+
+    <p>We're also working on reference implementations in Python and TypeScript that handle the full flow — wallet management, automatic 402 handling, token rotation, and mint selection. Those will be open source and available in the next few weeks.</p>
+
+    <p>The agent economy needs more than discovery. It needs commerce. And commerce needs open payment rails. That's what we shipped today.</p>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">Ecash</span>
+      <span class="article-tag">Cashu</span>
+      <span class="article-tag">Agent Payments</span>
+      <span class="article-tag">X-Cashu</span>
+      <span class="article-tag">HTTP 402</span>
+      <span class="article-tag">Feature</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Enable Ecash for Your Agent</h3>
+      <p class="article-cta__text">List your agent on Agentry and enable ecash payments. Open payment rails, no accounts required, no platform lock-in.</p>
+      <div class="article-cta__buttons">
+        <a href="https://agentry.com/#list-agent" class="btn btn--primary btn--lg">List Your Agent</a>
+        <a href="/blog/agents-are-searching" class="btn btn--secondary btn--lg">How Agents Discover Each Other</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: Agents Are Searching -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+            <path d="M8 8h6M8 11h4" opacity="0.5"/>
+            <circle cx="17" cy="7" r="3" opacity="0.7"/>
+            <path d="M16 7h2M17 6v2" opacity="0.7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Insight</span>
+          <span>March 20, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./agents-are-searching.html">The Agents Are Already Searching — What Happened When We Made Our Directory Machine-Readable</a></h3>
+        <p class="article-card__excerpt">We added machine-readable discovery endpoints to Agentry and AI systems started hitting them within minutes. Here's what that signals about the future of agent discovery.</p>
+        <div class="article-card__footer">
+          <a href="./agents-are-searching.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">6 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: A2A Protocol Explained -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Protocol Deep Dive</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./a2a-protocol-explained.html">The A2A Protocol Explained: How AI Agents Will Discover Each Other</a></h3>
+        <p class="article-card__excerpt">A deep dive into Google's Agent2Agent protocol — how Agent Cards work, how discovery happens via well-known URLs, and why the registry gap matters.</p>
+        <div class="article-card__footer">
+          <a href="./a2a-protocol-explained.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">10 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 3: Machine-Discoverable Agents -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Product Update</span>
+          <span>March 18, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./machine-discoverable-agents.html">Your AI Agent Directory Is Now Machine-Searchable</a></h3>
+        <p class="article-card__excerpt">Agentry now serves five machine-readable discovery layers — llms.txt, agents.json, A2A Registry, structured search API, and MCP Registry listing.</p>
+        <div class="article-card__footer">
+          <a href="./machine-discoverable-agents.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">8 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

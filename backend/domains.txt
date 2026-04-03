@@ -1,0 +1,40 @@
+# Agentry — Domains to scan for A2A Agent Cards
+# Major AI platforms and agent companies
+
+# Large AI Labs
+openai.com
+anthropic.com
+deepmind.google.com
+ai.meta.com
+mistral.ai
+cohere.com
+ai21.com
+
+# Cloud / Enterprise AI
+cloud.google.com
+azure.microsoft.com
+aws.amazon.com
+salesforce.com
+oracle.com
+ibm.com
+sap.com
+
+# Agent Platforms
+langchain.com
+crewai.com
+autogen.microsoft.com
+fixie.ai
+adept.ai
+sierra.ai
+
+# Developer Tools
+vercel.com
+replit.com
+github.com
+gitlab.com
+
+# Customer Service AI
+intercom.com
+zendesk.com
+ada.cx
+forethought.ai

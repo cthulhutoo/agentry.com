@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The A2A Protocol Explained: How AI Agents Will Discover Each Other — Agentry</title>
+<meta name="description" content="A deep dive into Google's Agent2Agent (A2A) protocol — how Agent Cards work, how agent discovery happens via well-known URLs, and why the registry gap matters for business interoperability.">
+<link rel="canonical" href="https://agentry.com/blog/a2a-protocol-explained">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="The A2A Protocol Explained: How AI Agents Will Discover Each Other">
+<meta property="og:description" content="A deep dive into Google's Agent2Agent (A2A) protocol — how Agent Cards work, how agent discovery happens via well-known URLs, and why the registry gap matters for business interoperability.">
+<meta property="og:url" content="https://agentry.com/blog/a2a-protocol-explained">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-03-13T11:00:00-07:00">
+<meta property="article:section" content="Protocol Deep Dive">
+<meta property="article:tag" content="A2A Protocol">
+<meta property="article:tag" content="Agent Discovery">
+<meta property="article:tag" content="Agent Card">
+<meta property="article:tag" content="Interoperability">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The A2A Protocol Explained: How AI Agents Will Discover Each Other">
+<meta name="twitter:description" content="A deep dive into Google's Agent2Agent protocol — how Agent Cards work, how discovery happens, and why the registry gap matters for business interoperability.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Code block styles -->
+<style>
+.code-block {
+  background: #1a1a2e;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-6) 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-5);
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.code-block__lang {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8892b0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.code-block__dots {
+  display: flex;
+  gap: 6px;
+}
+.code-block__dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+}
+.code-block__dots span:first-child { background: #ff5f57; }
+.code-block__dots span:nth-child(2) { background: #febc2e; }
+.code-block__dots span:last-child { background: #28c840; }
+.code-block pre {
+  margin: 0;
+  padding: var(--space-5);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.code-block code {
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #ccd6f6;
+  white-space: pre;
+  tab-size: 2;
+}
+.code-block .json-key { color: #82aaff; }
+.code-block .json-string { color: #c3e88d; }
+.code-block .json-bool,
+.code-block .json-null { color: #f78c6c; }
+.code-block .json-comment { color: #546e7a; font-style: italic; }
+.code-block .json-url { color: #89ddff; }
+
+/* Discovery flow diagram */
+.flow-diagram {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin: var(--space-6) 0;
+  text-align: center;
+}
+.flow-diagram__title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+}
+.flow-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.flow-step {
+  background: var(--color-primary-light);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  min-width: 140px;
+  text-align: center;
+}
+.flow-arrow {
+  color: var(--color-primary);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+@media (max-width: 639px) {
+  .flow-steps { flex-direction: column; }
+  .flow-arrow { transform: rotate(90deg); }
+}
+</style>
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The A2A Protocol Explained: How AI Agents Will Discover Each Other",
+  "description": "A deep dive into Google's Agent2Agent (A2A) protocol — how Agent Cards work, how agent discovery happens via well-known URLs, and why the registry gap matters for business interoperability.",
+  "datePublished": "2026-03-13T11:00:00-07:00",
+  "dateModified": "2026-03-13T11:00:00-07:00",
+  "author": {
+    "@type": "Organization",
+    "name": "Agentry Team",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/a2a-protocol-explained"
+  },
+  "keywords": ["A2A protocol", "Agent2Agent protocol", "A2A agent discovery", "AI agent card", "agent interoperability"],
+  "articleSection": "Protocol Deep Dive",
+  "wordCount": 1900,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "The A2A Protocol Explained" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>The A2A Protocol Explained</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Protocol Deep Dive</span>
+    <h1 class="article-header__title">The A2A Protocol Explained: How AI Agents Will Discover Each Other</h1>
+    <div class="article-header__meta">
+      <span>By the Agentry Team</span>
+      <span class="article-header__meta-sep">·</span>
+      <time datetime="2026-03-13">March 13, 2026</time>
+      <span class="article-header__meta-sep">·</span>
+      <span>10 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#what-is-a2a" class="toc__link">What Is the A2A Protocol?</a></li>
+      <li><a href="#the-problem" class="toc__link">The Problem It Solves</a></li>
+      <li><a href="#agent-cards" class="toc__link">Agent Cards Explained</a></li>
+      <li><a href="#how-discovery-works" class="toc__link">How Discovery Works</a></li>
+      <li><a href="#registry-gap" class="toc__link">The Registry Gap</a></li>
+      <li><a href="#why-it-matters" class="toc__link">Why This Matters</a></li>
+      <li><a href="#where-agentry-fits" class="toc__link">Where Agentry Fits</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#what-is-a2a">What Is the A2A Protocol?</a></li>
+        <li><a href="#the-problem">The Problem It Solves</a></li>
+        <li><a href="#agent-cards">Agent Cards Explained</a></li>
+        <li><a href="#how-discovery-works">How Discovery Works</a></li>
+        <li><a href="#registry-gap">The Registry Gap</a></li>
+        <li><a href="#why-it-matters">Why This Matters for Businesses</a></li>
+        <li><a href="#where-agentry-fits">Where Agentry Fits</a></li>
+      </ul>
+    </nav>
+
+    <p>Right now, most AI agents operate in isolation. Your customer support agent can't talk to your vendor's logistics agent. Your sales automation tool has no idea that a research agent three floors up could feed it competitive intelligence. Each one is powerful on its own — but they're all stuck behind proprietary walls.</p>
+
+    <p>The <strong>Agent2Agent (A2A) protocol</strong> is Google's answer to that problem. It's an open standard that gives AI agents a shared language for discovering each other, advertising their capabilities, and collaborating on tasks — regardless of which vendor built them or what framework they run on.</p>
+
+    <p>This guide breaks down how A2A works, what Agent Cards are, how discovery actually functions today, and where the critical gaps remain. If you're building, buying, or evaluating AI agents, this protocol will shape the next chapter of the agent economy.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="what-is-a2a">What Is the A2A Protocol?</h2>
+
+    <p>The <a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">Agent2Agent (A2A) protocol</a> is an open specification for enabling communication and interoperability between AI agents. Originally released by Google and now governed by the Linux Foundation, it defines how agents announce their capabilities, negotiate interaction patterns, and exchange messages — all over standard HTTPS using JSON-RPC.</p>
+
+    <div class="callout">
+      <p><strong>The one-sentence version:</strong> A2A is a standard that lets AI agents discover each other, understand what each one can do, and collaborate on tasks — without exposing their internal logic, memory, or tools.</p>
+    </div>
+
+    <p>A few key design principles make A2A different from earlier integration approaches:</p>
+
+    <ul>
+      <li><strong>Opaque by design</strong> — Agents don't share their internal state, prompt chains, or tool configurations. They only expose what they choose to through a structured metadata document called an Agent Card.</li>
+      <li><strong>Framework-agnostic</strong> — Whether your agent is built on LangChain, CrewAI, AutoGen, or a custom stack, A2A doesn't care. It operates at the communication layer, not the framework layer.</li>
+      <li><strong>Task-oriented</strong> — A2A models interactions as tasks with defined lifecycles: submitted, working, completed, or failed. This makes it natural for multi-step, long-running workflows where one agent delegates work to another.</li>
+      <li><strong>Built on existing web standards</strong> — HTTPS, JSON-RPC 2.0, Server-Sent Events for streaming, and webhooks for push notifications. No new transport protocols to learn.</li>
+    </ul>
+
+    <p>The protocol defines three roles: a <strong>User</strong> (the human or system initiating a request), an <strong>A2A Client</strong> (the agent that delegates work), and an <strong>A2A Server</strong> (the agent that receives and executes the task). Importantly, any agent can be both a client and a server — an agent that receives a task can turn around and delegate subtasks to other agents downstream.</p>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="the-problem">The Problem It Solves: Agents Are Siloed</h2>
+
+    <p>Today's AI agent ecosystem has a fragmentation problem. Every major vendor — Salesforce, Microsoft, ServiceNow, Intercom, and hundreds of startups — has built their own agent framework. Each one works great within its own walled garden. But the moment you need agents from different vendors to cooperate, you're writing custom integration code.</p>
+
+    <p>Consider a common business scenario: a customer emails asking to change their shipping address on an order that's already been dispatched. To resolve this, you'd need your <strong>customer support agent</strong> (maybe Sierra or Intercom Fin) to understand the request, your <strong>logistics agent</strong> (built on your shipping provider's system) to check whether rerouting is possible, and your <strong>CRM agent</strong> to update the customer record. Today, that coordination happens through brittle, point-to-point integrations — or it doesn't happen at all, and a human steps in.</p>
+
+    <p>A2A addresses this by providing a universal contract for agent-to-agent interaction. Instead of building custom integrations for every agent pair, you give each agent an <strong>Agent Card</strong> that describes what it can do, and any A2A-compliant agent can read that card, understand the capabilities, and initiate collaboration.</p>
+
+    <div class="pull-quote">
+      "A2A does for AI agents what HTTP did for web pages: it provides the shared protocol layer that makes interoperability possible without requiring everyone to use the same framework."
+    </div>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="agent-cards">Agent Cards Explained: The "Business Card" for AI Agents</h2>
+
+    <p>The most important concept in A2A is the <strong>Agent Card</strong>. Think of it as a machine-readable business card that an AI agent publishes to tell the world: here's who I am, here's what I can do, here's how to authenticate, and here's the endpoint where you can reach me.</p>
+
+    <p>An Agent Card is a JSON document that every A2A-compliant server must publish. It contains several key sections:</p>
+
+    <ul>
+      <li><strong>Identity</strong> — The agent's name, description, version, and provider organization.</li>
+      <li><strong>Service endpoint</strong> — The HTTPS URL where other agents can send requests.</li>
+      <li><strong>Capabilities</strong> — Protocol-level features the agent supports, such as streaming responses (via Server-Sent Events), push notifications (via webhooks), and state transition history.</li>
+      <li><strong>Skills</strong> — The specific things the agent can do, each with its own ID, description, tags, example prompts, and supported input/output formats.</li>
+      <li><strong>Security</strong> — Authentication schemes (OAuth2, API keys, OpenID Connect) and required scopes, so client agents know how to authenticate before they send a request.</li>
+      <li><strong>Input/Output modes</strong> — The MIME types the agent accepts and produces (text, JSON, images, files), both as defaults and per-skill overrides.</li>
+    </ul>
+
+    <p>Here's what a real Agent Card looks like, based on the structure defined in the <a href="https://google.github.io/A2A/specification/" target="_blank" rel="noopener noreferrer">A2A specification</a>:</p>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">agent-card.json</span>
+      </div>
+      <pre><code>{
+  <span class="json-key">"name"</span>: <span class="json-string">"Acme Expense Processor"</span>,
+  <span class="json-key">"description"</span>: <span class="json-string">"Processes expense reports, validates receipts, and routes approvals according to company policy."</span>,
+  <span class="json-key">"url"</span>: <span class="json-url">"https://agents.acme.com/a2a/v1"</span>,
+  <span class="json-key">"provider"</span>: {
+    <span class="json-key">"organization"</span>: <span class="json-string">"Acme Corp"</span>,
+    <span class="json-key">"url"</span>: <span class="json-url">"https://www.acme.com"</span>
+  },
+  <span class="json-key">"version"</span>: <span class="json-string">"2.0.1"</span>,
+  <span class="json-key">"documentationUrl"</span>: <span class="json-url">"https://docs.acme.com/expense-agent"</span>,
+  <span class="json-key">"capabilities"</span>: {
+    <span class="json-key">"streaming"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"pushNotifications"</span>: <span class="json-bool">true</span>,
+    <span class="json-key">"stateTransitionHistory"</span>: <span class="json-bool">false</span>
+  },
+  <span class="json-key">"securitySchemes"</span>: {
+    <span class="json-key">"corporate_oidc"</span>: {
+      <span class="json-key">"type"</span>: <span class="json-string">"openIdConnect"</span>,
+      <span class="json-key">"openIdConnectUrl"</span>: <span class="json-url">"https://auth.acme.com/.well-known/openid-configuration"</span>
+    }
+  },
+  <span class="json-key">"security"</span>: [{ <span class="json-key">"corporate_oidc"</span>: [<span class="json-string">"expense.submit"</span>, <span class="json-string">"expense.approve"</span>] }],
+  <span class="json-key">"defaultInputModes"</span>: [<span class="json-string">"application/json"</span>, <span class="json-string">"text/plain"</span>],
+  <span class="json-key">"defaultOutputModes"</span>: [<span class="json-string">"application/json"</span>, <span class="json-string">"text/plain"</span>],
+  <span class="json-key">"skills"</span>: [
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"process-expense-report"</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Process Expense Report"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Validates line items, matches receipts, checks policy compliance, and routes for approval."</span>,
+      <span class="json-key">"tags"</span>: [<span class="json-string">"finance"</span>, <span class="json-string">"expenses"</span>, <span class="json-string">"approval"</span>, <span class="json-string">"compliance"</span>],
+      <span class="json-key">"examples"</span>: [
+        <span class="json-string">"Process the Q1 travel expense report for Jamie Chen"</span>,
+        <span class="json-string">"Validate and submit expense report EXP-2026-0412"</span>
+      ]
+    },
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"check-expense-status"</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Check Expense Status"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Returns the current approval status and any pending actions for a submitted expense report."</span>,
+      <span class="json-key">"tags"</span>: [<span class="json-string">"finance"</span>, <span class="json-string">"status"</span>, <span class="json-string">"tracking"</span>],
+      <span class="json-key">"examples"</span>: [
+        <span class="json-string">"What's the status of expense report EXP-2026-0412?"</span>
+      ]
+    }
+  ],
+  <span class="json-key">"supportsAuthenticatedExtendedCard"</span>: <span class="json-bool">true</span>
+}</code></pre>
+    </div>
+
+    <p>Every field in the Agent Card serves a purpose. The <code>skills</code> array is particularly important: it tells other agents exactly which tasks this agent can handle, with tags for matching and example prompts showing how to invoke each skill. The <code>securitySchemes</code> section lets client agents negotiate authentication before they ever send a request — no trial-and-error.</p>
+
+    <div class="callout">
+      <p><strong>Think of it this way:</strong> If an AI agent were a restaurant, the Agent Card would be its sign, menu, opening hours, and payment methods — all published in one machine-readable document. Other agents don't need to walk in and guess what's available.</p>
+    </div>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="how-discovery-works">How Agent Discovery Works Today</h2>
+
+    <p>Having a great Agent Card is only useful if other agents can find it. A2A defines a primary discovery mechanism — and acknowledges that it has limits.</p>
+
+    <h3>The well-known URL pattern</h3>
+
+    <p>The A2A spec recommends that every agent server publish its Agent Card at a standardized path following <a href="https://www.rfc-editor.org/rfc/rfc8615" target="_blank" rel="noopener noreferrer">RFC 8615</a> (the "Well-Known URIs" standard):</p>
+
+    <div class="code-block">
+      <div class="code-block__header">
+        <div class="code-block__dots"><span></span><span></span><span></span></div>
+        <span class="code-block__lang">HTTP Request</span>
+      </div>
+      <pre><code>GET https://{agent-server-domain}/.well-known/agent-card.json</code></pre>
+      <pre style="margin-top:0.5em; opacity:0.6; font-size:0.9em;"><code>// Also: /.well-known/agent.json is supported for backward compatibility. Agentry checks both.</code></pre>
+    </div>
+
+    <p>This is exactly how it sounds: if you know the domain where an agent lives, you can fetch its Agent Card by hitting that URL. It's analogous to how <code>robots.txt</code> works for web crawlers or how <code>/.well-known/openid-configuration</code> works for identity providers.</p>
+
+    <div class="flow-diagram">
+      <p class="flow-diagram__title">A2A Agent Discovery Flow</p>
+      <div class="flow-steps">
+        <div class="flow-step">Client agent knows a domain</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">GET /.well-known/agent-card.json</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Reads Agent Card</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Sends task via JSON-RPC</div>
+      </div>
+    </div>
+
+    <h3>Three discovery methods</h3>
+
+    <p>The specification acknowledges three ways agents can discover each other:</p>
+
+    <ol>
+      <li><strong>Well-Known URI</strong> — The standard path described above. Works well when a client agent already knows which server to query, but requires prior knowledge of the domain.</li>
+      <li><strong>Registries and catalogs</strong> — Third-party directories that aggregate Agent Cards from multiple providers. The spec mentions this method but doesn't define a registry standard.</li>
+      <li><strong>Direct configuration</strong> — A human or system manually provides an Agent Card URL to a client agent. This is the most common approach today and the least scalable.</li>
+    </ol>
+
+    <h3>Authenticated extended cards</h3>
+
+    <p>A2A also supports the concept of an <strong>authenticated extended Agent Card</strong>. The public Agent Card at the well-known URL might expose a limited view of an agent's capabilities. If the <code>supportsAuthenticatedExtendedCard</code> field is set to <code>true</code>, authenticated clients can request a more detailed version — revealing additional skills, more specific descriptions, or capabilities that are only available to authorized users.</p>
+
+    <p>This is a smart design choice for enterprise environments where agents might offer different service tiers or restrict sensitive operations to verified partners.</p>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="registry-gap">The Registry Gap: Discovery's Unsolved Problem</h2>
+
+    <p>Here's the critical gap in the A2A architecture: <strong>the protocol defines the card, but not the phone book.</strong></p>
+
+    <p>The well-known URL mechanism only works if a client agent already knows the domain of the agent it wants to talk to. That's fine for pre-configured, point-to-point integrations. But what about the scenarios that would make agent interoperability truly transformative?</p>
+
+    <ul>
+      <li>A procurement agent needs to find all available vendor agents that can supply a specific component — without knowing which vendors even have agents.</li>
+      <li>A customer support agent needs to discover the best logistics agent to handle a shipping inquiry — across multiple providers it has never interacted with before.</li>
+      <li>A developer wants to browse available agents by category, skill, pricing model, or protocol support to find the right one for their project.</li>
+    </ul>
+
+    <p>None of these scenarios work with well-known URLs alone. They all require a <strong>registry</strong> — a centralized or federated directory where agents can publish their cards and other agents (or humans) can search, filter, and discover them.</p>
+
+    <div class="callout">
+      <p><strong>The analogy:</strong> A2A gives every agent a business card, but there's no Rolodex, no industry directory, and no Yellow Pages. Every agent carries perfect self-description, but there's nowhere to go looking for agents you don't already know about.</p>
+    </div>
+
+    <p>The <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">A2A project on GitHub</a> acknowledges that registries are a valid discovery mechanism but deliberately leaves the registry layer undefined. This is intentional — the protocol focuses on the wire format and lets the ecosystem build the infrastructure. But it means the most valuable form of discovery — open-ended search — still has no standard implementation.</p>
+
+    <!-- ========== SECTION 6 ========== -->
+    <h2 id="why-it-matters">Why This Matters for Businesses</h2>
+
+    <p>If you're a business owner or technical leader evaluating AI agents, A2A has direct implications for your strategy — even if you never read a line of the spec.</p>
+
+    <h3>Interoperability without custom integration</h3>
+    <p>A2A-compliant agents can work together out of the box. Instead of paying for custom middleware every time you add a new agent to your stack, you get plug-and-play collaboration. Your HR agent can delegate benefits questions to an insurance provider's agent. Your sales agent can hand off qualified leads to your onboarding agent. The Agent Card is the contract that makes it work.</p>
+
+    <h3>Avoiding vendor lock-in</h3>
+    <p>When agents communicate through an open protocol, switching vendors becomes dramatically easier. If your current customer support agent isn't performing, you can swap it for a competing product that publishes the same A2A-compliant card — and every other agent in your stack keeps working without reconfiguration.</p>
+
+    <h3>Future-proofing your investment</h3>
+    <p>The agent ecosystem is still early. Vendors will rise and fall. Frameworks will evolve. But the need for agents to communicate with each other will only increase. Choosing A2A-aware agents today means you're building on a foundation that's designed for the multi-agent future, rather than betting on a single vendor's proprietary ecosystem.</p>
+
+    <h3>Security and trust at the protocol level</h3>
+    <p>A2A embeds security into the discovery process itself. Agent Cards declare their authentication requirements upfront — OAuth2 scopes, API key schemes, OpenID Connect configurations — so client agents know exactly what credentials are needed before initiating contact. This is a significant improvement over ad-hoc API integrations where authentication requirements are discovered through documentation or (worse) trial and error.</p>
+
+    <div class="comparison-box">
+      <div class="comparison-box__header">Integration Approaches: Before A2A vs. With A2A</div>
+      <div class="comparison-box__grid">
+        <div class="comparison-box__col">
+          <p class="comparison-box__col-title">Before A2A</p>
+          <ul>
+            <li>Custom API integrations per agent pair</li>
+            <li>Manual capability documentation</li>
+            <li>Vendor-specific authentication flows</li>
+            <li>No standard for discovering new agents</li>
+            <li>Switching vendors requires rewiring</li>
+          </ul>
+        </div>
+        <div class="comparison-box__col">
+          <p class="comparison-box__col-title">With A2A</p>
+          <ul>
+            <li>Universal protocol for all agent pairs</li>
+            <li>Machine-readable Agent Cards</li>
+            <li>Standardized security negotiation</li>
+            <li>Well-known URLs + registry discovery</li>
+            <li>Swap agents without breaking others</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SECTION 7 ========== -->
+    <h2 id="where-agentry-fits">Where Agentry Fits: Building the Registry Layer</h2>
+
+    <p>The A2A protocol gives agents the ability to describe themselves. Agentry gives them a place to be found.</p>
+
+    <p>We're building the <strong>registry layer</strong> that A2A's architecture needs but doesn't provide. The <a href="/#directory">Agentry Directory</a> is a protocol-aware catalog where AI agents are indexed by their capabilities, skills, categories, authentication methods, and compliance certifications. Every listing includes structured data that maps directly to the A2A Agent Card schema — so programmatic discovery is possible, not just human browsing.</p>
+
+    <p>Here's what that means in practice:</p>
+
+    <ul>
+      <li><strong>For businesses</strong> — Instead of hunting for agents across dozens of vendor websites, you can search the Agentry directory by use case ("customer support agents that handle refunds"), by protocol support ("A2A-compliant with OAuth2"), or by category. Our <a href="/#get-matched">Get Matched</a> service adds human curation on top of programmatic search.</li>
+      <li><strong>For developers</strong> — Register your A2A-compliant agent in the directory and it becomes discoverable by every client agent that queries our registry. We're building toward a future where a client agent can query Agentry's API, receive a list of matching Agent Cards, and initiate collaboration — all without human intervention.</li>
+      <li><strong>For the ecosystem</strong> — A2A defines the grammar. Agentry provides the dictionary. Together, they make open-ended agent discovery a reality rather than a specification footnote.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>The bottom line:</strong> A2A made agent interoperability technically possible. A registry makes it practically useful. If agents can describe themselves but can't be found, the protocol's promise remains unrealized. That's the gap we're filling.</p>
+    </div>
+
+    <p>The A2A protocol is still evolving — with <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">active development on GitHub</a> and growing adoption across the industry. Whether you're building agents, buying agents, or planning your AI strategy, understanding how discovery works (and where it falls short) will help you make better decisions today and position yourself for what's coming next.</p>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">A2A Protocol</span>
+      <span class="article-tag">Agent Discovery</span>
+      <span class="article-tag">Agent Cards</span>
+      <span class="article-tag">Interoperability</span>
+      <span class="article-tag">Open Standards</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Register Your Agent or Find the Right One</h3>
+      <p class="article-cta__text">List your A2A-compliant agent in the Agentry directory, or browse 70+ verified agents across 9 categories to find the right fit for your business.</p>
+      <div class="article-cta__buttons">
+        <a href="/#developers" class="btn btn--primary btn--lg">For Developers</a>
+        <a href="/#list-agent" class="btn btn--secondary btn--lg">List Your Agent</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: Article 1 (live) -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2a7 7 0 0 1 7 7c0 3-2 5.5-4 7l-3 3.5L9 16c-2-1.5-4-4-4-7a7 7 0 0 1 7-7z"/>
+            <circle cx="12" cy="9" r="2"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">AI Agents 101</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./what-is-an-ai-agent.html">What Is an AI Agent? The Plain-English Guide for Business Owners</a></h3>
+        <p class="article-card__excerpt">AI agents are software that can perceive, decide, and act on their own. Learn how they differ from chatbots, what they can do today, and how to evaluate one for your business.</p>
+        <div class="article-card__footer">
+          <a href="./what-is-an-ai-agent.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">8 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: Registry vs Directory -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Industry Analysis</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./registry-vs-directory.html">AI Agent Registry vs. AI Agent Directory: What's the Difference?</a></h3>
+        <p class="article-card__excerpt">Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences — and why the agent economy needs registries, not just directories.</p>
+        <div class="article-card__footer">
+          <a href="./registry-vs-directory.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">9 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

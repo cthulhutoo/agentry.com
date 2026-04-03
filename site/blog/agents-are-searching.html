@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Agents Are Already Searching — What Happened When We Made Our Directory Machine-Readable — Agentry</title>
+<meta name="description" content="We added machine-readable discovery endpoints to Agentry and AI systems started hitting them within minutes. Here's what that signals about the future of agent discovery.">
+<link rel="canonical" href="https://agentry.com/blog/agents-are-searching">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Agents Are Already Searching — What Happened When We Made Our Directory Machine-Readable">
+<meta property="og:description" content="We added machine-readable discovery endpoints to Agentry and AI systems started hitting them within minutes. Here's what that signals about the future of agent discovery.">
+<meta property="og:url" content="https://agentry.com/blog/agents-are-searching">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-03-20T10:00:00-06:00">
+<meta property="article:section" content="Insight">
+<meta property="article:tag" content="agent discovery">
+<meta property="article:tag" content="A2A protocol">
+<meta property="article:tag" content="llms.txt">
+<meta property="article:tag" content="agents.json">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="agent-to-agent">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Agents Are Already Searching — What Happened When We Made Our Directory Machine-Readable">
+<meta name="twitter:description" content="We added machine-readable discovery endpoints to Agentry and AI systems started hitting them within minutes.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Agents Are Already Searching — What Happened When We Made Our Directory Machine-Readable",
+  "description": "We added machine-readable discovery endpoints to Agentry and AI systems started hitting them within minutes. Here's what that signals about the future of agent discovery.",
+  "datePublished": "2026-03-20T10:00:00-06:00",
+  "dateModified": "2026-03-20T10:00:00-06:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ryan Clark",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/agents-are-searching"
+  },
+  "keywords": ["agent discovery", "A2A protocol", "llms.txt", "agents.json", "MCP", "agent-to-agent", "machine-readable"],
+  "articleSection": "Insight",
+  "wordCount": 1800,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "The Agents Are Already Searching" }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>The Agents Are Already Searching</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Insight</span>
+    <h1 class="article-header__title">The Agents Are Already Searching — What Happened When We Made Our Directory Machine-Readable</h1>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-03-20">March 20, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>6 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#the-agents-showed-up" class="toc__link">The Agents Showed Up First</a></li>
+      <li><a href="#what-this-tells-us" class="toc__link">What This Tells Us</a></li>
+      <li><a href="#discovery-gap" class="toc__link">The Discovery Gap</a></li>
+      <li><a href="#dns-not-yellow-pages" class="toc__link">DNS for Agents, Not Yellow Pages</a></li>
+      <li><a href="#protocols-converging" class="toc__link">The Protocols Are Converging</a></li>
+      <li><a href="#what-were-building" class="toc__link">What We're Building Toward</a></li>
+      <li><a href="#get-involved" class="toc__link">Get Involved</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#the-agents-showed-up">The Agents Showed Up First</a></li>
+        <li><a href="#what-this-tells-us">What This Tells Us</a></li>
+        <li><a href="#discovery-gap">The Discovery Gap</a></li>
+        <li><a href="#dns-not-yellow-pages">DNS for Agents, Not Yellow Pages</a></li>
+        <li><a href="#protocols-converging">The Protocols Are Converging</a></li>
+        <li><a href="#what-were-building">What We're Building Toward</a></li>
+        <li><a href="#get-involved">Get Involved</a></li>
+      </ul>
+    </nav>
+
+    <p>We built a directory for AI agents. The standard stuff: categories, listings, search, trust scores. It worked fine as a website — people browsed it, found agents, compared options.</p>
+
+    <p>Then we added <a href="/blog/machine-discoverable-agents">machine-readable discovery endpoints</a> — A2A protocol support, <code>agents.json</code>, <code>llms.txt</code>, MCP Registry listing — and something unexpected happened.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="the-agents-showed-up">The Agents Showed Up First</h2>
+
+    <p>Within minutes of deploying the discovery endpoints, we started seeing requests from Azure IP ranges associated with OpenAI's infrastructure. Not a trickle — structured, methodical requests to our <code>/.well-known/agent.json</code> and <code>/llms.txt</code> files.</p>
+
+    <p>Within 24 hours, the picture got clearer. Requests from OpenAI, from infrastructure consistent with Anthropic's Claude, from what appeared to be an MCP client, and from LangChain-based systems. The machine traffic arrived faster and more consistently than the human traffic ever did.</p>
+
+    <p>We hadn't announced anything yet. We hadn't posted about it. We just put structured data at well-known URLs, and the agents found it.</p>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="what-this-tells-us">What This Tells Us</h2>
+
+    <p>AI systems are already actively reading the web for structured agent data. They're looking for <code>agents.json</code>, <code>llms.txt</code>, A2A Agent Cards — the same discovery protocols we had just implemented. This isn't theoretical. It isn't a whitepaper prediction. The agent-to-agent discovery layer is forming right now, and most of the industry hasn't noticed.</p>
+
+    <p>Think about what that means. Major AI labs have already built infrastructure that probes domains for machine-readable agent metadata. They're not waiting for a standard to be finalized and ratified by committee. They're reading the endpoints <em>today</em>, building indexes, and presumably using that data to improve tool-use and agent routing.</p>
+
+    <p>The parallel to early web search is hard to ignore. In 1994, if you put up a web page, Webcrawler found it before most humans did. We're at that moment again — except the "crawlers" are AI systems, and instead of HTML they're reading JSON-LD, Agent Cards, and structured capability descriptors.</p>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="discovery-gap">The Discovery Gap</h2>
+
+    <p>Right now, finding an AI agent is a human problem solved with human tools. You Google "best AI customer service agent," you read a listicle, you ask your network, you maybe check a directory. It works, but it's slow, subjective, and doesn't scale.</p>
+
+    <p>But here's the thing: agents need to find other agents too. An orchestration system that needs a specialized tool. A multi-agent workflow that needs to delegate a subtask. An enterprise platform that needs to dynamically compose agent pipelines. These systems can't Google it. They can't read a blog post and make a judgment call.</p>
+
+    <p>They need structured, queryable, machine-readable registries. They need to be able to ask: "What agents exist that can handle document processing, support A2A, and cost less than $0.50 per task?" And they need an answer in milliseconds, not minutes.</p>
+
+    <p>That gap — between how humans discover agents and how machines need to discover agents — is the thing most people building in this space are underestimating. The human-facing directory is table stakes. The machine-facing registry is the infrastructure that actually enables the agent economy.</p>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="dns-not-yellow-pages">DNS for Agents, Not Yellow Pages</h2>
+
+    <p>There's an analogy that keeps coming back in our internal discussions: the real value of a directory might not be the website — the Yellow Pages — but the structured data layer underneath — the DNS.</p>
+
+    <p>The Yellow Pages was a human interface. You flipped through it, you found a plumber, you made a call. Useful, but fundamentally limited by human attention. DNS, on the other hand, is invisible infrastructure. No one "uses" DNS in the way they use a directory. But DNS is what makes the entire internet work — a machine-readable, programmatically queryable layer that resolves names to addresses billions of times per second.</p>
+
+    <p>When an agent can programmatically query "show me all customer service agents that support A2A and cost less than $1 per resolution," that's a fundamentally different thing than a human browsing a list. It's the difference between the Yellow Pages and DNS. One is a product. The other is infrastructure.</p>
+
+    <p>We think the real opportunity for agent directories isn't the website. It's becoming the resolution layer — the system that agents query to find other agents, automatically, at scale, using open protocols.</p>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="protocols-converging">The Protocols Are Converging</h2>
+
+    <p>What makes this moment interesting isn't any single protocol. It's that four complementary standards are emerging in the same window:</p>
+
+    <ul>
+      <li><strong>A2A (Agent-to-Agent)</strong> — Google's open protocol for agent communication and discovery, built on Agent Cards served at well-known URLs. The <a href="https://developers.googleblog.com/developers-guide-to-ai-agent-protocols/" target="_blank" rel="noopener noreferrer">Google developer blog</a> has a solid overview of where this fits.</li>
+      <li><strong>MCP (Model Context Protocol)</strong> — Anthropic's standard for tool and context discovery, now supported by Claude, Cursor, VS Code, and a growing list of clients.</li>
+      <li><strong>llms.txt</strong> — A plain-text standard that tells AI models what a site does and how to use its APIs. As <a href="https://buildwithfern.com/post/how-to-write-llm-friendly-documentation" target="_blank" rel="noopener noreferrer">Fern's analysis</a> notes, hundreds of thousands of websites have already adopted it.</li>
+      <li><strong>agents.json</strong> — A machine-readable API capability descriptor at <code>/.well-known/agents.json</code> that gives agents enough context to construct valid API calls without documentation parsing.</li>
+    </ul>
+
+    <p>The <a href="https://getstream.io/blog/ai-agent-protocols/" target="_blank" rel="noopener noreferrer">GetStream guide on agent protocols</a> does a good job mapping how these layers interact: MCP handles tool discovery, A2A handles agent communication, and files like <code>llms.txt</code> and <code>agents.json</code> handle the initial "what is this site and what can it do?" question.</p>
+
+    <p>These protocols aren't competing. They're complementary layers of the same stack. An agent might discover a registry via <code>llms.txt</code>, understand its API via <code>agents.json</code>, query it for A2A Agent Cards, and then communicate with a discovered agent over A2A directly. Each protocol handles one step of the interaction.</p>
+
+    <p>The infrastructure for agent discovery is being laid right now. Not in a spec committee. In production, by the systems actually doing the discovering.</p>
+
+    <!-- ========== SECTION 6 ========== -->
+    <h2 id="what-were-building">What We're Building Toward</h2>
+
+    <p>Agentry serves all of these protocols from one registry. You list your agent once, and it's discoverable via A2A Agent Cards, queryable through a structured search API, described in <code>agents.json</code>, readable via <code>llms.txt</code>, and findable in the MCP Registry.</p>
+
+    <p>Free to list. Free to query. The goal isn't to be a gatekeeper — it's to be useful infrastructure. Open protocols, open data, no lock-in.</p>
+
+    <p>We don't know exactly what the agent economy looks like in two years. But we know it needs a resolution layer. It needs somewhere agents can go to find other agents — reliably, programmatically, and using the protocols that are already being adopted. That's what we're building.</p>
+
+    <!-- ========== SECTION 7 ========== -->
+    <h2 id="get-involved">Get Involved</h2>
+
+    <p>If you're building an agent, <a href="https://agentry.com/#list-agent">list it</a>. It's free, and your agent becomes discoverable by both humans browsing the directory and machines querying the API. Add an A2A Agent Card to your agent for a trust score boost and richer discovery metadata.</p>
+
+    <p>If you want to go deeper on A2A and how agent discovery works at the protocol level, read our <a href="/blog/a2a-protocol-explained">explainer on the A2A protocol</a>.</p>
+
+    <p>And if you're curious about what exactly we shipped on the machine-discovery side, our <a href="/blog/machine-discoverable-agents">previous post covers all five discovery layers</a> in detail.</p>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">Agent Discovery</span>
+      <span class="article-tag">A2A Protocol</span>
+      <span class="article-tag">llms.txt</span>
+      <span class="article-tag">agents.json</span>
+      <span class="article-tag">MCP</span>
+      <span class="article-tag">Insight</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">List Your Agent for Free</h3>
+      <p class="article-cta__text">Make your agent discoverable by both humans and machines. One listing, five discovery protocols. No lock-in.</p>
+      <div class="article-cta__buttons">
+        <a href="https://agentry.com/#list-agent" class="btn btn--primary btn--lg">List Your Agent</a>
+        <a href="/blog/a2a-protocol-explained" class="btn btn--secondary btn--lg">Read the A2A Explainer</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: Machine-Discoverable Agents -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+            <path d="M8 8h6M8 11h4" opacity="0.5"/>
+            <circle cx="17" cy="7" r="3" opacity="0.7"/>
+            <path d="M16 7h2M17 6v2" opacity="0.7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Product Update</span>
+          <span>March 18, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./machine-discoverable-agents.html">Your AI Agent Directory Is Now Machine-Searchable</a></h3>
+        <p class="article-card__excerpt">Agentry now serves five machine-readable discovery layers — llms.txt, agents.json, A2A Registry, structured search API, and MCP Registry listing.</p>
+        <div class="article-card__footer">
+          <a href="./machine-discoverable-agents.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">8 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: A2A Protocol Explained -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Protocol Deep Dive</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./a2a-protocol-explained.html">The A2A Protocol Explained: How AI Agents Will Discover Each Other</a></h3>
+        <p class="article-card__excerpt">A deep dive into Google's Agent2Agent protocol — how Agent Cards work, how discovery happens via well-known URLs, and why the registry gap matters.</p>
+        <div class="article-card__footer">
+          <a href="./a2a-protocol-explained.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">10 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 3: Registry vs Directory -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Industry Analysis</span>
+          <span>March 13, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href="./registry-vs-directory.html">AI Agent Registry vs. AI Agent Directory: What's the Difference?</a></h3>
+        <p class="article-card__excerpt">Directories list AI agents. Registries verify, match, and govern them. Learn the critical differences — and why the agent economy needs registries.</p>
+        <div class="article-card__footer">
+          <a href="./registry-vs-directory.html" class="article-card__read-more">
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">9 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeMode = null;
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+
+  function initTheme() {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    themeMode = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

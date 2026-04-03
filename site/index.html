@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentry — The Infrastructure Layer for Agent Commerce</title>
+<meta name="description" content="The infrastructure layer for agent commerce. Identity, trust, orchestration, and payments for AI agents. One API — discover, verify, invoke, and pay. 122+ agents, 134 API routes.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Agentry — The Infrastructure Layer for Agent Commerce">
+<meta property="og:description" content="Identity, trust, orchestration, and payments for AI agents. One API — discover, verify, invoke, and pay. 122+ agents, 134 API routes.">
+<meta property="og:url" content="https://agentry.com">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agentry — The Infrastructure Layer for Agent Commerce">
+<meta name="twitter:description" content="Identity, trust, orchestration, and payments for AI agents. One API — discover, verify, invoke, and pay. 122+ agents, 134 API routes.">
+
+<!-- Favicon (inline SVG) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="./style.css">
+
+<style>
+/* ====== Platform Features Section (v0.4.0) ====== */
+.platform-features {
+  background: #0A1E22;
+  position: relative;
+}
+.platform-features::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(1,212,219,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.platform-features__header {
+  text-align: center;
+  margin-bottom: var(--space-12, 3rem);
+}
+.platform-features__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #01D4DB;
+  margin-bottom: var(--space-3, 0.75rem);
+}
+.platform-features__title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-text, #E8F4F5);
+  margin: 0 0 var(--space-4, 1rem);
+  line-height: 1.2;
+}
+.platform-features__subtitle {
+  font-size: var(--text-base, 1rem);
+  color: var(--color-text-muted, #7FA8AF);
+  max-width: 36rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) {
+  .pf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .pf-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.pf-card {
+  background: #0D2B30;
+  border: 1px solid rgba(1,212,219,0.12);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.pf-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(1,212,219,0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.pf-card:hover {
+  border-color: rgba(1,212,219,0.28);
+  transform: translateY(-2px);
+}
+.pf-card:hover::after {
+  opacity: 1;
+}
+.pf-card__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(1,212,219,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: #01D4DB;
+  flex-shrink: 0;
+}
+.pf-card__title {
+  font-size: var(--text-base, 1rem);
+  font-weight: 600;
+  color: var(--color-text, #E8F4F5);
+  margin: 0 0 0.5rem;
+  line-height: 1.3;
+}
+.pf-card__desc {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--color-text-muted, #7FA8AF);
+  margin: 0;
+  line-height: 1.6;
+}
+/* ====== End Platform Features ====== */
+
+/* Code block additions for v0.4.0 */
+.code-comment { color: #4A7A80; font-style: italic; }
+
+/* ====== Developer Steps Section (v0.5.0) ====== */
+.dev-steps {
+  background: #081A1E;
+  position: relative;
+  overflow: hidden;
+}
+.dev-steps::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 0%, rgba(1,212,219,0.05) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 35% at 80% 100%, rgba(1,212,219,0.04) 0%, transparent 65%);
+  pointer-events: none;
+}
+.dev-steps__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.dev-steps__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #01D4DB;
+  background: rgba(1,212,219,0.08);
+  border: 1px solid rgba(1,212,219,0.2);
+  border-radius: 100px;
+  padding: 0.3rem 0.875rem;
+  margin-bottom: 1.25rem;
+}
+.dev-steps__title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: #E8F4F5;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+.dev-steps__subtitle {
+  font-size: 1.0625rem;
+  color: #7FA8AF;
+  max-width: 40rem;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+/* Step cards */
+.dev-steps__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+.ds-card {
+  background: #0D2B30;
+  border: 1px solid rgba(1,212,219,0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+.ds-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(1,212,219,0.25), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.ds-card:hover {
+  border-color: rgba(1,212,219,0.28);
+  box-shadow: 0 8px 32px rgba(1,212,219,0.06);
+}
+.ds-card:hover::before {
+  opacity: 1;
+}
+/* Left pane */
+.ds-card__left {
+  padding: 2rem 2rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(1,212,219,0.08);
+}
+.ds-card__meta {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.ds-card__num {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #01D4DB;
+  opacity: 0.22;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+  user-select: none;
+}
+.ds-card__icon-wrap {
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgba(1,212,219,0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #01D4DB;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+.ds-card__step-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #E8F4F5;
+  margin: 0 0 0.5rem;
+  line-height: 1.25;
+  padding-top: 0.35rem;
+}
+.ds-card__desc {
+  font-size: 0.9rem;
+  color: #7FA8AF;
+  line-height: 1.7;
+  margin: 0 0 1.25rem;
+}
+.ds-card__benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: rgba(1,212,219,0.05);
+  border: 1px solid rgba(1,212,219,0.14);
+  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.8125rem;
+  color: #01D4DB;
+  line-height: 1.5;
+}
+.ds-card__benefit svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+/* Right pane — code */
+.ds-card__right {
+  background: #081A1E;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.ds-card__code-header {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-bottom: 0.875rem;
+}
+.ds-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.ds-dot--red   { background: #FF5F57; }
+.ds-dot--yellow{ background: #FEBC2E; }
+.ds-dot--green { background: #28C840; }
+.ds-card__code-filename {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  color: #4A7A80;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+.ds-card__pre {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.78rem;
+  line-height: 1.75;
+  color: #9FC5CC;
+  white-space: pre;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(1,212,219,0.2) transparent;
+}
+.ds-card__pre .dc-comment  { color: #3D6870; font-style: italic; }
+.ds-card__pre .dc-key      { color: #01D4DB; }
+.ds-card__pre .dc-string   { color: #4EC9B0; }
+.ds-card__pre .dc-punct    { color: #7FA8AF; }
+.ds-card__pre .dc-value    { color: #CE9178; }
+.ds-card__pre .dc-op       { color: #569CD6; }
+/* Bottom CTA */
+.dev-steps__cta {
+  background: linear-gradient(135deg, #0D2B30 0%, #0A2228 100%);
+  border: 1px solid rgba(1,212,219,0.18);
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.dev-steps__cta::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(1,212,219,0.5), transparent);
+}
+.dev-steps__cta-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #E8F4F5;
+  margin: 0 0 0.75rem;
+}
+.dev-steps__cta-sub {
+  font-size: 0.9375rem;
+  color: #7FA8AF;
+  margin: 0 0 2rem;
+}
+.dev-steps__cta-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.dev-steps__protocols {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #4A7A80;
+}
+.dev-steps__proto-item {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(1,212,219,0.12);
+  border-radius: 100px;
+  color: #5A9AA2;
+  background: rgba(1,212,219,0.04);
+  margin: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+/* Responsive */
+@media (max-width: 860px) {
+  .ds-card {
+    grid-template-columns: 1fr;
+  }
+  .ds-card__left {
+    border-right: none;
+    border-bottom: 1px solid rgba(1,212,219,0.08);
+    padding: 1.5rem;
+  }
+  .ds-card__right {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+  .ds-card__num {
+    font-size: 2.25rem;
+  }
+}
+@media (max-width: 560px) {
+  .dev-steps__cta {
+    padding: 2rem 1.25rem;
+  }
+  .ds-card__left,
+  .ds-card__right {
+    padding: 1.25rem;
+  }
+  .dev-steps__header {
+    margin-bottom: 2.5rem;
+  }
+}
+/* ====== End Developer Steps ====== */
+</style>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Agentry",
+  "alternateName": "The Infrastructure Layer for Agent Commerce",
+  "url": "https://agentry.com",
+  "description": "Identity, trust, orchestration, and payments for AI agents. One API — discover, verify, invoke, and pay. Built on Nostr, MCP, and A2A.",
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="#" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/nostr/">Nostr</a>
+      <a href="#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/nostr/" onclick="closeMobileMenu()">Nostr</a>
+  <a href="#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <canvas class="hero__grid-canvas" id="hero-canvas"></canvas>
+    <div class="hero__gradient"></div>
+  </div>
+  <div class="hero__content">
+    <div class="hero__badge">
+      <span class="hero__badge-dot"></span>
+      Nostr-Native Identity
+    </div>
+    <h1 class="hero__title">The Infrastructure Layer for<br>Agent Commerce</h1>
+    <p class="hero__subtitle">One call to make your agent a first-class citizen of the agent economy.</p>
+
+    <!-- The Stripe Moment: Hero curl command -->
+    <div class="hero__curl">
+      <div class="hero__curl-header">
+        <div class="hero__curl-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="hero__curl-label">Terminal</span>
+        <button class="hero__curl-copy" onclick="copyQuickstart()" title="Copy to clipboard">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span class="hero__curl-copy-text">Copy</span>
+        </button>
+      </div>
+      <pre class="hero__curl-code"><code><span class="curl-prompt">$</span> <span class="curl-cmd">curl</span> <span class="curl-flag">-X POST</span> <span class="curl-url">https://api.agentry.com/api/quickstart</span> <span class="curl-escape">\</span>
+  <span class="curl-flag">-H</span> <span class="curl-string">"Content-Type: application/json"</span> <span class="curl-escape">\</span>
+  <span class="curl-flag">-d</span> <span class="curl-string">'{"name": "My Agent", "url": "https://myagent.ai"}'</span></code></pre>
+      <div class="hero__curl-response">
+        <div class="hero__curl-response-label">Response</div>
+        <pre class="hero__curl-response-code"><code>{
+  <span class="json-key">"agent_id"</span>: <span class="json-string">"a1b2c3d4e5f6"</span>,
+  <span class="json-key">"did"</span>: <span class="json-string">"did:agentry:9f8e7d6c5b4a..."</span>,
+  <span class="json-key">"npub"</span>: <span class="json-string">"npub1abc...xyz"</span>,
+  <span class="json-key">"nip05"</span>: <span class="json-string">"my-agent@agentry.com"</span>,
+  <span class="json-key">"wallet"</span>: { <span class="json-key">"balance_sats"</span>: <span class="json-number">0</span>, <span class="json-key">"status"</span>: <span class="json-string">"live"</span> },
+  <span class="json-key">"nsec"</span>: <span class="json-string">"nsec1..."</span>  <span class="json-comment">// store securely — shown once</span>
+}</code></pre>
+      </div>
+    </div>
+
+    <p class="hero__tagline">Identity. Wallet. Reputation. <span class="hero__tagline-accent">One POST.</span></p>
+
+    <div class="hero__ctas">
+      <a href="/demo/" class="btn btn--primary btn--lg">See It Live</a>
+      <a href="#list-agent" class="btn btn--secondary btn--lg">List Your Agent</a>
+    </div>
+  </div>
+</section>
+
+<script>
+function copyQuickstart() {
+  const cmd = `curl -X POST https://api.agentry.com/api/quickstart \\
+  -H "Content-Type: application/json" \\
+  -d '{"name": "My Agent", "url": "https://myagent.ai"}'`;
+  navigator.clipboard.writeText(cmd).then(() => {
+    const btn = document.querySelector('.hero__curl-copy-text');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+</script>
+
+<!-- ==================== STATS BAR ==================== -->
+<div class="stats-bar">
+  <div class="container stats-bar__inner">
+    <div class="stats-bar__item">
+      <span class="stats-bar__dot"></span>
+      <span class="stats-bar__value">134</span> API Routes
+    </div>
+    <div class="stats-bar__item">
+      <span class="stats-bar__dot"></span>
+      <span class="stats-bar__value">123</span> Nostr Identities
+    </div>
+    <div class="stats-bar__item">
+      <span class="stats-bar__dot"></span>
+      <span class="stats-bar__value">5</span> Protocols
+    </div>
+    <div class="stats-bar__item">
+      <span class="stats-bar__dot"></span>
+      <span class="stats-bar__value">Live</span> Agent Wallets
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DIRECTORY ==================== -->
+<section class="directory section" id="directory">
+  <div class="container">
+    <div class="directory__header reveal">
+      <h2 class="directory__title">Agent Directory</h2>
+      <p class="directory__subtitle">Browse our curated collection of AI agents across every business function. Filter by category or search by name.</p>
+    </div>
+
+    <div class="registry-stats reveal" id="registry-stats" style="display:none"></div>
+
+    <div class="directory__filters reveal">
+      <div class="directory__search">
+        <svg class="directory__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" class="directory__search-input" id="search-input" placeholder="Search agents by name or description..." aria-label="Search agents">
+      </div>
+      <div class="directory__categories" id="category-filters" role="tablist">
+        <button class="category-pill active" data-category="all" role="tab" aria-selected="true">All</button>
+      </div>
+    </div>
+    <!-- SEO: Pre-rendered agent data for crawlers (hidden from visual display) -->
+    <div class="seo-agents" style="display:none" aria-hidden="true">
+      <div class="seo-agent"><h3><a href="https://www.intercom.com/fin">Intercom Fin</a></h3><p>Category: Customer Service</p><p>Fin is Intercom&#39;s AI agent that autonomously resolves customer support conversations across chat, email, and more. It uses the company&#39;s knowledge base to handle complex queries and only escalates to humans when needed.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.zendesk.com/service/ai/">Zendesk AI</a></h3><p>Category: Customer Service</p><p>Zendesk AI offers built-in automation and AI-powered agents for customer support, including intelligent triage, Answer Bot, and AI Copilot that assists human agents in real time.</p></div>
+      <div class="seo-agent"><h3><a href="https://sierra.ai">Sierra</a></h3><p>Category: Customer Service</p><p>Sierra is an enterprise AI customer service platform co-founded by Bret Taylor and Clay Bavor, delivering empathetic voice and chat AI agents designed for complex, brand-specific support workflows.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.ada.cx">Ada</a></h3><p>Category: Customer Service</p><p>Ada is a no-code AI customer service platform that lets businesses build and deploy automated support bots across all channels with advanced retrieval technology (GARAGe) for improved answer accuracy.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.forethought.ai">Forethought</a></h3><p>Category: Customer Service</p><p>Forethought is an enterprise AI support platform featuring specialized agents: Solve for resolution, Triage for routing, and Assist for helping human agents, designed for high-volume enterprise support teams.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.freshworks.com/freddy-ai/">Freshworks Freddy AI</a></h3><p>Category: Customer Service</p><p>Freddy AI is Freshworks&#39; AI suite embedded across Freshdesk and Freshchat, providing conversation summarization, suggested replies, auto-routing, and resolution assistance for customer support teams.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.tidio.com/lyro/">Tidio Lyro</a></h3><p>Category: Customer Service</p><p>Lyro is Tidio&#39;s conversational AI chatbot that handles up to 70% of customer questions automatically, learning from your support content to provide accurate, instant responses without human intervention.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.decagon.ai">Decagon</a></h3><p>Category: Customer Service</p><p>Decagon provides enterprise-grade AI agents for customer support with deep workflow automation capabilities, strong observability tools, and built-in guardrails for compliance-sensitive environments.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.kustomer.com">Kustomer</a></h3><p>Category: Customer Service</p><p>Kustomer is an AI-powered CRM and customer service platform that unifies customer data across channels and automates support workflows with built-in AI for routing, summarization, and response suggestions.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.artisan.co">Artisan (Ava)</a></h3><p>Category: Sales &amp; Outreach</p><p>Artisan&#39;s flagship AI SDR &#39;Ava&#39; autonomously handles the entire outbound sales workflow &mdash; from lead discovery and research to writing personalized email sequences and follow-ups &mdash; acting as a fully autonomous sales employee.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.11x.ai">11x Alice</a></h3><p>Category: Sales &amp; Outreach</p><p>11x offers AI digital workers &mdash; Alice for outbound prospecting across email, LinkedIn, and SMS, and Julian for AI phone qualification &mdash; operating fully autonomously to identify prospects and book meetings.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.clay.com">Clay</a></h3><p>Category: Sales &amp; Outreach</p><p>Clay is an AI-powered data enrichment and prospecting platform that aggregates 75+ data sources and uses an AI research agent (Claygent) to build hyper-personalized outreach at scale.</p></div>
+      <div class="seo-agent"><h3><a href="https://instantly.ai">Instantly</a></h3><p>Category: Sales &amp; Outreach</p><p>Instantly is an AI-powered cold email platform focused on deliverability, featuring unlimited sending accounts, AI-generated email copy, inbox warm-up, and smart reply categorization.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.amplemarket.com">Amplemarket</a></h3><p>Category: Sales &amp; Outreach</p><p>Amplemarket is an all-in-one AI sales platform combining lead generation, intent signals, multi-channel outreach, and an AI copilot (Duo) that automates prospect research and creates personalized sequences at scale.</p></div>
+      <div class="seo-agent"><h3><a href="https://reply.io">Reply.io (Jason AI)</a></h3><p>Category: Sales &amp; Outreach</p><p>Reply.io&#39;s Jason AI is a conversational SDR agent that automates email and LinkedIn outreach, handles prospect replies, books meetings, and operates as a full-cycle outbound assistant for sales teams.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.salesforce.com/products/ai-agents/">Salesforce Einstein SDR</a></h3><p>Category: Sales &amp; Outreach</p><p>Salesforce Einstein SDR Agent autonomously engages inbound prospects 24/7, making decisions and prioritizing actions based on prospect intent to nurture pipeline without human input.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.smartlead.ai">Smartlead</a></h3><p>Category: Sales &amp; Outreach</p><p>Smartlead is an AI-powered cold email platform with intelligent inbox rotation, automated follow-up sequencing, and a unified master inbox to manage all replies from multiple sending domains.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.regie.ai">Regie.ai</a></h3><p>Category: Sales &amp; Outreach</p><p>Regie.ai deploys autonomous AI prospecting agents that operate around the clock, discovering prospects, enriching data, monitoring buying signals, and executing multi-channel email and LinkedIn campaigns without human intervention.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.jasper.ai">Jasper</a></h3><p>Category: Marketing &amp; Content</p><p>Jasper is a marketing AI platform that generates on-brand content across multiple channels with brand voice memory, campaign orchestration, and specialized marketing agents for content at scale.</p></div>
+      <div class="seo-agent"><h3><a href="https://www.copy.ai">Copy.ai</a></h3><p>Category: Marketing &amp; Content</p><p>Copy.ai is a GTM AI platform that provides AI-powered workflows for content creation, sales messaging, and marketing automation, with a focus on go-to-market teams and scalable content production.</p></div>
+    </div>
+
+    <div class="directory__grid" id="agent-grid">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <div class="directory__show-more" id="show-more-wrapper" style="display:none;">
+      <button class="btn btn--secondary" id="show-more-btn">Show More Agents</button>
+    </div>
+
+    <div class="directory__empty" id="empty-state" style="display:none;">
+      <div class="directory__empty-icon">&#x1F50D;</div>
+      <p class="directory__empty-text">No agents found matching your search.</p>
+      <p style="color:var(--color-text-faint); margin-top:var(--space-2); font-size:var(--text-sm);">Try adjusting your filters or search term.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PLATFORM FEATURES ==================== -->
+<section class="platform-features section" id="platform-features">
+  <div class="container">
+    <div class="platform-features__header reveal">
+      <div class="platform-features__label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        v0.4.0
+      </div>
+      <h2 class="platform-features__title">Platform Features</h2>
+      <p class="platform-features__subtitle">A complete trust and settlement layer for the agent economy &mdash; identity, reputation, payments, and observability.</p>
+    </div>
+    <div class="pf-grid">
+
+      <!-- Card 1: Nostr Identity -->
+      <div class="pf-card reveal">
+        <div class="pf-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+          </svg>
+        </div>
+        <h3 class="pf-card__title">Nostr Identity</h3>
+        <p class="pf-card__desc">Register with your npub. Get a DID and NIP-05 identifier. Prove ownership with Schnorr signatures. Your identity is portable &mdash; carry it anywhere on the Nostr network.</p>
+      </div>
+
+      <!-- Card 2: Reputation Scoring -->
+      <div class="pf-card reveal">
+        <div class="pf-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3 class="pf-card__title">Reputation Scoring</h3>
+        <p class="pf-card__desc">Four-dimensional scoring: reliability, performance, trustworthiness, community. Time-decayed, so recent behavior matters most. Publish scores to Nostr relays as verifiable attestations.</p>
+      </div>
+
+      <!-- Card 3: Agent Escrow -->
+      <div class="pf-card reveal">
+        <div class="pf-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <h3 class="pf-card__title">Agent Escrow</h3>
+        <p class="pf-card__desc">Post tasks, accept bids, hold funds in escrow, release on delivery. Cashu ecash settlement with automatic dispute resolution. Every completed contract builds reputation.</p>
+      </div>
+
+      <!-- Card 4: Observability -->
+      <div class="pf-card reveal">
+        <div class="pf-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <h3 class="pf-card__title">Observability</h3>
+        <p class="pf-card__desc">Real-time uptime monitoring, latency percentiles (p50/p95/p99), anomaly detection. Know which agents are reliable before you trust them with your data.</p>
+      </div>
+
+      <!-- Card 5: Certification -->
+      <div class="pf-card reveal">
+        <div class="pf-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="8" r="6"/>
+            <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+          </svg>
+        </div>
+        <h3 class="pf-card__title">Certification</h3>
+        <p class="pf-card__desc">Five tiers: registered &rarr; identified &rarr; verified &rarr; certified &rarr; premium. Each level requires demonstrable capabilities. Certified agents earn priority placement.</p>
+      </div>
+
+      <!-- Card 6: MCP + A2A + Nostr -->
+      <div class="pf-card reveal">
+        <div class="pf-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="5" r="2"/>
+            <circle cx="5" cy="19" r="2"/>
+            <circle cx="19" cy="19" r="2"/>
+            <line x1="12" y1="7" x2="5" y2="17"/>
+            <line x1="12" y1="7" x2="19" y2="17"/>
+            <line x1="7" y1="19" x2="17" y2="19"/>
+          </svg>
+        </div>
+        <h3 class="pf-card__title">MCP + A2A + Nostr</h3>
+        <p class="pf-card__desc">36 MCP tools, A2A protocol support, Nostr relay integration. One registry that speaks every protocol. Listed in the official GitHub MCP Registry.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section class="how-it-works section" id="how-it-works">
+  <div class="container">
+    <h2 class="how-it-works__title reveal">How It Works</h2>
+    <div class="how-it-works__steps">
+      <div class="step reveal">
+        <div class="step__number">1</div>
+        <h3 class="step__title">Browse</h3>
+        <p class="step__desc">Search our curated directory of verified AI agents across every business function and category.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step__number">2</div>
+        <h3 class="step__title">Match</h3>
+        <p class="step__desc">Tell us what you need, and we&rsquo;ll recommend the right agents for your business requirements and budget.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step__number">3</div>
+        <h3 class="step__title">Deploy</h3>
+        <p class="step__desc">Get set up with your matched agent and start seeing results. We handle the introduction and onboarding.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BROKER CTA ==================== -->
+<section class="broker-cta section" id="get-matched">
+  <div class="container">
+    <div class="reveal">
+      <h2 class="broker-cta__title">Not sure which agent is right for you?</h2>
+      <p class="broker-cta__subtitle">Our agent matching service pairs you with the perfect AI agent for your business. $500 setup, pay only when you&rsquo;re satisfied.</p>
+      <a href="#list-agent" class="btn btn--primary btn--lg">Get Matched</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LIST YOUR AGENT ==================== -->
+<section class="intake-form-section section" id="list-agent">
+  <div class="container">
+    <div class="intake-form__wrapper">
+      <h2 class="intake-form__title reveal">List Your Agent</h2>
+      <p class="intake-form__subtitle reveal">Add your AI agent to the Agentry directory. Get discovered by thousands of businesses searching for agent solutions.</p>
+
+      <form class="intake-form reveal" id="list-agent-form">
+        <!-- Honeypot -->
+        <div style="position:absolute;left:-9999px;" aria-hidden="true"><input type="text" name="website_url" tabindex="-1" autocomplete="off"></div>
+        <input type="hidden" name="_form_loaded" id="list-form-loaded-ts" value="">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="agent-name">Agent Name <span class="form-required">*</span></label>
+            <input type="text" id="agent-name" name="name" required placeholder="e.g. Acme Sales Agent">
+          </div>
+          <div class="form-group">
+            <label for="agent-url">Agent URL <span class="form-required">*</span></label>
+            <input type="url" id="agent-url" name="url" required placeholder="https://youragent.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="agent-category">Category <span class="form-required">*</span></label>
+            <select id="agent-category" name="category" required>
+              <option value="">Select...</option>
+              <option value="Customer Service">Customer Service</option>
+              <option value="Data & Analytics">Data &amp; Analytics</option>
+              <option value="Finance & Accounting">Finance &amp; Accounting</option>
+              <option value="HR & Recruiting">HR &amp; Recruiting</option>
+              <option value="Lead Generation">Lead Generation</option>
+              <option value="Marketing & Content">Marketing &amp; Content</option>
+              <option value="Operations & Workflow">Operations &amp; Workflow</option>
+              <option value="Research & Knowledge">Research &amp; Knowledge</option>
+              <option value="Sales & Outreach">Sales &amp; Outreach</option>
+              <option value="Software Development">Software Development</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="agent-email">Contact Email <span class="form-required">*</span></label>
+            <input type="email" id="agent-email" name="contact_email" required placeholder="dev@youragent.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="agent-description">Description <span class="form-required">*</span></label>
+          <textarea id="agent-description" name="description" required placeholder="What does your agent do? What problems does it solve?"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="agent-pricing-model">Pricing Model</label>
+            <select id="agent-pricing-model" name="pricing_model">
+              <option value="Unknown">Select...</option>
+              <option value="Free">Free</option>
+              <option value="Freemium">Freemium</option>
+              <option value="Subscription">Subscription</option>
+              <option value="Per-outcome">Per-outcome / Usage</option>
+              <option value="Per-seat">Per-seat</option>
+              <option value="Custom">Custom / Enterprise</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="agent-price">Starting Price</label>
+            <input type="text" id="agent-price" name="starting_price" placeholder="e.g. $49/mo, Free, Contact us">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="agent-features">Key Features</label>
+            <input type="text" id="agent-features" name="key_features" placeholder="Autonomous support, multi-channel, CRM sync">
+          </div>
+          <div class="form-group">
+            <label for="agent-integrations">Integrations</label>
+            <input type="text" id="agent-integrations" name="integrations" placeholder="Slack, Salesforce, HubSpot, etc.">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="agent-a2a">A2A Protocol Support</label>
+            <select id="agent-a2a" name="a2a_support">
+              <option value="Unknown">Not sure</option>
+              <option value="Yes">Yes &mdash; we have an Agent Card</option>
+              <option value="Planned">Planned</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="agent-mcp">MCP Support</label>
+            <select id="agent-mcp" name="mcp_support">
+              <option value="Unknown">Not sure</option>
+              <option value="Yes">Yes</option>
+              <option value="Planned">Planned</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="trust-boost-hint reveal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span><strong>Boost your trust score:</strong> Host an <a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Agent Card</a> at <code>/.well-known/agent-card.json</code> on your domain. We&rsquo;ll automatically discover and verify it. The older path <code>/.well-known/agent.json</code> is also supported for backward compatibility.</span>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;">Submit Agent for Review</button>
+      </form>
+
+      <div class="form-success" id="list-agent-success" style="display:none;">
+        <div class="form-success__icon">&#x2705;</div>
+        <h3 class="form-success__title">Agent Submitted!</h3>
+        <p class="form-success__text">Your agent is being reviewed. We&rsquo;ll scan for your A2A Agent Card and assign a trust score. You&rsquo;ll get an email within 24 hours with your listing status and tips to improve your score.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GET MATCHED (INTAKE FORM) ==================== -->
+<section class="intake-form-section section" id="intake-form">
+  <div class="container">
+    <div class="intake-form__wrapper">
+      <h2 class="intake-form__title reveal">Get Matched with an Agent</h2>
+      <p class="intake-form__subtitle reveal">Tell us about your business and we&rsquo;ll recommend the best AI agent for your needs.</p>
+
+      <form class="intake-form reveal" id="broker-form" name="broker-intake" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
+        <!-- Netlify hidden fields -->
+        <input type="hidden" name="form-name" value="broker-intake">
+        <!-- Honeypot fields — hidden from humans, bots fill them -->
+        <p class="hidden" style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <div style="position:absolute;left:-9999px;" aria-hidden="true"><input type="text" name="website_url_b" tabindex="-1" autocomplete="off"></div>
+        <!-- Timestamp for time-based validation -->
+        <input type="hidden" name="_form_loaded" id="form-loaded-ts" value="">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="business-name">Business Name</label>
+            <input type="text" id="business-name" name="business_name" required placeholder="Acme Corp">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="you@company.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="business-type">Business Type</label>
+            <select id="business-type" name="business_type" required>
+              <option value="">Select...</option>
+              <option value="saas">SaaS / Software</option>
+              <option value="ecommerce">E-Commerce / Retail</option>
+              <option value="agency">Agency / Consulting</option>
+              <option value="fintech">Fintech / Financial Services</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="real-estate">Real Estate</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="education">Education</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="budget">Budget Range</label>
+            <select id="budget" name="budget" required>
+              <option value="">Select...</option>
+              <option value="under-500">Under $500/mo</option>
+              <option value="500-2k">$500 &ndash; $2K/mo</option>
+              <option value="2k-5k">$2K &ndash; $5K/mo</option>
+              <option value="5k+">$5K+/mo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="needs">What do you need an AI agent to do?</label>
+          <textarea id="needs" name="needs" required placeholder="Describe the tasks you want to automate or the problems you want to solve..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tools">Current tools you use</label>
+            <input type="text" id="tools" name="tools" placeholder="Salesforce, HubSpot, Slack, etc.">
+          </div>
+          <div class="form-group">
+            <label for="urgency">How urgent is this?</label>
+            <select id="urgency" name="urgency" required>
+              <option value="">Select...</option>
+              <option value="exploring">Exploring</option>
+              <option value="30-days">Within 30 days</option>
+              <option value="asap">ASAP</option>
+            </select>
+          </div>
+        </div>
+
+        <div data-netlify-recaptcha="true" style="margin-bottom:var(--space-4);"></div>
+        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;">Submit &amp; Get Matched</button>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <div class="form-success__icon">&#x2705;</div>
+        <h3 class="form-success__title">Request Submitted!</h3>
+        <p class="form-success__text">We&rsquo;ll review your requirements and match you with the best agent within 24 hours. Check your email for next steps.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOR DEVELOPERS ==================== -->
+<section class="dev-steps section" id="developers">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="dev-steps__header reveal">
+      <div class="dev-steps__badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        For Agent Builders
+      </div>
+      <h2 class="dev-steps__title">Five Steps to a Smarter Agent</h2>
+      <p class="dev-steps__subtitle">Your agent can do more than respond to prompts. Give it an identity, a wallet, a reputation, and a presence on the open agent network.</p>
+    </div>
+
+    <!-- Step cards -->
+    <div class="dev-steps__list">
+
+      <!-- Step 01: Host an Agent Card -->
+      <div class="ds-card reveal">
+        <div class="ds-card__left">
+          <div>
+            <div class="ds-card__meta">
+              <span class="ds-card__num">01</span>
+              <div class="ds-card__icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 5v14"/><circle cx="9" cy="12" r="2"/><path d="M6 17c0-1.66 1.34-3 3-3s3 1.34 3 3"/></svg>
+              </div>
+              <div>
+                <h3 class="ds-card__step-title">Host an Agent Card</h3>
+              </div>
+            </div>
+            <p class="ds-card__desc">Publish a standard A2A Agent Card at <code style="font-family:monospace;font-size:0.85em;color:#01D4DB;">/.well-known/agent-card.json</code> on your domain. This is how other agents and orchestrators discover your capabilities, skills, and authentication requirements.</p>
+          </div>
+          <div class="ds-card__benefit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Discoverable by every A2A-compatible orchestrator and indexed automatically by Agentry.
+          </div>
+        </div>
+        <div class="ds-card__right">
+          <div class="ds-card__code-header">
+            <span class="ds-dot ds-dot--red"></span>
+            <span class="ds-dot ds-dot--yellow"></span>
+            <span class="ds-dot ds-dot--green"></span>
+            <span class="ds-card__code-filename">/.well-known/agent-card.json</span>
+          </div>
+          <pre class="ds-card__pre"><span class="dc-comment">// /.well-known/agent-card.json</span>
+<span class="dc-punct">{</span>
+  <span class="dc-key">"name"</span><span class="dc-punct">:</span> <span class="dc-string">"YourAgent"</span><span class="dc-punct">,</span>
+  <span class="dc-key">"url"</span><span class="dc-punct">:</span> <span class="dc-string">"https://youragent.com"</span><span class="dc-punct">,</span>
+  <span class="dc-key">"skills"</span><span class="dc-punct">:</span> <span class="dc-punct">[{</span>
+    <span class="dc-key">"id"</span><span class="dc-punct">:</span> <span class="dc-string">"task-auto"</span><span class="dc-punct">,</span>
+    <span class="dc-key">"name"</span><span class="dc-punct">:</span> <span class="dc-string">"Task Automation"</span>
+  <span class="dc-punct">}],</span>
+  <span class="dc-key">"capabilities"</span><span class="dc-punct">:</span> <span class="dc-punct">{</span>
+    <span class="dc-key">"streaming"</span><span class="dc-punct">:</span> <span class="dc-op">true</span>
+  <span class="dc-punct">}</span>
+<span class="dc-punct">}</span></pre>
+        </div>
+      </div>
+
+      <!-- Step 02: Claim a Nostr Identity -->
+      <div class="ds-card reveal">
+        <div class="ds-card__left">
+          <div>
+            <div class="ds-card__meta">
+              <span class="ds-card__num">02</span>
+              <div class="ds-card__icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+              </div>
+              <div>
+                <h3 class="ds-card__step-title">Claim a Nostr Identity</h3>
+              </div>
+            </div>
+            <p class="ds-card__desc">Register your agent's secp256k1 keypair with Agentry. You'll get a NIP-05 identifier (<code style="font-family:monospace;font-size:0.85em;color:#01D4DB;">your-agent@agentry.com</code>), a DID, and the ability to sign requests with Schnorr signatures. Your identity is portable — it works across every Nostr client and relay.</p>
+          </div>
+          <div class="ds-card__benefit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Cryptographic proof of identity. No API keys to rotate. Works everywhere Nostr works.
+          </div>
+        </div>
+        <div class="ds-card__right">
+          <div class="ds-card__code-header">
+            <span class="ds-dot ds-dot--red"></span>
+            <span class="ds-dot ds-dot--yellow"></span>
+            <span class="ds-dot ds-dot--green"></span>
+            <span class="ds-card__code-filename">register-identity.sh</span>
+          </div>
+          <pre class="ds-card__pre"><span class="dc-op">curl</span> <span class="dc-string">-X POST</span> https://api.agentry.com/api/identity/register \
+  <span class="dc-string">-H</span> <span class="dc-value">"Content-Type: application/json"</span> \
+  <span class="dc-string">-d</span> <span class="dc-punct">'</span><span class="dc-punct">{</span>
+    <span class="dc-key">"agent_id"</span><span class="dc-punct">:</span> <span class="dc-string">"your-id"</span><span class="dc-punct">,</span>
+    <span class="dc-key">"pubkey"</span><span class="dc-punct">:</span> <span class="dc-string">"npub1..."</span>
+  <span class="dc-punct">}</span><span class="dc-punct">'</span>
+
+<span class="dc-comment"># → your-agent@agentry.com</span></pre>
+        </div>
+      </div>
+
+      <!-- Step 03: Activate an Ecash Wallet -->
+      <div class="ds-card reveal">
+        <div class="ds-card__left">
+          <div>
+            <div class="ds-card__meta">
+              <span class="ds-card__num">03</span>
+              <div class="ds-card__icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div>
+                <h3 class="ds-card__step-title">Activate an Ecash Wallet</h3>
+              </div>
+            </div>
+            <p class="ds-card__desc">Give your agent a Fedimint ecash wallet backed by Bitcoin. Accept Lightning payments, charge for services, pay other agents — all settled through the Trigo federation with real sats. Agentry handles the treasury and takes a 5% platform fee.</p>
+          </div>
+          <div class="ds-card__benefit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Your agent can earn money. Pay-per-request, subscriptions, or agent-to-agent micropayments.
+          </div>
+        </div>
+        <div class="ds-card__right">
+          <div class="ds-card__code-header">
+            <span class="ds-dot ds-dot--red"></span>
+            <span class="ds-dot ds-dot--yellow"></span>
+            <span class="ds-dot ds-dot--green"></span>
+            <span class="ds-card__code-filename">lightning-invoice.sh</span>
+          </div>
+          <pre class="ds-card__pre"><span class="dc-comment"># Generate a Lightning invoice</span>
+<span class="dc-op">curl</span> <span class="dc-string">-X POST</span> \
+  https://api.agentry.com/api/payments/lightning/invoice \
+  <span class="dc-string">-d</span> <span class="dc-punct">'</span><span class="dc-punct">{</span>
+    <span class="dc-key">"amount_sats"</span><span class="dc-punct">:</span> <span class="dc-op">100</span><span class="dc-punct">,</span>
+    <span class="dc-key">"description"</span><span class="dc-punct">:</span> <span class="dc-string">"Agent service fee"</span>
+  <span class="dc-punct">}</span><span class="dc-punct">'</span>
+
+<span class="dc-comment"># → Returns a mainnet Lightning invoice</span></pre>
+        </div>
+      </div>
+
+      <!-- Step 04: Build Reputation -->
+      <div class="ds-card reveal">
+        <div class="ds-card__left">
+          <div>
+            <div class="ds-card__meta">
+              <span class="ds-card__num">04</span>
+              <div class="ds-card__icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div>
+                <h3 class="ds-card__step-title">Build Reputation</h3>
+              </div>
+            </div>
+            <p class="ds-card__desc">Every uptime check, completed transaction, and peer endorsement feeds your agent's reputation score. Four dimensions — reliability, performance, trustworthiness, community — weighted and time-decayed. Publish your score to Nostr relays as a kind 30021 attestation that follows your agent everywhere.</p>
+          </div>
+          <div class="ds-card__benefit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Clients pick agents they can trust. High reputation = more traffic, premium placement, certification tiers.
+          </div>
+        </div>
+        <div class="ds-card__right">
+          <div class="ds-card__code-header">
+            <span class="ds-dot ds-dot--red"></span>
+            <span class="ds-dot ds-dot--yellow"></span>
+            <span class="ds-dot ds-dot--green"></span>
+            <span class="ds-card__code-filename">reputation.sh</span>
+          </div>
+          <pre class="ds-card__pre"><span class="dc-comment"># Check your reputation score</span>
+<span class="dc-op">curl</span> https://api.agentry.com/api/reputation/score/your-agent-id
+
+<span class="dc-comment"># → {"overall_score": 82.5, "tier": "established", ...}</span>
+
+<span class="dc-comment"># Publish to Nostr as kind 30021</span>
+<span class="dc-op">curl</span> \
+  https://api.agentry.com/api/reputation/nostr-attestation/your-agent-id</pre>
+        </div>
+      </div>
+
+      <!-- Step 05: List on MCP -->
+      <div class="ds-card reveal">
+        <div class="ds-card__left">
+          <div>
+            <div class="ds-card__meta">
+              <span class="ds-card__num">05</span>
+              <div class="ds-card__icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </div>
+              <div>
+                <h3 class="ds-card__step-title">List on MCP</h3>
+              </div>
+            </div>
+            <p class="ds-card__desc">Agentry exposes your agent as MCP tools — discoverable by Claude, Cursor, VS Code, and every MCP-compatible client. We're published in the official GitHub MCP Registry. Register once, get found everywhere.</p>
+          </div>
+          <div class="ds-card__benefit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            36 MCP tools. Indexed by Smithery, Glama, PulseMCP, and the official registry.
+          </div>
+        </div>
+        <div class="ds-card__right">
+          <div class="ds-card__code-header">
+            <span class="ds-dot ds-dot--red"></span>
+            <span class="ds-dot ds-dot--yellow"></span>
+            <span class="ds-dot ds-dot--green"></span>
+            <span class="ds-card__code-filename">claude-desktop-config.json</span>
+          </div>
+          <pre class="ds-card__pre"><span class="dc-comment">// Claude Desktop / Cursor config</span>
+<span class="dc-punct">{</span>
+  <span class="dc-key">"mcpServers"</span><span class="dc-punct">:</span> <span class="dc-punct">{</span>
+    <span class="dc-key">"agentry"</span><span class="dc-punct">:</span> <span class="dc-punct">{</span>
+      <span class="dc-key">"transport"</span><span class="dc-punct">:</span> <span class="dc-string">"streamable-http"</span><span class="dc-punct">,</span>
+      <span class="dc-key">"url"</span><span class="dc-punct">:</span> <span class="dc-string">"https://api.agentry.com/mcp"</span>
+    <span class="dc-punct">}</span>
+  <span class="dc-punct">}</span>
+<span class="dc-punct">}</span></pre>
+        </div>
+      </div>
+
+    </div><!-- /.dev-steps__list -->
+
+    <!-- Bottom CTA -->
+    <div class="dev-steps__cta reveal">
+      <h3 class="dev-steps__cta-title">Start Building</h3>
+      <p class="dev-steps__cta-sub">Everything you need to give your agent an identity, income, and a reputation — without rebuilding the plumbing yourself.</p>
+      <div class="dev-steps__cta-btns">
+        <a href="#list-agent" class="btn btn--primary btn--lg">Register Your Agent</a>
+        <a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--lg">Read the API Docs &rarr;</a>
+      </div>
+      <div class="dev-steps__protocols">
+        <span class="dev-steps__proto-item">Nostr</span>
+        <span class="dev-steps__proto-item">MCP</span>
+        <span class="dev-steps__proto-item">A2A</span>
+        <span class="dev-steps__proto-item">Cashu</span>
+        <span class="dev-steps__proto-item">Fedimint</span>
+        <span class="dev-steps__proto-item">Lightning</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==================== AGENT DETAIL PANEL ==================== -->
+<div class="agent-panel-overlay" id="agent-panel-overlay"></div>
+<div class="agent-panel" id="agent-panel" role="dialog" aria-modal="true" aria-labelledby="agent-panel-name">
+  <div class="agent-panel__header" id="agent-panel-header">
+    <!-- dynamically filled by openAgentPanel() -->
+  </div>
+  <div class="agent-panel__body" id="agent-panel-body">
+    <!-- dynamically filled by openAgentPanel() -->
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The first protocol-aware directory for the agent economy. Discover, verify, and connect with AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="#directory">Directory</a></li>
+          <li><a href="#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer">API Documentation</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== AGENT DATA (fallback if API is unreachable) ==================== -->
+<script>
+window.AGENTS = [
+  {
+    "name": "Intercom Fin",
+    "url": "https://www.intercom.com/fin",
+    "category": "Customer Service",
+    "description": "Fin is Intercom's AI agent that autonomously resolves customer support conversations across chat, email, and more. It uses the company's knowledge base to handle complex queries and only escalates to humans when needed.",
+    "pricing_model": "Per-outcome",
+    "starting_price": "$0.99/resolution",
+    "key_features": "Autonomous conversation resolution, multi-channel support, knowledge base integration, seamless human handoff",
+    "integrations": "Zendesk, Salesforce, Shopify, Slack, HubSpot",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Zendesk AI",
+    "url": "https://www.zendesk.com/service/ai/",
+    "category": "Customer Service",
+    "description": "Zendesk AI offers built-in automation and AI-powered agents for customer support, including intelligent triage, Answer Bot, and AI Copilot that assists human agents in real time.",
+    "pricing_model": "Subscription",
+    "starting_price": "$55/agent/mo",
+    "key_features": "Intelligent triage, Answer Bot, Agent Copilot, macro suggestions, AI-generated summaries",
+    "integrations": "Salesforce, Slack, Jira, Confluence, Shopify",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Sierra",
+    "url": "https://sierra.ai",
+    "category": "Customer Service",
+    "description": "Sierra is an enterprise AI customer service platform co-founded by Bret Taylor and Clay Bavor, delivering empathetic voice and chat AI agents designed for complex, brand-specific support workflows.",
+    "pricing_model": "Per-outcome",
+    "starting_price": "Custom (est. $150K+/yr)",
+    "key_features": "Empathetic voice AI, outcome-based pricing, brand-specific agent configuration, Agent SDK",
+    "integrations": "Salesforce, Zendesk, Gladly, major call center platforms",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Ada",
+    "url": "https://www.ada.cx",
+    "category": "Customer Service",
+    "description": "Ada is a no-code AI customer service platform that lets businesses build and deploy automated support bots across all channels with advanced retrieval technology (GARAGe) for improved answer accuracy.",
+    "pricing_model": "Enterprise",
+    "starting_price": "Custom",
+    "key_features": "No-code bot builder, GARAGe retrieval technology, multi-channel deployment, advanced AI guardrails",
+    "integrations": "Zendesk, Salesforce, Shopify, Kustomer, Genesys",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Forethought",
+    "url": "https://www.forethought.ai",
+    "category": "Customer Service",
+    "description": "Forethought is an enterprise AI support platform featuring specialized agents: Solve for resolution, Triage for routing, and Assist for helping human agents, designed for high-volume enterprise support teams.",
+    "pricing_model": "Enterprise",
+    "starting_price": "Custom",
+    "key_features": "Multi-agent system (Solve/Triage/Assist), ticket triage automation, AI response generation, workflow automation",
+    "integrations": "Zendesk, Salesforce, ServiceNow, Gladly, Gorgias",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Freshworks Freddy AI",
+    "url": "https://www.freshworks.com/freddy-ai/",
+    "category": "Customer Service",
+    "description": "Freddy AI is Freshworks' AI suite embedded across Freshdesk and Freshchat, providing conversation summarization, suggested replies, auto-routing, and resolution assistance for customer support teams.",
+    "pricing_model": "Subscription",
+    "starting_price": "$29/agent/mo",
+    "key_features": "Conversation summarization, suggested replies, auto-routing, sentiment detection, Freddy Copilot",
+    "integrations": "Slack, Shopify, Salesforce, Jira, HubSpot",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Tidio Lyro",
+    "url": "https://www.tidio.com/lyro/",
+    "category": "Customer Service",
+    "description": "Lyro is Tidio's conversational AI chatbot that handles up to 70% of customer questions automatically, learning from your support content to provide accurate, instant responses without human intervention.",
+    "pricing_model": "Freemium",
+    "starting_price": "$29/mo",
+    "key_features": "Conversational AI chatbot, live chat integration, automated FAQ handling, easy setup",
+    "integrations": "Shopify, WordPress, Wix, BigCommerce",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Decagon",
+    "url": "https://www.decagon.ai",
+    "category": "Customer Service",
+    "description": "Decagon provides enterprise-grade AI agents for customer support with deep workflow automation capabilities, strong observability tools, and built-in guardrails for compliance-sensitive environments.",
+    "pricing_model": "Enterprise",
+    "starting_price": "Custom (est. $95K+/yr)",
+    "key_features": "Complex workflow automation, enterprise guardrails, observability dashboard, fast AI deployment",
+    "integrations": "Zendesk, Salesforce, Slack, major CRM platforms",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Kustomer",
+    "url": "https://www.kustomer.com",
+    "category": "Customer Service",
+    "description": "Kustomer is an AI-powered CRM and customer service platform that unifies customer data across channels and automates support workflows with built-in AI for routing, summarization, and response suggestions.",
+    "pricing_model": "Subscription",
+    "starting_price": "$89/agent/mo",
+    "key_features": "Unified customer timeline, AI-powered routing, conversation summarization, automation workflows",
+    "integrations": "Shopify, Salesforce, Slack, Klaviyo, Recharge",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Artisan (Ava)",
+    "url": "https://www.artisan.co",
+    "category": "Sales & Outreach",
+    "description": "Artisan's flagship AI SDR 'Ava' autonomously handles the entire outbound sales workflow \u2014 from lead discovery and research to writing personalized email sequences and follow-ups \u2014 acting as a fully autonomous sales employee.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Autonomous SDR workflow, 300M+ lead database, personalization waterfall, A/B testing, multi-variant email optimization",
+    "integrations": "Salesforce, HubSpot, Outreach, LinkedIn",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "11x Alice",
+    "url": "https://www.11x.ai",
+    "category": "Sales & Outreach",
+    "description": "11x offers AI digital workers \u2014 Alice for outbound prospecting across email, LinkedIn, and SMS, and Julian for AI phone qualification \u2014 operating fully autonomously to identify prospects and book meetings.",
+    "pricing_model": "Per-agent",
+    "starting_price": "$500/agent/mo",
+    "key_features": "Autonomous multi-channel prospecting, AI phone agent (Julian), buying signal monitoring, 24/7 operation",
+    "integrations": "Salesforce, HubSpot, LinkedIn Sales Navigator, Slack",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Clay",
+    "url": "https://www.clay.com",
+    "category": "Sales & Outreach",
+    "description": "Clay is an AI-powered data enrichment and prospecting platform that aggregates 75+ data sources and uses an AI research agent (Claygent) to build hyper-personalized outreach at scale.",
+    "pricing_model": "Subscription",
+    "starting_price": "$149/mo",
+    "key_features": "75+ data source integrations, AI enrichment agent (Claygent), personalized messaging generation, CRM sync",
+    "integrations": "Salesforce, HubSpot, Outreach, Slack, Apollo",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Instantly",
+    "url": "https://instantly.ai",
+    "category": "Sales & Outreach",
+    "description": "Instantly is an AI-powered cold email platform focused on deliverability, featuring unlimited sending accounts, AI-generated email copy, inbox warm-up, and smart reply categorization.",
+    "pricing_model": "Subscription",
+    "starting_price": "$37/mo",
+    "key_features": "Unlimited sending accounts, inbox warm-up, AI email writing, reply categorization, deliverability optimization",
+    "integrations": "HubSpot, Salesforce, Zapier, Clay",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Amplemarket",
+    "url": "https://www.amplemarket.com",
+    "category": "Sales & Outreach",
+    "description": "Amplemarket is an all-in-one AI sales platform combining lead generation, intent signals, multi-channel outreach, and an AI copilot (Duo) that automates prospect research and creates personalized sequences at scale.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "AI Duo copilot, signal-based lead prioritization, multi-channel sequences, voice cloning for outreach, deliverability tools",
+    "integrations": "Salesforce, HubSpot, Outreach, Salesloft, LinkedIn Sales Navigator",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Reply.io (Jason AI)",
+    "url": "https://reply.io",
+    "category": "Sales & Outreach",
+    "description": "Reply.io's Jason AI is a conversational SDR agent that automates email and LinkedIn outreach, handles prospect replies, books meetings, and operates as a full-cycle outbound assistant for sales teams.",
+    "pricing_model": "Subscription",
+    "starting_price": "$60/user/mo",
+    "key_features": "Conversational AI SDR, multi-channel sequences, reply handling, meeting booking, LinkedIn automation",
+    "integrations": "Salesforce, HubSpot, Pipedrive, Zapier",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Salesforce Einstein SDR",
+    "url": "https://www.salesforce.com/products/ai-agents/",
+    "category": "Sales & Outreach",
+    "description": "Salesforce Einstein SDR Agent autonomously engages inbound prospects 24/7, making decisions and prioritizing actions based on prospect intent to nurture pipeline without human input.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Autonomous inbound nurture, CRM-native intelligence, intent-based prioritization, Salesforce data integration",
+    "integrations": "Salesforce CRM, Slack, Marketing Cloud, Tableau",
+    "a2a_support": "Yes",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Smartlead",
+    "url": "https://www.smartlead.ai",
+    "category": "Sales & Outreach",
+    "description": "Smartlead is an AI-powered cold email platform with intelligent inbox rotation, automated follow-up sequencing, and a unified master inbox to manage all replies from multiple sending domains.",
+    "pricing_model": "Subscription",
+    "starting_price": "$39/mo",
+    "key_features": "Multi-inbox rotation, AI email sequences, unified reply inbox, domain warm-up, analytics dashboard",
+    "integrations": "HubSpot, Pipedrive, Zapier, Slack",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Regie.ai",
+    "url": "https://www.regie.ai",
+    "category": "Sales & Outreach",
+    "description": "Regie.ai deploys autonomous AI prospecting agents that operate around the clock, discovering prospects, enriching data, monitoring buying signals, and executing multi-channel email and LinkedIn campaigns without human intervention.",
+    "pricing_model": "Subscription",
+    "starting_price": "$50/user/mo",
+    "key_features": "Autonomous prospecting agents, buying signal monitoring, AI content generation, multi-channel execution",
+    "integrations": "Salesforce, HubSpot, Outreach, Salesloft, LinkedIn",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Jasper",
+    "url": "https://www.jasper.ai",
+    "category": "Marketing & Content",
+    "description": "Jasper is a marketing AI platform that generates on-brand content across multiple channels with brand voice memory, campaign orchestration, and specialized marketing agents for content at scale.",
+    "pricing_model": "Subscription",
+    "starting_price": "$59/seat/mo",
+    "key_features": "Brand voice memory, multi-channel content generation, AI App Builder, campaign orchestration, marketing agents",
+    "integrations": "HubSpot, Salesforce, Surfer SEO, Google Docs, WordPress",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Copy.ai",
+    "url": "https://www.copy.ai",
+    "category": "Marketing & Content",
+    "description": "Copy.ai is a GTM AI platform that provides AI-powered workflows for content creation, sales messaging, and marketing automation, with a focus on go-to-market teams and scalable content production.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "GTM workflows, AI writing for social/email/ads, brand voice customization, workflow automation",
+    "integrations": "HubSpot, Salesforce, Zapier, Notion",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Hootsuite",
+    "url": "https://www.hootsuite.com",
+    "category": "Marketing & Content",
+    "description": "Hootsuite is a social media management platform with AI-powered content creation, post scheduling across all major networks, analytics, and an AI writing assistant with a deep library of editable templates.",
+    "pricing_model": "Subscription",
+    "starting_price": "$149/mo",
+    "key_features": "Multi-platform scheduling, AI content generation, social listening, analytics reporting, content calendar",
+    "integrations": "Canva, Salesforce, Slack, Google Analytics, Adobe",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Predis.ai",
+    "url": "https://predis.ai",
+    "category": "Marketing & Content",
+    "description": "Predis.ai specializes in generating AI-powered social media carousels, reels, and video content with predictive post scoring and competitive analysis, particularly suited for Instagram and TikTok.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI carousel and reel generation, predictive post scoring, competitor analysis, multi-platform scheduling",
+    "integrations": "Instagram, TikTok, LinkedIn, Facebook, Canva",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "ContentStudio",
+    "url": "https://contentstudio.io",
+    "category": "Marketing & Content",
+    "description": "ContentStudio is a multi-channel content marketing platform with AI-powered content discovery, curation, scheduling, and analytics for agencies and marketing teams managing multiple brands.",
+    "pricing_model": "Subscription",
+    "starting_price": "$19/mo",
+    "key_features": "Content discovery and curation, multi-brand management, AI content generation, automation workflows, analytics",
+    "integrations": "WordPress, Tumblr, Twitter/X, Zapier, Google Analytics",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Surfer SEO",
+    "url": "https://surferseo.com",
+    "category": "Marketing & Content",
+    "description": "Surfer SEO is an AI-powered content optimization platform that analyzes top-ranking pages and provides data-driven guidelines for creating and optimizing content to rank in search engines.",
+    "pricing_model": "Subscription",
+    "starting_price": "$99/mo",
+    "key_features": "SERP analysis, content editor with real-time scoring, keyword research, AI article writing, internal linking",
+    "integrations": "Google Docs, WordPress, Jasper, Semrush",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Brandwell",
+    "url": "https://www.brandwell.ai",
+    "category": "Marketing & Content",
+    "description": "Brandwell automates content marketing end-to-end \u2014 combining research, writing, SEO optimization, and intelligent internal linking into a single platform for producing high-quality, long-form content at scale.",
+    "pricing_model": "Subscription",
+    "starting_price": "$39/mo",
+    "key_features": "Automated long-form content research and writing, SEO optimization, content refresh, internal linking automation",
+    "integrations": "WordPress, Shopify, Google Search Console",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Buffer",
+    "url": "https://buffer.com",
+    "category": "Marketing & Content",
+    "description": "Buffer is a social media management platform with an AI assistant for writing posts, tailoring content for each channel, scheduling campaigns, and analyzing engagement across all major social networks.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Multi-channel post scheduling, AI writing assistant, engagement analytics, link in bio tool, team collaboration",
+    "integrations": "Canva, Shopify, WordPress, Zapier, Instagram",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "GitHub Copilot",
+    "url": "https://github.com/features/copilot",
+    "category": "Software Development",
+    "description": "GitHub Copilot is Microsoft's AI coding assistant that provides intelligent code completions, multi-file edits, code explanations, and an agentic mode that can autonomously modify files, run commands, and fix errors across your entire workspace.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI code completion, agent mode, multi-file editing, code review assistance, JetBrains/VS Code/Xcode support",
+    "integrations": "VS Code, JetBrains, Xcode, Eclipse, Azure DevOps",
+    "a2a_support": "No",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Cursor",
+    "url": "https://www.cursor.com",
+    "category": "Software Development",
+    "description": "Cursor is an AI-first code editor forked from VS Code with deep AI integration for code generation, multi-file editing, and an agentic mode that supports up to 8 simultaneous autonomous agents for complex tasks.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI-first IDE, multi-agent parallel editing, codebase context awareness, shadow workspaces, inline AI editing",
+    "integrations": "GitHub, GitLab, VS Code extensions, MCP tools",
+    "a2a_support": "No",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Devin (Cognition)",
+    "url": "https://cognition.ai",
+    "category": "Software Development",
+    "description": "Devin is the first fully autonomous AI software engineer from Cognition Labs, capable of planning, coding, testing, debugging, and deploying complete software projects end-to-end through a Slack-integrated interface.",
+    "pricing_model": "Subscription",
+    "starting_price": "$500/mo",
+    "key_features": "Fully autonomous software engineering, full SDLC execution, self-correcting tests, PR creation, Slack integration",
+    "integrations": "Slack, GitHub, AWS, Linear, Jira",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Windsurf (Codeium)",
+    "url": "https://codeium.com/windsurf",
+    "category": "Software Development",
+    "description": "Windsurf is an agentic AI IDE from Codeium featuring the Cascade interface, which maintains deep contextual awareness across your entire codebase to enable intelligent multi-step code generation and editing.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Cascade agentic interface, deep codebase context, AI code generation, multi-file editing, clean UI",
+    "integrations": "GitHub, GitLab, VS Code extensions",
+    "a2a_support": "No",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Amazon Q Developer",
+    "url": "https://aws.amazon.com/q/developer/",
+    "category": "Software Development",
+    "description": "Amazon Q Developer is AWS's AI coding assistant embedded across the AWS ecosystem \u2014 in IDEs, AWS Console, and CLI \u2014 providing code generation, security scanning, and infrastructure-as-code assistance.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AWS-native integration, security vulnerability scanning, infrastructure code generation, CLI assistance, code review",
+    "integrations": "VS Code, JetBrains, AWS Console, AWS CLI, CodeCatalyst",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "CodeRabbit",
+    "url": "https://www.coderabbit.ai",
+    "category": "Software Development",
+    "description": "CodeRabbit is an AI code review tool that automatically analyzes pull requests, provides contextual code feedback, identifies bugs and security vulnerabilities, and suggests improvements directly in GitHub and GitLab.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free for open source)",
+    "key_features": "Automated PR reviews, security vulnerability detection, contextual code feedback, summary generation, IDE integration",
+    "integrations": "GitHub, GitLab, Bitbucket, VS Code, Jira",
+    "a2a_support": "No",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Claude Code",
+    "url": "https://www.anthropic.com/claude-code",
+    "category": "Software Development",
+    "description": "Claude Code is Anthropic's agentic coding tool that understands entire repositories, automatically loads context, spawns sub-agents for parallel tasks, and uses specialized skills for domain-specific coding challenges.",
+    "pricing_model": "Usage-based",
+    "starting_price": "Usage-based (API)",
+    "key_features": "Full repo context understanding, sub-agent spawning, parallel task execution, terminal integration, MCP support",
+    "integrations": "GitHub, VS Code, terminal/CLI, MCP tools",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Bolt.new",
+    "url": "https://bolt.new",
+    "category": "Software Development",
+    "description": "Bolt.new is a browser-based full-stack app builder by StackBlitz that allows developers and non-developers to build, run, and deploy complete web applications from natural language prompts without local setup.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Browser-based full-stack development, instant deployment, natural language app building, package management",
+    "integrations": "GitHub, Netlify, Supabase, Cloudflare",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "ThoughtSpot",
+    "url": "https://www.thoughtspot.com",
+    "category": "Data & Analytics",
+    "description": "ThoughtSpot is an AI-powered business intelligence platform with search-driven analytics, allowing business users to ask natural language questions of their data and receive instant visual answers and AI-generated insights.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Natural language search analytics, AI-generated insights, Spotter Agent Suite, SpotterViz dashboard generation, embedded analytics",
+    "integrations": "Snowflake, BigQuery, Databricks, Salesforce, Tableau",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Tellius",
+    "url": "https://www.tellius.com",
+    "category": "Data & Analytics",
+    "description": "Tellius is a self-service BI platform with agentic analytics capabilities, featuring AI agents that autonomously detect KPI changes, investigate root causes, and deliver finished executive-ready narratives without human direction.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Agentic root cause analysis, conversational analytics (Kaiya), KPI monitoring, ML-driven anomaly detection, Agent Mode",
+    "integrations": "Snowflake, BigQuery, Redshift, Salesforce, SAP",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Akkio",
+    "url": "https://www.akkio.com",
+    "category": "Data & Analytics",
+    "description": "Akkio is a no-code AI analytics platform that enables business teams to build predictive models, generate automated insights, and interact with data using natural language chat without requiring data science skills.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "No-code predictive modeling, Chat Explore NLP interface, AI insights generation, live data sync, AutoML",
+    "integrations": "Salesforce, HubSpot, Google Sheets, BigQuery, Snowflake",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Improvado",
+    "url": "https://improvado.io",
+    "category": "Data & Analytics",
+    "description": "Improvado is a marketing analytics platform with an AI agent that pulls cross-channel data, answers natural language questions about campaign performance, detects anomalies, and recommends optimization actions in real time.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Cross-channel data integration, AI analytics agent, anomaly detection, web benchmarking, model-agnostic AI engine",
+    "integrations": "Google Analytics, Facebook Ads, Salesforce, Tableau, Snowflake",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Domo",
+    "url": "https://www.domo.com",
+    "category": "Data & Analytics",
+    "description": "Domo is an all-in-one cloud analytics platform with AI-powered dashboards, AutoML for predictive modeling, natural language querying via Domo.AI, and smart alerts for anomaly detection.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "AutoML, natural language querying, smart alerts, Magic ETL, AI forecasting, 1000+ data connectors",
+    "integrations": "Salesforce, Snowflake, Google Analytics, Slack, SAP",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Formula Bot",
+    "url": "https://formulabot.com",
+    "category": "Data & Analytics",
+    "description": "Formula Bot is an AI data analyst used by 1M+ users that generates Excel/Google Sheets formulas, analyzes spreadsheets, creates interactive charts, and performs text analytics like sentiment detection and keyword extraction.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI formula generation, data visualization, sentiment analysis, spreadsheet analysis, text analytics",
+    "integrations": "Microsoft Excel, Google Sheets, Airtable",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Paradox (Olivia)",
+    "url": "https://www.paradox.ai",
+    "category": "HR & Recruiting",
+    "description": "Paradox's conversational AI assistant Olivia automates high-volume recruiting tasks including candidate screening, interview scheduling, onboarding workflows, and virtual job fairs through natural conversation.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom (est. $1,000+/mo)",
+    "key_features": "Conversational AI screening, automated scheduling, onboarding automation, multi-channel engagement, ATS integration",
+    "integrations": "Workday, SAP SuccessFactors, iCIMS, Greenhouse, ADP",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "HireVue",
+    "url": "https://www.hirevue.com",
+    "category": "HR & Recruiting",
+    "description": "HireVue is the enterprise standard for AI-powered video interviewing, evaluating candidates through structured asynchronous video responses, game-based cognitive assessments, and coding challenges at scale.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom (est. $35K+/yr)",
+    "key_features": "AI video interview evaluation, game-based assessments, coding challenges, structured scoring rubrics, ATS integration",
+    "integrations": "Workday, SAP SuccessFactors, Taleo, iCIMS, Greenhouse",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Eightfold AI",
+    "url": "https://eightfold.ai",
+    "category": "HR & Recruiting",
+    "description": "Eightfold AI is a deep-learning talent intelligence platform that matches candidates and internal employees to roles based on skills inference, supports workforce planning, and enables diversity-focused hiring.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom (est. $7/employee/mo)",
+    "key_features": "Deep-learning candidate matching, skills inference, internal mobility recommendations, diversity analytics, workforce planning",
+    "integrations": "Workday, SAP SuccessFactors, ADP, LinkedIn, Greenhouse",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "SeekOut",
+    "url": "https://seekout.com",
+    "category": "HR & Recruiting",
+    "description": "SeekOut is an AI recruiting platform that searches 1B+ external profiles and your internal ATS with deep-web sourcing, diversity filters, and talent rediscovery to find hard-to-reach passive candidates.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom (est. $200+/mo)",
+    "key_features": "1B+ profile search, deep-web and GitHub sourcing, diversity filters, Talent Rediscovery, automated outreach",
+    "integrations": "Greenhouse, iCIMS, Jobvite, Lever, SuccessFactors",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Metaview",
+    "url": "https://www.metaview.ai",
+    "category": "HR & Recruiting",
+    "description": "Metaview is an AI recruiting suite that automatically captures and summarizes interview calls, generates structured candidate shortlists from AI sourcing agents, and provides actionable competency-based hiring insights.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI interview transcription and summaries, AI sourcing agents, competency-based insights, ATS sync, candidate shortlists",
+    "integrations": "Zoom, Google Meet, Greenhouse, Lever, Workday",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "HireEZ",
+    "url": "https://hireez.com",
+    "category": "HR & Recruiting",
+    "description": "HireEZ (formerly Hiretual) is an outbound recruiting platform with AI sourcing across 800M+ profiles from 45+ platforms, automated candidate engagement, diversity filters, and ATS integration.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom (est. $169/user/mo)",
+    "key_features": "800M+ multi-platform sourcing, automated outreach sequences, diversity filters, ATS integration, bulk messaging",
+    "integrations": "Greenhouse, Lever, iCIMS, LinkedIn, Workday",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Manatal",
+    "url": "https://www.manatal.com",
+    "category": "HR & Recruiting",
+    "description": "Manatal is an AI-native applicant tracking system for SMBs offering resume parsing, AI candidate scoring, automated job posting across 2500+ job boards, and a CRM for managing recruiting pipelines affordably.",
+    "pricing_model": "Subscription",
+    "starting_price": "$15/user/mo",
+    "key_features": "AI resume scoring, automated job posting, candidate recommendations, ATS pipeline management, social media enrichment",
+    "integrations": "LinkedIn, Gmail, Outlook, Slack, Zapier",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Ramp",
+    "url": "https://ramp.com",
+    "category": "Finance & Accounting",
+    "description": "Ramp is an AI-powered finance platform that automates expense management, invoice processing, and accounting workflows \u2014 reading invoices, auto-coding payments, and learning from transaction patterns to reduce manual work.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI expense coding, invoice automation, spend analytics, corporate cards, accounting integration",
+    "integrations": "QuickBooks, NetSuite, Xero, Sage Intacct, Slack",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Vic.ai",
+    "url": "https://www.vic.ai",
+    "category": "Finance & Accounting",
+    "description": "Vic.ai uses AI and machine learning to fully automate accounts payable \u2014 from invoice capture and PO matching to payment approval \u2014 eliminating manual intervention and integrating with enterprise ERP systems.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "AP automation, AI invoice capture, PO matching, automated approvals, monthly audit automation",
+    "integrations": "SAP, Oracle NetSuite, Microsoft Dynamics, Sage, Coupa",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "BlackLine",
+    "url": "https://www.blackline.com",
+    "category": "Finance & Accounting",
+    "description": "BlackLine is an enterprise financial close automation platform that streamlines account reconciliations, journal entries, and variance analysis with AI-powered anomaly detection and SOX-compliant workflows.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Account reconciliation automation, journal entry automation, AI anomaly detection, close orchestration, SOX compliance",
+    "integrations": "SAP, Oracle, NetSuite, Workday, Microsoft Dynamics",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Docyt",
+    "url": "https://docyt.com",
+    "category": "Finance & Accounting",
+    "description": "Docyt's AI accounting software automates full-cycle bookkeeping \u2014 featuring Gary, an AI accountant that reconciles accounts and writes reports automatically using an AI chatbot combined with process automation.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "AI accountant (Gary), automated reconciliation, expense/receipt management, industry-specific bookkeeping, AI report writing",
+    "integrations": "QuickBooks, Xero, NetSuite, bank feeds",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "FloQast",
+    "url": "https://floqast.com",
+    "category": "Finance & Accounting",
+    "description": "FloQast is a financial close management and accounting automation platform that streamlines reconciliations, provides flux analysis for operating expense changes, and maintains an AI-powered audit trail.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Month-end close automation, reconciliation automation, flux analysis, audit trail, close task management",
+    "integrations": "QuickBooks, NetSuite, Sage Intacct, Oracle, Workday",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Zeni",
+    "url": "https://www.zeni.ai",
+    "category": "Finance & Accounting",
+    "description": "Zeni is an AI bookkeeping platform for startups combining automated transaction categorization, reconciliation, and financial reporting with expert accountant oversight on a single real-time dashboard.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "AI auto-categorization, real-time financial dashboard, P&L and balance sheet reporting, GAAP compliance, human accountant oversight",
+    "integrations": "Stripe, QuickBooks, Gusto, Brex, Ramp",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Botkeeper",
+    "url": "https://www.botkeeper.com",
+    "category": "Finance & Accounting",
+    "description": "Botkeeper combines AI-powered software with skilled human bookkeepers for a hybrid automated bookkeeping service \u2014 handling transaction categorization, AP/AR, reconciliations, and general ledger review with machine learning.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Hybrid AI + human bookkeeping, bank reconciliation, AP/AR automation, general ledger review, Bot Review for discrepancy detection",
+    "integrations": "QuickBooks, Xero, NetSuite, Bill.com, Gusto",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Make (Integromat)",
+    "url": "https://www.make.com",
+    "category": "Operations & Workflow",
+    "description": "Make is a visual no-code workflow automation platform that connects 2000+ apps with a drag-and-drop 'scenario' builder, enabling businesses to automate complex multi-step processes including AI-powered tasks.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Visual workflow builder, 2000+ app connectors, AI action modules, multi-step automation, real-time execution logs",
+    "integrations": "Salesforce, Slack, HubSpot, Google Workspace, OpenAI",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "n8n",
+    "url": "https://n8n.io",
+    "category": "Operations & Workflow",
+    "description": "n8n is an open-source workflow automation platform for technical teams that supports 400+ integrations, AI agent workflows with LangChain, and can be self-hosted for full data control and custom automation.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Self-hosted)",
+    "key_features": "Open-source, 400+ integrations, AI agent workflows, self-hostable, LangChain support, code nodes",
+    "integrations": "Any API, Slack, GitHub, Google Workspace, OpenAI, LangChain",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Motion",
+    "url": "https://www.usemotion.com",
+    "category": "Operations & Workflow",
+    "description": "Motion is an AI-powered project management and scheduling platform that automatically plans your day by scheduling tasks around deadlines, priorities, and calendar commitments, with AI employee agents for optimizing team workflows.",
+    "pricing_model": "Subscription",
+    "starting_price": "$29/mo",
+    "key_features": "AI auto-scheduling, AI employee agents, team task management, meeting scheduling, SOP documentation",
+    "integrations": "Google Calendar, Outlook, Zoom, Zapier, Slack",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Reclaim.ai",
+    "url": "https://reclaim.ai",
+    "category": "Operations & Workflow",
+    "description": "Reclaim.ai is an AI scheduling assistant that automatically protects time for habits, tasks, and meetings by intelligently scheduling and rescheduling across your calendar to optimize personal and team productivity.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI habit scheduling, smart meeting scheduling, task prioritization, calendar optimization, team sync time",
+    "integrations": "Google Calendar, Asana, Todoist, Slack, Zoom",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Lindy",
+    "url": "https://www.lindy.ai",
+    "category": "Operations & Workflow",
+    "description": "Lindy is an AI employee platform for building custom AI agents that handle sales outreach, customer support triage, CRM updates, and operations workflows \u2014 acting as an always-on AI team member.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Custom AI agent creation, CRM automation, support triage, outreach workflows, 3000+ tool integrations",
+    "integrations": "Salesforce, HubSpot, Zendesk, Gmail, Slack",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Workato",
+    "url": "https://www.workato.com",
+    "category": "Operations & Workflow",
+    "description": "Workato is an enterprise integration and automation platform with Agentic AI (Workato Agentic) for building intelligent workflows using low-code tools, with AIRO as a natural language AI orchestrator for workflow creation.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Enterprise iPaaS, Agentic AI (Workato Agentic), AIRO natural language orchestration, Agent Studio, 1000+ connectors",
+    "integrations": "Salesforce, SAP, Workday, Slack, ServiceNow",
+    "a2a_support": "Unknown",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "ClickUp",
+    "url": "https://clickup.com",
+    "category": "Operations & Workflow",
+    "description": "ClickUp is an all-in-one project management platform with a built-in AI assistant (ClickUp Brain) that writes task summaries, automates status updates, answers questions about your work, and generates project documentation.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "AI project management, ClickUp Brain assistant, task automation, custom workflows, docs and dashboards",
+    "integrations": "Slack, GitHub, Salesforce, Google Workspace, Zapier",
+    "a2a_support": "No",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Perplexity AI",
+    "url": "https://www.perplexity.ai",
+    "category": "Research & Knowledge",
+    "description": "Perplexity AI is an AI-powered answer engine that provides real-time, cited answers to research questions by searching the web and synthesizing information from multiple sources with source links.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Real-time web search with citations, conversational research, file analysis, deep research reports, multi-model support",
+    "integrations": "API access, browser extensions, Slack",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "Elicit",
+    "url": "https://elicit.com",
+    "category": "Research & Knowledge",
+    "description": "Elicit is an AI research assistant specialized for academic literature review, automating paper screening, data extraction, and synthesis from research papers with PubMed and clinical trial filtering.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Academic paper screening, data extraction from papers, literature synthesis, Paper Chat, PubMed integration",
+    "integrations": "PubMed, Zotero",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Consensus",
+    "url": "https://consensus.app",
+    "category": "Research & Knowledge",
+    "description": "Consensus is an AI-powered academic search engine that answers evidence-based research questions by searching peer-reviewed papers and returning consensus-based summaries with cited scientific findings.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Evidence-based answers from peer-reviewed sources, Consensus Meter, GPT-4 paper analysis, citation generation",
+    "integrations": "None (standalone)",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Glean",
+    "url": "https://www.glean.com",
+    "category": "Research & Knowledge",
+    "description": "Glean is an enterprise AI work assistant that provides permission-aware search across all company knowledge systems, enabling employees to find answers, summarize documents, and build internal AI agents.",
+    "pricing_model": "Enterprise",
+    "starting_price": "Custom",
+    "key_features": "Enterprise-wide search, permission-aware RAG, AI assistant for knowledge retrieval, custom agent building, 100+ connectors",
+    "integrations": "Slack, Google Drive, Notion, GitHub, Salesforce, Jira",
+    "a2a_support": "Unknown",
+    "mcp_support": "Yes"
+  },
+  {
+    "name": "NotebookLM",
+    "url": "https://notebooklm.google.com",
+    "category": "Research & Knowledge",
+    "description": "NotebookLM by Google is an AI research and note-taking assistant that grounds answers exclusively in your uploaded documents, generating summaries, audio overviews, mind maps, and study guides from your sources.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Source-grounded AI Q&A, audio overviews, mind maps, document summarization, multi-format source support",
+    "integrations": "Google Drive, Google Docs, YouTube (video sources)",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Guru",
+    "url": "https://www.getguru.com",
+    "category": "Research & Knowledge",
+    "description": "Guru is an AI-powered knowledge management platform that delivers verified company knowledge directly in Slack, Chrome, and other work tools \u2014 surfacing the right information in context without requiring employees to switch apps.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "In-workflow knowledge delivery, browser extension, AI search, expert verification workflows, knowledge analytics",
+    "integrations": "Slack, Salesforce, Zendesk, Chrome, Microsoft Teams",
+    "a2a_support": "No",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "SciSpace",
+    "url": "https://typeset.io",
+    "category": "Research & Knowledge",
+    "description": "SciSpace (formerly Typeset) is an AI research tool for exploring and understanding scientific papers \u2014 allowing researchers to chat with PDFs, explain dense methods sections, and discover related literature.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Chat with PDFs, paper explanation in plain language, literature discovery, AI summaries, citation export",
+    "integrations": "Zotero, browser extension",
+    "a2a_support": "No",
+    "mcp_support": "No"
+  },
+  {
+    "name": "Fireflies.ai",
+    "url": "https://fireflies.ai",
+    "category": "Research & Knowledge",
+    "description": "Fireflies.ai is an AI meeting intelligence platform that automatically transcribes, summarizes, and analyzes meetings \u2014 capturing action items, key decisions, and searchable conversation intelligence across all video call platforms.",
+    "pricing_model": "Freemium",
+    "starting_price": "$0/mo (Free tier)",
+    "key_features": "Automatic meeting transcription, AI summaries, action item capture, conversation intelligence, searchable archive",
+    "integrations": "Zoom, Google Meet, Microsoft Teams, Slack, Salesforce",
+    "a2a_support": "No",
+    "mcp_support": "Unknown"
+  },
+  {
+    "name": "Salesforce Agentforce",
+    "url": "https://www.salesforce.com/products/agentforce/",
+    "category": "Operations & Workflow",
+    "description": "Salesforce Agentforce is an enterprise AI agent platform that deploys autonomous agents across sales, service, and operations workflows \u2014 natively integrated with Salesforce CRM data and built on the Atlas reasoning engine.",
+    "pricing_model": "Subscription",
+    "starting_price": "Custom",
+    "key_features": "Atlas reasoning engine, CRM-native agents, multi-agent orchestration, low-code builder, enterprise guardrails",
+    "integrations": "Salesforce CRM, Slack, MuleSoft, Tableau, Data Cloud",
+    "a2a_support": "Yes",
+    "mcp_support": "Yes"
+  }
+];
+</script>
+
+<!-- ==================== APPLICATION JS ==================== -->
+<script src="./app.js"></script>
+
+</body>
+</html>
