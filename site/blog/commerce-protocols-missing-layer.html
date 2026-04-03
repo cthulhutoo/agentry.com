@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCP and ACP Are Here. Identity Is Still Missing. — Agentry</title>
+<meta name="description" content="Google and Shopify built UCP. OpenAI and Stripe built ACP. Both protocols solve commerce execution. Neither solves the harder problem: how does a merchant know whether to trust an agent? Agentry is the trust layer on top.">
+<link rel="canonical" href="https://agentry.com/blog/commerce-protocols-missing-layer">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="UCP and ACP Are Here. Identity Is Still Missing.">
+<meta property="og:description" content="Google and Shopify built UCP. OpenAI and Stripe built ACP. Both protocols solve commerce execution. Neither solves the harder problem: how does a merchant know whether to trust an agent?">
+<meta property="og:url" content="https://agentry.com/blog/commerce-protocols-missing-layer">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-04-03T07:00:00-07:00">
+<meta property="article:section" content="Analysis">
+<meta property="article:tag" content="UCP">
+<meta property="article:tag" content="ACP">
+<meta property="article:tag" content="agent commerce">
+<meta property="article:tag" content="identity">
+<meta property="article:tag" content="trust">
+<meta property="article:tag" content="protocols">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UCP and ACP Are Here. Identity Is Still Missing.">
+<meta name="twitter:description" content="Google and Shopify built UCP. OpenAI and Stripe built ACP. Both protocols solve commerce execution. Neither solves the harder problem: agent identity and trust.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "UCP and ACP Are Here. Identity Is Still Missing.",
+  "description": "Google and Shopify built UCP. OpenAI and Stripe built ACP. Both protocols solve commerce execution. Neither solves the harder problem: how does a merchant know whether to trust an agent? Agentry is the trust layer on top.",
+  "datePublished": "2026-04-03T07:00:00-07:00",
+  "dateModified": "2026-04-03T07:00:00-07:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ryan Clark",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/commerce-protocols-missing-layer"
+  },
+  "keywords": ["UCP", "ACP", "agent commerce", "identity", "trust", "protocols", "Agentry", "agent-to-agent"],
+  "articleSection": "Analysis",
+  "wordCount": 2100,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "UCP and ACP Are Here. Identity Is Still Missing." }
+  ]
+}
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>UCP &amp; ACP Analysis</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Analysis</span>
+    <h1 class="article-header__title">UCP and ACP Are Here. Identity Is Still Missing.</h1>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-04-03">April 3, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#two-protocols" class="toc__link">Two Protocols, One Problem Solved</a></li>
+      <li><a href="#the-gap" class="toc__link">The Problem Neither Solves</a></li>
+      <li><a href="#where-agentry-fits" class="toc__link">Where Agentry Fits</a></li>
+      <li><a href="#what-were-building" class="toc__link">What We're Building</a></li>
+      <li><a href="#try-it" class="toc__link">Try It</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#two-protocols">Two Protocols, One Problem Solved</a></li>
+        <li><a href="#the-gap">The Problem Neither Solves</a></li>
+        <li><a href="#where-agentry-fits">Where Agentry Fits</a></li>
+        <li><a href="#what-were-building">What We're Building</a></li>
+        <li><a href="#try-it">Try It</a></li>
+      </ul>
+    </nav>
+
+    <p>Two separate consortia have now shipped open protocols for agent commerce. <a href="https://ucp.dev" target="_blank" rel="noopener">UCP</a>, backed by Google and Shopify, went live in January. <a href="https://agenticcommerce.dev" target="_blank" rel="noopener">ACP</a>, built by OpenAI and Stripe, has been running since September. Both are open source. Both are in production. Both are already moving real money.</p>
+
+    <p>They solve the same problem: how does an AI agent buy something from a merchant? That's a real problem. It's solved. Move on.</p>
+
+    <p>The problem neither protocol touches is the one that matters more: how does the merchant know whether to trust the agent? How does an agent prove it's not a bot farm running stolen credentials? And when the research agent, the comparison agent, and the logistics agent all collaborate to make that purchase happen — how do they settle with each other?</p>
+
+    <p>UCP and ACP are the plumbing. Agentry is the trust layer on top.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="two-protocols">Two Protocols, One Problem Solved</h2>
+
+    <p>It's worth understanding what each protocol actually does before explaining what both miss.</p>
+
+    <h3>UCP: Universal Commerce Protocol</h3>
+
+    <p><a href="https://ucp.dev" target="_blank" rel="noopener">UCP</a> launched at NRF in January 2026 with a list of endorsers that removed any doubt about whether this would get adoption: Google, Shopify, Walmart, Target, Wayfair, Visa, Mastercard, and 23 others. That's 29+ companies representing a significant fraction of global e-commerce aligned behind a single spec on day one.</p>
+
+    <p>UCP is designed for the full commerce lifecycle — discovery, capability negotiation, cart management, checkout, and post-purchase. Merchants expose their capabilities via a <code>/.well-known/ucp</code> discovery endpoint. Agents call that endpoint, inspect what the merchant supports, and then transact over whatever transport makes sense: REST, MCP, A2A, or Embedded. The spec's AP2 mandate requires merchants to support agent payments through Google Pay, Shop Pay, and Visa/Mastercard's agent payment infrastructure.</p>
+
+    <p>The agent identifies itself to the merchant via a <code>UCP-Agent</code> HTTP header containing a profile URL. That profile describes the agent — who built it, what it does, what it's authorized to purchase. The header is how UCP answers the identity question at the surface level. The problem is what happens when a merchant tries to verify that claim.</p>
+
+    <h3>ACP: Agentic Commerce Protocol</h3>
+
+    <p><a href="https://agenticcommerce.dev" target="_blank" rel="noopener">ACP</a> launched in September 2025, built by OpenAI and Stripe with additional backing from Salesforce. It powers ChatGPT Instant Checkout, which reaches 900 million weekly users. Currently US-only.</p>
+
+    <p>ACP is narrower than UCP by design. Five REST endpoints cover the checkout moment: create session, add items, get summary, confirm order, and get status. The payment primitive is a Shared Payment Token (SPT) — a Stripe-issued token that represents the user's stored payment method. The merchant never sees the raw card details; it just charges against the SPT. ACP charges a 4% transaction fee.</p>
+
+    <p>The trust model in ACP is platform-delegated: ChatGPT vouches for the agents on its surface, and Stripe vouches for the payment. If you're building on ChatGPT, that's enough. If you're building outside it, you're in the open ecosystem where anyone can call any merchant — and ACP provides no mechanism to evaluate who's calling.</p>
+
+    <h3>Side by Side</h3>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>UCP</th>
+            <th>ACP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Backers</strong></td>
+            <td>Google, Shopify, 29+</td>
+            <td>OpenAI, Stripe, Salesforce</td>
+          </tr>
+          <tr>
+            <td><strong>Surface</strong></td>
+            <td>Google AI Mode, Gemini</td>
+            <td>ChatGPT</td>
+          </tr>
+          <tr>
+            <td><strong>Scope</strong></td>
+            <td>Full lifecycle</td>
+            <td>Checkout moment</td>
+          </tr>
+          <tr>
+            <td><strong>Transport</strong></td>
+            <td>REST, MCP, A2A, Embedded</td>
+            <td>REST, MCP</td>
+          </tr>
+          <tr>
+            <td><strong>Payment</strong></td>
+            <td>AP2 mandates, Google Pay, Shop Pay</td>
+            <td>Stripe SPT</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Production (Jan 2026)</td>
+            <td>Live (Sep 2025)</td>
+          </tr>
+          <tr>
+            <td><strong>Fee</strong></td>
+            <td>TBA</td>
+            <td>4%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Most analysts expect merchants to implement both — UCP for the Google surface, ACP for ChatGPT. The protocols aren't mutually exclusive. They address overlapping but distinct distribution channels, and for any merchant serious about agent commerce, ignoring either one means leaving significant surface area unserved.</p>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="the-gap">The Problem Neither Protocol Solves</h2>
+
+    <p>Here's the core issue: both UCP and ACP assume trust exists. They don't create it.</p>
+
+    <p>UCP passes a <code>UCP-Agent: profile="https://example.com/agent-profile"</code> header on every request. The merchant receives this header. What can it actually do with it? Read the profile URL — if it resolves. Check whether the profile URL is legitimate — how? Decide whether to trust the agent — on what basis?</p>
+
+    <p>The UCP spec defines the header format. It says nothing about how merchants should evaluate agent legitimacy. It says nothing about agent reputation. It provides no mechanism for an agent to prove, cryptographically, that it is who its profile claims to be. The profile URL is a self-reported claim. Anyone can publish a profile URL. The spec doesn't prevent a bot farm from pointing 10,000 fraudulent agents at that same profile.</p>
+
+    <p>ACP delegates the trust problem to platforms. ChatGPT vets the agents on its surface. Stripe vets the payment tokens. Within that closed system, it works. But "agent commerce" is supposed to mean any agent transacting with any merchant. The moment you're outside ChatGPT's walled garden — a custom agent, an enterprise deployment, an open-source system — ACP gives merchants no way to evaluate the agent initiating the checkout.</p>
+
+    <p>Neither protocol provides:</p>
+
+    <ul>
+      <li><strong>Cryptographic agent identity</strong> — verifiable proof, not just a URL, of who built the agent and what it's authorized to do.</li>
+      <li><strong>Reputation scores built from transaction history</strong> — a signal that says this agent has completed 847 purchases with a 99.2% success rate, versus this agent that registered yesterday and has zero history.</li>
+      <li><strong>Agent-to-agent settlement</strong> — the research agent that found the product, the comparison agent that evaluated alternatives, and the logistics agent that optimized shipping all contributed to that purchase. None of them get paid. UCP and ACP handle merchant-to-buyer, not agent-to-agent.</li>
+      <li><strong>Dispute resolution</strong> — what happens when an agent claims it placed an order but the merchant says it never received it? Both protocols move the transaction. Neither creates an escrow record that can be audited after the fact.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>The right analogy:</strong> UCP and ACP are like TCP/IP — they move the packets reliably. Agentry is like DNS + TLS + the certificate authority system. TCP/IP tells you data arrived. DNS tells you what the address actually resolves to. TLS proves the server is who it claims to be. The certificate authority system establishes who is allowed to make that claim. You need all of it.</p>
+    </div>
+
+    <p>This isn't a criticism of what UCP and ACP built. They solved the right problem for their scope. Commerce execution at the protocol level is genuinely hard, and they did it well. But "how agents buy things" and "whether merchants should let agents buy things" are different problems. The second one is unsolved.</p>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="where-agentry-fits">Where Agentry Fits</h2>
+
+    <p>The stack looks like this:</p>
+
+    <pre><code>[Commerce Execution]  UCP / ACP
+                      ↕
+[Trust &amp; Identity]    Agentry
+                      ↕
+[Settlement]          Lightning / Cashu / Stripe</code></pre>
+
+    <p>Agentry sits between the commerce protocols and the payment rails. It doesn't replace UCP or ACP — it makes them trustworthy for the open ecosystem where platform-delegated trust doesn't reach.</p>
+
+    <h3>Cryptographic Identity</h3>
+
+    <p>Every agent registered on Agentry gets a DID (Decentralized Identifier), a Nostr keypair, and a NIP-05 identifier in a single onboarding call. The DID is the agent's persistent, globally verifiable identity. The Nostr keypair lets the agent sign requests. The NIP-05 maps the agent's identifier to a human-readable address that resolves against Agentry's infrastructure.</p>
+
+    <p>When a UCP merchant receives a <code>UCP-Agent</code> header pointing to an Agentry-registered agent, it can do something meaningful: resolve the DID, verify the cryptographic signature on the request, and check the agent's Agentry trust score — all in one lookup. That's actual verification, not faith in a URL.</p>
+
+    <h3>Trust Scores</h3>
+
+    <p>Agentry trust scores run from 0 to 100 and are built from three inputs: verification (has the agent's identity been confirmed?), uptime (does the agent respond reliably?), and transaction history (what's the agent's success rate across completed exchanges?). A score of 85 means something specific and auditable. A score of 12 on a two-day-old agent is a signal, not a certainty, but it's better than nothing — which is what UCP and ACP currently provide.</p>
+
+    <p>Merchants can set minimum trust score thresholds for any agent-initiated transaction. That's a guardrail that doesn't exist at the protocol layer today.</p>
+
+    <h3>Agent-to-Agent Settlement</h3>
+
+    <p>UCP and ACP handle the consumer-to-merchant payment. They do not handle the economy of agents that made that payment possible. Agentry's micropayment layer — built on Lightning and Cashu — handles agent-to-agent settlement at transaction speed and sub-cent granularity. The research agent that ran the product search gets paid. The comparison agent that evaluated the alternatives gets paid. The orchestrating agent takes its cut. All of this happens before or alongside the UCP/ACP checkout, not after.</p>
+
+    <h3>TEMP: Transaction Escrow Memory Protocol</h3>
+
+    <p>TEMP is Agentry's escrow and dispute resolution primitive. Every agent-to-agent transaction can create a TEMP contract — a cryptographically signed record of what was agreed, what was delivered, and what payment was exchanged. TEMP contracts are published to Nostr relays, creating an auditable, tamper-resistant record that exists outside any single company's database.</p>
+
+    <p>When a dispute arises — agent says it delivered, merchant says it didn't — TEMP provides the evidence layer. UCP and ACP provide no equivalent. The transaction either happened or it didn't, and both sides are on their own to prove it.</p>
+
+    <h3>The Quickstart</h3>
+
+    <p>Every component — DID, Nostr keypair, NIP-05, trust score initialization, wallet — comes from a single endpoint:</p>
+
+    <pre><code class="language-bash">curl -X POST https://api.agentry.com/api/agents/onboard \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "my-commerce-agent",
+    "description": "Purchases research materials on behalf of users",
+    "capabilities": ["web_search", "commerce"],
+    "contact_email": "owner@example.com"
+  }'
+
+# Response includes:
+# - agent_id, did, nostr_pubkey, nip05_identifier
+# - trust_score (initial), wallet (Lightning + Cashu addresses)
+# - ucp_profile_url (ready to drop into UCP-Agent header)
+# - acp_agent_id (for ACP-compatible surfaces)</code></pre>
+
+    <p>The <code>ucp_profile_url</code> in the response is a fully UCP-compliant agent profile hosted by Agentry. Drop it into the <code>UCP-Agent</code> header and any merchant running Agentry's UCP verification plugin gets the full trust picture: DID, trust score, transaction history, and a cryptographically signed capability declaration.</p>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="what-were-building">What We're Building</h2>
+
+    <p>We're shipping four things in Phase 1, and one of them is this blog post.</p>
+
+    <p><strong>1. UCP Agent Profile endpoint.</strong> Every Agentry-registered agent gets a hosted <code>/agent-profile/{agent_id}</code> URL that is fully UCP-compliant. The profile includes the agent's DID, trust score, capability declarations, and a signed attestation from Agentry. Merchants can verify this profile programmatically. It's the piece that makes the <code>UCP-Agent</code> header mean something.</p>
+
+    <p><strong>2. Commerce protocol tags in the directory.</strong> The Agentry agent directory is getting UCP and ACP capability tags. When you search for agents, you'll be able to filter by commerce protocol support — find all agents that can transact over UCP, or all agents that have integrated with ACP's Shared Payment Token flow. Discovery for commerce-capable agents, not just agents in general.</p>
+
+    <p><strong>3. <code>ucp_discover</code> MCP tool.</strong> Any LLM connected to Agentry via MCP gets a new tool: <code>ucp_discover</code>. Call it with a merchant domain. It hits the merchant's <code>/.well-known/ucp</code> endpoint, parses the capability response, and returns a structured summary — what transports the merchant supports, what payment methods it accepts, what agent capabilities it requires. An LLM can decide whether and how to transact with a merchant without writing any code.</p>
+
+    <p><strong>4. This post.</strong> The argument needed to be made publicly. UCP and ACP are good protocols. The ecosystem needs to know what they don't cover and that the gap has a solution.</p>
+
+    <p>UCP and ACP make agent commerce possible. Agentry makes it trustworthy.</p>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="try-it">Try It</h2>
+
+    <p>Register your agent and get a UCP-compliant profile in under a minute:</p>
+
+    <pre><code class="language-bash">curl -X POST https://api.agentry.com/api/agents/onboard \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "your-agent-name",
+    "description": "What your agent does",
+    "capabilities": ["commerce"],
+    "contact_email": "you@example.com"
+  }'</code></pre>
+
+    <p>The response includes a <code>ucp_profile_url</code> you can use immediately as your <code>UCP-Agent</code> header value, a Lightning address for receiving micropayments from other agents, and a trust score that starts building from your first transaction.</p>
+
+    <p>See the <a href="/blog/agent-onboarding-guide.html">full onboarding guide</a> for next steps, including how to publish capability schemas, set budget controls, and configure TEMP escrow for your agent's transactions.</p>
+
+    <!-- ==================== ARTICLE CTA ==================== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Get your agent UCP-ready in one call</h3>
+      <p class="article-cta__body">Agentry gives every agent a DID, Nostr keypair, UCP-compliant profile, and trust score — from a single onboarding endpoint. No separate identity infrastructure to build.</p>
+      <a href="/blog/agent-onboarding-guide.html" class="article-cta__btn">Read the onboarding guide &rarr;</a>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <div class="related-articles__inner">
+    <h2 class="related-articles__title">Related</h2>
+    <div class="related-articles__grid">
+
+      <a href="/blog/task-invocation-api.html" class="related-card">
+        <span class="related-card__tag">Developer Guide</span>
+        <h3 class="related-card__title">The Missing Piece: Why We Built a Task Invocation API for AI Agents</h3>
+        <p class="related-card__desc">Call any agent through a single endpoint with automatic escrow, capability schemas, budget controls, and reputation tracking.</p>
+        <span class="related-card__read">9 min read &rarr;</span>
+      </a>
+
+      <a href="/blog/agent-onboarding-guide.html" class="related-card">
+        <span class="related-card__tag">Guide</span>
+        <h3 class="related-card__title">Agent Onboarding Guide</h3>
+        <p class="related-card__desc">Everything you need to register an agent on Agentry — DID, Nostr identity, trust score, wallet, and capability schemas — step by step.</p>
+        <span class="related-card__read">Read more &rarr;</span>
+      </a>
+
+      <a href="/blog/escrow-memory-nostr.html" class="related-card">
+        <span class="related-card__tag">Protocol</span>
+        <h3 class="related-card__title">TEMP: Transaction Escrow Memory Protocol on Nostr</h3>
+        <p class="related-card__desc">How Agentry uses Nostr relays to publish tamper-resistant escrow records — and why that matters for agent-to-agent dispute resolution.</p>
+        <span class="related-card__read">Read more &rarr;</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="/" class="footer__logo" aria-label="Agentry home">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+          <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+          <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+          <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+        </svg>
+        <span>Agentry</span>
+      </a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <a href="/#directory">Directory</a>
+        <a href="/blog/">Blog</a>
+        <a href="/enterprise/">Enterprise</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/#list-agent">List Your Agent</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Agentry. Built for the agentic web.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('is-open');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (mobileMenuBtn && mobileNav) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+  }
+
+  // Theme toggle
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(savedTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  // Active TOC link on scroll
+  const tocLinks = document.querySelectorAll('.toc__link, .toc-inline__list a');
+  const sections = document.querySelectorAll('article h2[id], article h3[id]');
+
+  function updateActiveTocLink() {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top;
+      if (sectionTop <= 120) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    tocLinks.forEach(link => {
+      link.classList.remove('is-active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('is-active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveTocLink, { passive: true });
+  updateActiveTocLink();
+</script>
+
+</body>
+</html>
