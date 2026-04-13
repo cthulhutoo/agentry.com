@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milk Market — MCP-Enabled Nostr Dairy Marketplace Agent | Agentry Directory</title>
+<meta name="description" content="Milk Market is a decentralized farm-to-consumer dairy marketplace built on Nostr with MCP support. Zero platform fees, direct farmer-to-buyer commerce for raw milk, cheese, and dairy products.">
+<link rel="canonical" href="https://agentry.com/agents/milk-market">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Milk Market — MCP-Enabled Nostr Dairy Marketplace Agent">
+<meta property="og:description" content="Decentralized farm-to-consumer dairy marketplace built on Nostr. MCP-enabled product discovery, storefront browsing, and order management. Zero platform fees. Lightning + Cashu payments.">
+<meta property="og:url" content="https://agentry.com/agents/milk-market">
+<meta property="og:site_name" content="Agentry">
+<meta property="og:image" content="https://agentry.com/agents/milk-market-screenshot.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Milk Market — MCP-Enabled Nostr Dairy Marketplace Agent">
+<meta name="twitter:description" content="Decentralized farm-to-consumer dairy marketplace on Nostr. MCP agent commerce with 9 tools, zero platform fees. Lightning + Cashu.">
+<meta name="twitter:image" content="https://agentry.com/agents/milk-market-screenshot.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+
+<!-- Structured Data: SoftwareApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Milk Market",
+  "description": "Decentralized farm-to-consumer dairy marketplace built on Nostr. MCP-enabled product discovery, storefront browsing, and order management for raw milk, cheese, and dairy products. Zero platform fees. Direct farmer-to-buyer commerce.",
+  "url": "https://milk.market",
+  "applicationCategory": "Commerce & Marketplace",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "codeRepository": "https://github.com/shopstr-eng/milk-market",
+  "license": "https://opensource.org/licenses/GPL-3.0",
+  "dateCreated": "2024",
+  "keywords": ["marketplace", "nostr", "bitcoin", "lightning", "cashu", "dairy", "farm", "food", "mcp", "p2p"],
+  "identifier": {
+    "@type": "PropertyValue",
+    "name": "DID",
+    "value": "did:agentry:7687ec7bd7c2393cd0d3132f7349d485"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "freemilk@milk.market"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Directory", "item": "https://agentry.com/#directory" },
+    { "@type": "ListItem", "position": 3, "name": "Milk Market" }
+  ]
+}
+</script>
+
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+<style>
+/* ====== Agent Profile Page Styles ====== */
+.agent-hero {
+  background: #0A1E22;
+  padding: var(--space-16, 4rem) 0 var(--space-12, 3rem);
+}
+.agent-hero__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-6, 1.5rem);
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #7FA8AF);
+  margin-bottom: var(--space-8, 2rem);
+}
+.breadcrumb a {
+  color: var(--color-text-muted, #7FA8AF);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.breadcrumb a:hover { color: #01D4DB; }
+.breadcrumb__sep { opacity: 0.4; }
+
+.agent-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: var(--space-12, 3rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .agent-hero__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.agent-hero__category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #01D4DB;
+  background: rgba(1,212,219,0.1);
+  border: 1px solid rgba(1,212,219,0.2);
+  border-radius: 100px;
+  padding: 0.25rem 0.75rem;
+  margin-bottom: var(--space-4, 1rem);
+}
+
+.agent-hero__name {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--color-text, #E8F4F5);
+  margin: 0 0 var(--space-4, 1rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.agent-hero__desc {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted, #7FA8AF);
+  line-height: 1.7;
+  margin: 0 0 var(--space-6, 1.5rem);
+  max-width: 520px;
+}
+
+.agent-hero__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #01D4DB;
+  color: #0A1E22;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--color-text, #E8F4F5);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid rgba(232,244,245,0.15);
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-secondary:hover { border-color: #01D4DB; color: #01D4DB; }
+
+.agent-screenshot {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(1,212,219,0.15);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(1,212,219,0.05);
+  display: block;
+}
+
+/* ====== Profile Layout ====== */
+.profile-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-12, 3rem) var(--space-6, 1.5rem);
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-10, 2.5rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====== Cards ====== */
+.profile-card {
+  background: #0E2A30;
+  border: 1px solid rgba(1,212,219,0.1);
+  border-radius: 12px;
+  padding: var(--space-6, 1.5rem);
+  margin-bottom: var(--space-6, 1.5rem);
+}
+.profile-card:last-child { margin-bottom: 0; }
+
+.profile-card__title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #01D4DB;
+  margin: 0 0 var(--space-4, 1rem);
+}
+
+/* ====== Identity Card ====== */
+.identity-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(1,212,219,0.07);
+}
+.identity-row:last-child { border-bottom: none; padding-bottom: 0; }
+.identity-row:first-child { padding-top: 0; }
+.identity-row__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #7FA8AF);
+}
+.identity-row__value {
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.8125rem;
+  color: var(--color-text, #E8F4F5);
+  word-break: break-all;
+  line-height: 1.5;
+}
+.identity-row__value--truncated {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.identity-row__value--truncated span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+.copy-btn {
+  background: rgba(1,212,219,0.1);
+  border: 1px solid rgba(1,212,219,0.2);
+  color: #01D4DB;
+  border-radius: 4px;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.copy-btn:hover { background: rgba(1,212,219,0.2); }
+.copy-btn.copied { color: #4ade80; border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.1); }
+
+.registered-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: rgba(1,212,219,0.08);
+  border: 1px solid rgba(1,212,219,0.2);
+  color: #01D4DB;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;
+  border-radius: 100px;
+  margin-top: 0.75rem;
+}
+.registered-badge svg { flex-shrink: 0; }
+
+/* ====== MCP Tools ====== */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+@media (max-width: 700px) {
+  .tools-grid { grid-template-columns: 1fr; }
+}
+
+.tool-card {
+  background: #0A1E22;
+  border: 1px solid rgba(1,212,219,0.1);
+  border-radius: 8px;
+  padding: var(--space-4, 1rem);
+  transition: border-color 0.15s;
+}
+.tool-card:hover { border-color: rgba(1,212,219,0.25); }
+
+.tool-card__name {
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #01D4DB;
+  margin: 0 0 0.375rem;
+}
+.tool-card__desc {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #7FA8AF);
+  line-height: 1.5;
+  margin: 0 0 0.5rem;
+}
+.tool-card__params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.tool-param {
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.6875rem;
+  background: rgba(1,212,219,0.06);
+  border: 1px solid rgba(1,212,219,0.12);
+  color: #7FA8AF;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+}
+
+/* ====== Capabilities ====== */
+.payment-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--space-4, 1rem);
+}
+.payment-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+}
+.payment-badge--lightning {
+  background: rgba(250,176,5,0.1);
+  border: 1px solid rgba(250,176,5,0.25);
+  color: #FAB005;
+}
+.payment-badge--cashu {
+  background: rgba(74,222,128,0.1);
+  border: 1px solid rgba(74,222,128,0.25);
+  color: #4ade80;
+}
+
+.protocol-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--space-4, 1rem);
+}
+.protocol-badge {
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 5px;
+  background: rgba(1,212,219,0.08);
+  border: 1px solid rgba(1,212,219,0.18);
+  color: #01D4DB;
+}
+
+.nip-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+.nip-chip {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(127,168,175,0.08);
+  border: 1px solid rgba(127,168,175,0.15);
+  color: #7FA8AF;
+  font-family: 'Courier New', 'Consolas', monospace;
+}
+
+/* ====== Tags ====== */
+.tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+.tag-chip {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.625rem;
+  border-radius: 100px;
+  background: rgba(1,212,219,0.06);
+  border: 1px solid rgba(1,212,219,0.12);
+  color: #7FA8AF;
+}
+
+/* ====== Links section ====== */
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.link-row__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted, #7FA8AF);
+  flex-shrink: 0;
+}
+.link-row__url {
+  font-size: 0.8125rem;
+  color: #01D4DB;
+  text-decoration: none;
+  font-family: 'Courier New', 'Consolas', monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.link-row__url:hover { opacity: 0.8; text-decoration: underline; }
+
+/* ====== Resource card ====== */
+.resource-item {
+  background: #0A1E22;
+  border: 1px solid rgba(1,212,219,0.1);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+.resource-item__name {
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.875rem;
+  color: #01D4DB;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+.resource-item__uri {
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: #7FA8AF;
+  margin: 0;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text, #E8F4F5);
+  margin: 0 0 var(--space-6, 1.5rem);
+  letter-spacing: -0.01em;
+}
+.section-title span {
+  color: #01D4DB;
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.875em;
+  margin-left: 0.5rem;
+  opacity: 0.7;
+}
+
+/* ====== Zero fee banner ====== */
+.zero-fee-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(74,222,128,0.06);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: var(--space-6, 1.5rem);
+}
+.zero-fee-banner__icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(74,222,128,0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.zero-fee-banner__text {
+  font-size: 0.875rem;
+  color: #4ade80;
+  font-weight: 600;
+  margin: 0;
+}
+.zero-fee-banner__sub {
+  font-size: 0.75rem;
+  color: rgba(74,222,128,0.7);
+  margin: 0.125rem 0 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="agent-hero">
+  <div class="agent-hero__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/#directory">Directory</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Milk Market</span>
+    </div>
+    <div class="agent-hero__grid">
+      <div class="agent-hero__content">
+        <span class="agent-hero__category">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+          Commerce &amp; Marketplace
+        </span>
+        <h1 class="agent-hero__name">Milk Market</h1>
+        <p class="agent-hero__desc">Decentralized farm-to-consumer dairy marketplace built on Nostr. MCP-enabled product discovery, storefront browsing, and order management for raw milk, cheese, and dairy products. Zero platform fees. Direct farmer-to-buyer commerce.</p>
+        <div class="agent-hero__actions">
+          <a href="https://milk.market" target="_blank" rel="noopener" class="btn-primary">
+            Visit Site
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a href="https://github.com/shopstr-eng/milk-market" target="_blank" rel="noopener" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="mailto:freemilk@milk.market" class="btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Contact
+          </a>
+        </div>
+      </div>
+      <div class="agent-hero__visual">
+        <img src="milk-market-screenshot.png" alt="Milk Market dairy marketplace interface" class="agent-screenshot" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MAIN PROFILE CONTENT ==================== -->
+<div style="background: #0A1E22;">
+<div class="profile-layout">
+
+  <!-- Left column: main content -->
+  <div class="profile-main">
+
+    <!-- Zero fee highlight -->
+    <div class="zero-fee-banner">
+      <div class="zero-fee-banner__icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <p class="zero-fee-banner__text">Zero Platform Fees</p>
+        <p class="zero-fee-banner__sub">Direct farmer-to-buyer transactions — no intermediary cut</p>
+      </div>
+    </div>
+
+    <!-- MCP Tools -->
+    <section>
+      <h2 class="section-title">MCP Tools <span>9 tools</span></h2>
+      <div class="tools-grid">
+
+        <div class="tool-card">
+          <p class="tool-card__name">search_products</p>
+          <p class="tool-card__desc">Search Milk Market listings by product type, farm name, or region. Returns dairy products with availability and pricing.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">query</span>
+            <span class="tool-param">category</span>
+            <span class="tool-param">limit</span>
+            <span class="tool-param">filters</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">get_product_details</p>
+          <p class="tool-card__desc">Retrieve full product information including description, origin farm, certifications, pricing, and stock status.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">product_id</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">list_companies</p>
+          <p class="tool-card__desc">List all registered farms and dairy producers on the Milk Market network with summary and location info.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">limit</span>
+            <span class="tool-param">offset</span>
+            <span class="tool-param">region</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">get_company_details</p>
+          <p class="tool-card__desc">Get full farm profile including Nostr pubkey, certifications, product catalog, and contact details.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">company_id</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">get_reviews</p>
+          <p class="tool-card__desc">Fetch NIP-85 verified reviews for a product or farm. Returns ratings, review text, and verified reviewer identity.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">target_id</span>
+            <span class="tool-param">type</span>
+            <span class="tool-param">limit</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">get_storefront</p>
+          <p class="tool-card__desc">Browse a farm's complete storefront including all active dairy listings, pickup/shipping options, and seasonal availability.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">merchant_pubkey</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">create_order</p>
+          <p class="tool-card__desc">Place an order via NIP-15. Initiates checkout with Lightning or Cashu payment and delivery preferences.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">product_id</span>
+            <span class="tool-param">quantity</span>
+            <span class="tool-param">payment_method</span>
+            <span class="tool-param">delivery_address</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">get_order</p>
+          <p class="tool-card__desc">Retrieve order status, delivery tracking, and payment confirmation for an existing order.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">order_id</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-card__name">update_order_status</p>
+          <p class="tool-card__desc">Update order lifecycle status — confirm payment received, mark dispatched, request cancellation, or initiate dispute.</p>
+          <div class="tool-card__params">
+            <span class="tool-param">order_id</span>
+            <span class="tool-param">status</span>
+            <span class="tool-param">note</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MCP Resources -->
+    <section style="margin-top: var(--space-10, 2.5rem);">
+      <h2 class="section-title">MCP Resources <span>1 resource</span></h2>
+      <div class="resource-item">
+        <p class="resource-item__name">product-catalog</p>
+        <p class="resource-item__uri">shopstr://catalog/products</p>
+      </div>
+    </section>
+
+    <!-- Capabilities -->
+    <section style="margin-top: var(--space-10, 2.5rem);">
+      <h2 class="section-title">Capabilities</h2>
+
+      <div class="profile-card">
+        <p class="profile-card__title">Payment Methods</p>
+        <div class="payment-badges">
+          <span class="payment-badge payment-badge--lightning">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Lightning
+          </span>
+          <span class="payment-badge payment-badge--cashu">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+            Cashu
+          </span>
+        </div>
+
+        <p class="profile-card__title" style="margin-top: var(--space-4, 1rem);">Commerce Protocols</p>
+        <div class="protocol-list">
+          <span class="protocol-badge">MCP</span>
+          <span class="protocol-badge">NIP-15</span>
+        </div>
+
+        <p class="profile-card__title" style="margin-top: var(--space-4, 1rem);">Supported NIPs</p>
+        <div class="nip-chips">
+          <span class="nip-chip">NIP-02</span>
+          <span class="nip-chip">NIP-05</span>
+          <span class="nip-chip">NIP-07</span>
+          <span class="nip-chip">NIP-15</span>
+          <span class="nip-chip">NIP-17</span>
+          <span class="nip-chip">NIP-19</span>
+          <span class="nip-chip">NIP-42</span>
+          <span class="nip-chip">NIP-46</span>
+          <span class="nip-chip">NIP-47</span>
+          <span class="nip-chip">NIP-49</span>
+          <span class="nip-chip">NIP-57</span>
+          <span class="nip-chip">NIP-60</span>
+          <span class="nip-chip">NIP-61</span>
+          <span class="nip-chip">NIP-85</span>
+          <span class="nip-chip">NIP-99</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tags -->
+    <section style="margin-top: var(--space-8, 2rem);">
+      <h2 class="section-title">Tags</h2>
+      <div class="tag-chips">
+        <span class="tag-chip">marketplace</span>
+        <span class="tag-chip">nostr</span>
+        <span class="tag-chip">bitcoin</span>
+        <span class="tag-chip">lightning</span>
+        <span class="tag-chip">cashu</span>
+        <span class="tag-chip">dairy</span>
+        <span class="tag-chip">farm</span>
+        <span class="tag-chip">food</span>
+        <span class="tag-chip">mcp</span>
+        <span class="tag-chip">p2p</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Right column: sidebar -->
+  <div class="profile-sidebar">
+
+    <!-- Identity Card -->
+    <div class="profile-card">
+      <p class="profile-card__title">Identity</p>
+
+      <div class="identity-row">
+        <span class="identity-row__label">DID</span>
+        <span class="identity-row__value" style="font-size: 0.75rem;">did:agentry:7687ec7bd7c2393cd0d3132f7349d485</span>
+      </div>
+
+      <div class="identity-row">
+        <span class="identity-row__label">npub</span>
+        <div class="identity-row__value--truncated" style="font-family: 'Courier New', monospace; font-size: 0.8125rem; color: var(--color-text, #E8F4F5);">
+          <span title="npub1wm7wcrsx8q6378gwphzwhtmd60t8gpqjd4ny23m8gpc0x96jw0vs2jpud0">npub1wm7wcrsx8q6…jpud0</span>
+          <button class="copy-btn" onclick="copyToClipboard('npub1wm7wcrsx8q6378gwphzwhtmd60t8gpqjd4ny23m8gpc0x96jw0vs2jpud0', this)">copy</button>
+        </div>
+      </div>
+
+      <div class="identity-row">
+        <span class="identity-row__label">pubkey</span>
+        <div class="identity-row__value--truncated" style="font-family: 'Courier New', monospace; font-size: 0.8125rem; color: var(--color-text, #E8F4F5);">
+          <span title="76fcec0e0638351f1d0e0dc4ebaf6dd3d67404126d664547674070f3175273d9">76fcec0e063835…273d9</span>
+          <button class="copy-btn" onclick="copyToClipboard('76fcec0e0638351f1d0e0dc4ebaf6dd3d67404126d664547674070f3175273d9', this)">copy</button>
+        </div>
+      </div>
+
+      <div class="identity-row">
+        <span class="identity-row__label">NIP-05</span>
+        <span class="identity-row__value">milk-market@agentry.com</span>
+      </div>
+
+      <div class="identity-row">
+        <span class="identity-row__label">Agent ID</span>
+        <span class="identity-row__value">fef6d5dc2e9d</span>
+      </div>
+
+      <div>
+        <span class="registered-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Registered on Agentry
+        </span>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <div class="profile-card">
+      <p class="profile-card__title">Links</p>
+      <div class="links-list">
+        <div class="link-row">
+          <span class="link-row__label">Website</span>
+          <a href="https://milk.market" target="_blank" rel="noopener" class="link-row__url">milk.market</a>
+        </div>
+        <div class="link-row">
+          <span class="link-row__label">MCP Endpoint</span>
+          <a href="https://milk.market/api/mcp" target="_blank" rel="noopener" class="link-row__url">milk.market/api/mcp</a>
+        </div>
+        <div class="link-row">
+          <span class="link-row__label">GitHub</span>
+          <a href="https://github.com/shopstr-eng/milk-market" target="_blank" rel="noopener" class="link-row__url">shopstr-eng/milk-market</a>
+        </div>
+        <div class="link-row">
+          <span class="link-row__label">Contact</span>
+          <a href="mailto:freemilk@milk.market" class="link-row__url">freemilk@milk.market</a>
+        </div>
+        <div class="link-row">
+          <span class="link-row__label">API Profile</span>
+          <a href="https://api.agentry.com/api/agents/fef6d5dc2e9d" target="_blank" rel="noopener" class="link-row__url">agentry.com/…/fef6d5dc2e9d</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meta -->
+    <div class="profile-card">
+      <p class="profile-card__title">About</p>
+      <div class="links-list">
+        <div class="link-row">
+          <span class="link-row__label">Founded</span>
+          <span style="font-size: 0.8125rem; color: var(--color-text, #E8F4F5);">2024</span>
+        </div>
+        <div class="link-row">
+          <span class="link-row__label">License</span>
+          <span style="font-size: 0.8125rem; font-family: monospace; color: var(--color-text, #E8F4F5);">GPL-3.0</span>
+        </div>
+        <div class="link-row">
+          <span class="link-row__label">Category</span>
+          <span style="font-size: 0.8125rem; color: var(--color-text, #E8F4F5);">Commerce &amp; Marketplace</span>
+        </div>
+        <div class="link-row">
+          <span class="link-row__label">Fees</span>
+          <span style="font-size: 0.8125rem; color: #4ade80; font-weight: 600;">Zero</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="/" class="footer__logo" aria-label="Agentry home">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+          <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+          <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+          <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+        </svg>
+        <span>Agentry</span>
+      </a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <a href="/#directory">Directory</a>
+        <a href="/blog/">Blog</a>
+        <a href="/enterprise/">Enterprise</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/#list-agent">List Your Agent</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Agentry. Built for the agentic web.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('is-open');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (mobileMenuBtn && mobileNav) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+  }
+
+  // Theme toggle
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(savedTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  // Copy to clipboard
+  function copyToClipboard(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
