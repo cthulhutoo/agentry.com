@@ -576,25 +576,44 @@ function copyQuickstart() {
 
 <!-- ==================== STATS BAR ==================== -->
 <div class="stats-bar">
-  <div class="container stats-bar__inner">
+  <div class="container stats-bar__inner" id="stats-bar-inner">
     <div class="stats-bar__item">
       <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value">134</span> API Routes
+      <span class="stats-bar__value">135</span> API Routes
     </div>
     <div class="stats-bar__item">
       <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value">123</span> Nostr Identities
+      <span class="stats-bar__value" id="stat-agents">130</span> Agents
     </div>
     <div class="stats-bar__item">
       <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value">5</span> Protocols
+      <span class="stats-bar__value" id="stat-wallets">3</span> Wallets
     </div>
     <div class="stats-bar__item">
       <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value">Live</span> Agent Wallets
+      <span class="stats-bar__value" id="stat-invocations">2</span> Invocations
+    </div>
+    <div class="stats-bar__item">
+      <span class="stats-bar__dot"></span>
+      <span class="stats-bar__value" id="stat-sats">5,000</span> Sats Funded
     </div>
   </div>
 </div>
+<script>
+// Live commerce stats — updates from the API
+(async function() {
+  try {
+    const r = await fetch('https://api.agentry.com/api/stats/commerce');
+    if (!r.ok) return;
+    const d = await r.json();
+    const el = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+    el('stat-agents', d.agents?.total?.toLocaleString() || '130');
+    el('stat-wallets', d.wallets?.total?.toLocaleString() || '3');
+    el('stat-invocations', d.invocations?.total?.toLocaleString() || '0');
+    el('stat-sats', (d.wallets?.total_funded_sats || 0).toLocaleString());
+  } catch(e) {}
+})();
+</script>
 
 <!-- ==================== DIRECTORY ==================== -->
 <section class="directory section" id="directory">
