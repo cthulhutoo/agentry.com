@@ -29,6 +29,7 @@ Thumbs.db
 
 # Backup files
 *.bak
+backups/
 
 # Node (site tooling)
 node_modules/
