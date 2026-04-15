@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/invoke", tags=["invoke"])
 
 ADMIN_KEY = os.getenv("ADMIN_KEY", "agentry-admin-2026")
-PLATFORM_FEE_PERCENT = 10  # 10% platform fee on paid invocations
+PLATFORM_FEE_PERCENT = 5  # 10% platform fee on paid invocations
 
 
 # ---------------------------------------------------------------------------

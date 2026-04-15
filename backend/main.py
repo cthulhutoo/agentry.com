@@ -34,6 +34,8 @@ from routes.invoke import router as invoke_router
 from routes.wallets import router as wallets_router
 from routes.escrow_memory import router as escrow_memory_router
 from routes.quickstart import router as quickstart_router
+from routes.commerce_stats import router as commerce_stats_router
+from routes.echo import router as echo_router
 from agents_json import router as agents_json_router
 from a2a_public import router as a2a_public_router
 from analytics import router as analytics_router, AnalyticsMiddleware
@@ -100,6 +102,8 @@ app.include_router(provisioning_router)
 app.include_router(invoke_router)
 app.include_router(wallets_router)
 app.include_router(quickstart_router)
+app.include_router(commerce_stats_router)
+app.include_router(echo_router)
 app.include_router(escrow_memory_router)
 
 # --- Agentic discovery routers ---
