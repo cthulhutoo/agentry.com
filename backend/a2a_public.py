@@ -80,7 +80,7 @@ def _agent_to_a2a_card(agent: dict[str, Any]) -> dict[str, Any]:
         }
 
     # Add Agentry metadata extensions
-    card["x-agentry"] = {
+    agentry_meta: dict[str, Any] = {
         "agentryId": agent.get("id", ""),
         "category": agent.get("category", "Uncategorized"),
         "pricingModel": agent.get("pricing_model", "Unknown"),
@@ -93,6 +93,12 @@ def _agent_to_a2a_card(agent: dict[str, Any]) -> dict[str, Any]:
         "mcpSupport": agent.get("mcp_support", "Unknown"),
         "directoryUrl": f"https://agentry.com/#agent-{agent.get('id', '')}",
     }
+    # Include verified endpoint paths so consuming agents can skip probing
+    if agent.get("a2a_endpoint"):
+        agentry_meta["a2aEndpoint"] = agent["a2a_endpoint"]
+    if agent.get("mcp_endpoint"):
+        agentry_meta["mcpEndpoint"] = agent["mcp_endpoint"]
+    card["x-agentry"] = agentry_meta
 
     return card
 
