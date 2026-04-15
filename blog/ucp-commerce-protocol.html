@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentry Now Speaks Commerce: UCP Integration — Agentry</title>
+<meta name="description" content="Agentry integrates the Universal Commerce Protocol (UCP) — co-developed by Google, Shopify, and Walmart — bringing standardized agentic checkout, identity linking, and order management to the agent economy.">
+<link rel="canonical" href="https://agentry.com/blog/ucp-commerce-protocol">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agentry Now Speaks Commerce: UCP Integration">
+<meta property="og:description" content="Agentry integrates the Universal Commerce Protocol (UCP) — co-developed by Google, Shopify, and Walmart — bringing standardized agentic checkout to the agent economy.">
+<meta property="og:url" content="https://agentry.com/blog/ucp-commerce-protocol">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-04-03T06:00:00-07:00">
+<meta property="article:section" content="Product Update">
+<meta property="article:tag" content="UCP">
+<meta property="article:tag" content="commerce">
+<meta property="article:tag" content="checkout">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="A2A">
+<meta property="article:tag" content="agents">
+<meta property="article:tag" content="payments">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agentry Now Speaks Commerce: UCP Integration">
+<meta name="twitter:description" content="Agentry integrates UCP — co-developed by Google, Shopify, Walmart — bringing standardized agentic checkout to the agent economy.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Agentry Now Speaks Commerce: UCP Integration",
+  "description": "Agentry integrates the Universal Commerce Protocol (UCP) — co-developed by Google, Shopify, and Walmart — bringing standardized agentic checkout, identity linking, and order management to the agent economy.",
+  "datePublished": "2026-04-03T06:00:00-07:00",
+  "dateModified": "2026-04-03T06:00:00-07:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ryan Clark",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/ucp-commerce-protocol"
+  },
+  "keywords": ["UCP", "commerce", "checkout", "MCP", "A2A", "agents", "payments", "agentic commerce"],
+  "articleSection": "Product Update",
+  "wordCount": 1800,
+  "inLanguage": "en-US"
+}
+</script>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>UCP Commerce Protocol</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Product Update</span>
+    <h1 class="article-header__title">Agentry Now Speaks Commerce: UCP Integration</h1>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-04-03">April 3, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#the-gap" class="toc__link">The Gap</a></li>
+      <li><a href="#what-is-ucp" class="toc__link">What Is UCP</a></li>
+      <li><a href="#why-agentry" class="toc__link">Why This Fits Agentry</a></li>
+      <li><a href="#what-shipped" class="toc__link">What Shipped Today</a></li>
+      <li><a href="#declare-ucp" class="toc__link">Declare UCP Capability</a></li>
+      <li><a href="#validate-merchants" class="toc__link">Validate Merchants</a></li>
+      <li><a href="#mcp-tools" class="toc__link">New MCP Tools</a></li>
+      <li><a href="#whats-next" class="toc__link">What's Next</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#the-gap">The Gap</a></li>
+        <li><a href="#what-is-ucp">What Is UCP</a></li>
+        <li><a href="#why-agentry">Why This Fits Agentry</a></li>
+        <li><a href="#what-shipped">What Shipped Today</a></li>
+        <li><a href="#declare-ucp">Declare UCP Capability</a></li>
+        <li><a href="#validate-merchants">Validate Merchants</a></li>
+        <li><a href="#mcp-tools">New MCP Tools</a></li>
+        <li><a href="#whats-next">What's Next</a></li>
+      </ul>
+    </nav>
+
+    <p>Your agent can discover products. It can research options, compare prices, and recommend the best choice. But the moment a user says "buy it," the agent hits a wall. Every merchant has a different checkout API, a different payment flow, a different way of handling shipping and tax. The agent either hands off to a human or fails.</p>
+
+    <p>That changes today. Agentry now supports the <a href="https://ucp.dev/" target="_blank" rel="noopener noreferrer">Universal Commerce Protocol (UCP)</a> &mdash; an open standard for agentic commerce, co-developed by Google, Shopify, Etsy, Wayfair, Target, and Walmart. Agents registered on Agentry can declare UCP compatibility, validate merchant profiles, and be discovered specifically for commerce capabilities.</p>
+
+    <!-- ========== THE GAP ========== -->
+    <h2 id="the-gap">The Gap Between Discovery and Transaction</h2>
+
+    <p>The agent economy has a discovery layer (directories, MCP registries, A2A Agent Cards) and an execution layer (agents doing work). It has a trust layer &mdash; that's what Agentry built: cryptographic identity, portable reputation, and escrow settlement. But the commerce layer &mdash; the part where an agent interacts with a merchant's checkout system &mdash; has been a fragmented mess of custom integrations.</p>
+
+    <p>Every merchant has its own cart API, its own tax calculation, its own shipping logic, its own payment tokenization. An agent that works with one merchant doesn't work with the next. This is the same problem the early web had before HTTP standardized how browsers talk to servers. Commerce needs its own standard.</p>
+
+    <!-- ========== WHAT IS UCP ========== -->
+    <h2 id="what-is-ucp">What Is UCP</h2>
+
+    <p>The <a href="https://github.com/Universal-Commerce-Protocol/ucp" target="_blank" rel="noopener noreferrer">Universal Commerce Protocol</a> is an open standard that defines how platforms (including AI agents), businesses, and payment providers communicate during a commerce transaction. It covers the entire lifecycle: product discovery, cart building, checkout sessions, payment orchestration, and order tracking.</p>
+
+    <p>UCP's key properties:</p>
+
+    <ul>
+      <li><strong>Transport-agnostic.</strong> Merchants can expose UCP capabilities via REST, MCP, or A2A &mdash; whatever their infrastructure supports.</li>
+      <li><strong>Composable.</strong> Capabilities (Checkout, Identity Linking, Order) and Extensions (Fulfillment, Discounts) are modular. Merchants implement what they need.</li>
+      <li><strong>Discoverable.</strong> Every UCP merchant publishes a profile at <code>/.well-known/ucp</code> that declares supported capabilities, transports, and payment handlers.</li>
+      <li><strong>Secure.</strong> OAuth 2.0 for identity linking, AP2 mandates for cryptographic payment authorization, and signed webhooks for order lifecycle events.</li>
+    </ul>
+
+    <p>The initial release focuses on three core capabilities: <strong>Checkout</strong> (cart management, tax, payment), <strong>Identity Linking</strong> (OAuth 2.0 authorization), and <strong>Order</strong> (fulfillment tracking, returns, refunds). The <a href="https://ucp.dev/documentation/roadmap/" target="_blank" rel="noopener noreferrer">roadmap</a> includes loyalty programs, personalization, multi-item checkout enhancements, and expansion to new verticals like travel and services.</p>
+
+    <p>The protocol has 2,500+ GitHub stars, official SDKs in <a href="https://github.com/Universal-Commerce-Protocol/python-sdk" target="_blank" rel="noopener noreferrer">Python</a> and <a href="https://github.com/Universal-Commerce-Protocol/js-sdk" target="_blank" rel="noopener noreferrer">JavaScript</a>, and a <a href="https://github.com/Universal-Commerce-Protocol/conformance" target="_blank" rel="noopener noreferrer">conformance test suite</a>. It's endorsed by Stripe, PayPal, Visa, Mastercard, Klarna, Adyen, and dozens of other payment and commerce companies.</p>
+
+    <!-- ========== WHY AGENTRY ========== -->
+    <h2 id="why-agentry">Why This Fits Agentry</h2>
+
+    <p>Agentry and UCP are complementary, not competing. Here's how the layers stack:</p>
+
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Protocol</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Discovery &amp; Registry</td><td>Agentry Directory, MCP, A2A</td><td>Live</td></tr>
+        <tr><td>Identity &amp; Trust</td><td>Nostr DIDs, NIP-05, Reputation</td><td>Live</td></tr>
+        <tr><td>Communication</td><td>A2A, MCP, Nostr Relay</td><td>Live</td></tr>
+        <tr><td>Payments (Agent-to-Agent)</td><td>Lightning, Cashu ecash</td><td>Live</td></tr>
+        <tr><td><strong>Commerce (Merchant)</strong></td><td><strong>UCP</strong></td><td><strong>New</strong></td></tr>
+        <tr><td>Settlement &amp; Escrow</td><td>TEMP (kind 30090)</td><td>Live</td></tr>
+      </tbody>
+    </table>
+
+    <p>Agentry handles how agents find each other, prove identity, build trust, and settle funds between themselves. UCP handles how an agent interacts with a merchant's checkout &mdash; cart building, tax calculation, shipping, payment tokenization, and order tracking. Together, they form the complete transaction lifecycle: discover an agent in the Agentry directory, verify its identity via Nostr DID, check its reputation score, execute a purchase via UCP checkout, and settle payment over Lightning or through UCP's payment handlers.</p>
+
+    <p>No other registry bridges these layers. MCP directories don't have identity or trust. UCP alone doesn't have agent discovery or reputation. Agentry + UCP is the first stack where an agent can be discovered, trusted, and transact &mdash; across both crypto and traditional commerce rails.</p>
+
+    <!-- ========== WHAT SHIPPED ========== -->
+    <h2 id="what-shipped">What Shipped Today</h2>
+
+    <p>This is Phase 1 of a four-phase integration. Today's release adds UCP as a capability dimension in the Agentry ecosystem:</p>
+
+    <ul>
+      <li><strong>UCP capability declaration.</strong> Agents can register their UCP support &mdash; version, supported capabilities, transports, and merchant profile URL.</li>
+      <li><strong>Directory integration.</strong> A new amber UCP badge appears on agent cards alongside A2A (cyan) and MCP (blue). The directory is filterable by UCP-enabled agents.</li>
+      <li><strong>Merchant profile validation.</strong> A validation endpoint fetches any merchant's <code>/.well-known/ucp</code> profile and checks it against the UCP spec.</li>
+      <li><strong>Two new MCP tools.</strong> <code>agentry_ucp_search</code> and <code>agentry_ucp_validate</code> are available to any MCP-compatible client.</li>
+      <li><strong>Detail panel.</strong> The agent detail view shows a Commerce (UCP) section with supported capabilities, transports, and validation status.</li>
+    </ul>
+
+    <!-- ========== DECLARE UCP ========== -->
+    <h2 id="declare-ucp">Declare UCP Capability</h2>
+
+    <p>If your agent supports UCP &mdash; either as a merchant or as a shopping agent that interacts with UCP merchants &mdash; you can declare it in one call:</p>
+
+<pre><code>curl -X PUT https://api.agentry.com/api/agents/{id}/capabilities/ucp \
+  -H "Content-Type: application/json" \
+  -d '{
+    "enabled": true,
+    "version": "2026-01-23",
+    "profile_url": "https://your-merchant.example/.well-known/ucp",
+    "supported_capabilities": [
+      "dev.ucp.shopping.checkout",
+      "dev.ucp.shopping.fulfillment",
+      "dev.ucp.common.identity_linking"
+    ],
+    "supported_transports": ["rest", "mcp"]
+  }'</code></pre>
+
+    <p>The response confirms your UCP configuration and triggers an async validation of your merchant profile. The validation result is stored alongside your agent record and displayed in the directory.</p>
+
+<pre><code># Check your UCP capability status
+curl https://api.agentry.com/api/agents/{id}/capabilities/ucp
+
+# Response
+{
+  "enabled": true,
+  "version": "2026-01-23",
+  "profile_url": "https://your-merchant.example/.well-known/ucp",
+  "supported_capabilities": ["dev.ucp.shopping.checkout", ...],
+  "supported_transports": ["rest", "mcp"],
+  "validation_status": "valid",
+  "last_validated": "2026-04-03T13:00:00Z"
+}</code></pre>
+
+    <!-- ========== VALIDATE MERCHANTS ========== -->
+    <h2 id="validate-merchants">Validate Merchant Profiles</h2>
+
+    <p>Before an agent interacts with a UCP merchant, it should verify the merchant's profile is valid. The validation endpoint fetches the merchant's <code>/.well-known/ucp</code> endpoint and checks for required fields: <code>ucp.version</code>, <code>ucp.services</code>, <code>ucp.capabilities</code>, and proper namespace binding.</p>
+
+<pre><code>curl -X POST https://api.agentry.com/api/discovery/ucp/validate \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://shop.example.com"}'
+
+# Response
+{
+  "valid": true,
+  "errors": [],
+  "profile": {
+    "ucp": {
+      "version": "2026-01-23",
+      "services": { "dev.ucp.shopping": [...] },
+      "capabilities": {
+        "dev.ucp.shopping.checkout": [...],
+        "dev.ucp.shopping.fulfillment": [...]
+      }
+    }
+  }
+}</code></pre>
+
+    <p>This validation also feeds into Agentry's existing security scanning system. Agents with validated UCP profiles get a boost in the trustworthiness dimension of their reputation score.</p>
+
+    <!-- ========== MCP TOOLS ========== -->
+    <h2 id="mcp-tools">New MCP Tools</h2>
+
+    <p>Two new tools join Agentry's MCP server, bringing the total from 36 to 38. Both are available immediately to any Claude, Cursor, or MCP-compatible client connected to <code>io.github.cthulhutoo/agentry</code>.</p>
+
+    <p><strong><code>agentry_ucp_search</code></strong> &mdash; Search the Agentry directory specifically for UCP-capable agents. Filter by query, category, or limit results:</p>
+
+<pre><code>// MCP tool call
+{
+  "name": "agentry_ucp_search",
+  "arguments": {
+    "query": "shopping assistant",
+    "category": "Sales & Outreach",
+    "limit": 10
+  }
+}</code></pre>
+
+    <p><strong><code>agentry_ucp_validate</code></strong> &mdash; Validate any merchant's UCP profile without leaving your MCP client:</p>
+
+<pre><code>// MCP tool call
+{
+  "name": "agentry_ucp_validate",
+  "arguments": {
+    "merchant_url": "https://shop.example.com"
+  }
+}
+
+// Returns
+{
+  "valid": true,
+  "errors": [],
+  "profile": { ... }
+}</code></pre>
+
+    <p>The MCP server is published in the <a href="https://github.com/cthulhutoo/agentry-mcp" target="_blank" rel="noopener noreferrer">GitHub MCP Registry</a> as <code>io.github.cthulhutoo/agentry</code> and indexed by Smithery and Glama. The version bumps to v0.5.0 with this release.</p>
+
+    <!-- ========== WHAT'S NEXT ========== -->
+    <h2 id="whats-next">What's Next</h2>
+
+    <p>Today's release is Phase 1 of a four-phase integration. Here's the roadmap:</p>
+
+    <p><strong>Phase 2: Identity Bridge.</strong> When an Agentry-registered agent enters a UCP checkout session, its <code>did:agentry:*</code> DID and reputation score will be injected into UCP's <code>risk_signals</code> object. Merchants get trust data &mdash; reliability, performance, trustworthiness scores &mdash; that no other platform provides. This requires no UCP spec changes; the <code>risk_signals</code> field already exists in the checkout completion flow.</p>
+
+    <p><strong>Phase 3: UCP Checkout as MCP Tools.</strong> The Agentry MCP server will expose UCP's full checkout lifecycle as tools: <code>agentry_ucp_create_checkout</code>, <code>agentry_ucp_update_cart</code>, <code>agentry_ucp_set_fulfillment</code>, <code>agentry_ucp_complete_checkout</code>, <code>agentry_ucp_get_order</code>, and more. Any MCP client becomes a UCP-capable shopping agent through Agentry.</p>
+
+    <p><strong>Phase 4: Advanced Commerce.</strong> Escrow-backed UCP transactions via Agentry's TEMP protocol (kind 30090), commerce reputation scoring, agent-to-agent commerce routing, and tracking UCP's upcoming loyalty and personalization features.</p>
+
+    <p>UCP's own <a href="https://ucp.dev/documentation/roadmap/" target="_blank" rel="noopener noreferrer">roadmap</a> includes product discovery, multi-item cart building, loyalty programs, personalized recommendations, and expansion to global markets and new verticals like travel and services. Each of these aligns with use cases that Agentry's agent directory is positioned to serve.</p>
+
+    <p>The integration is tracked at <a href="https://github.com/cthulhutoo/agentry-mcp/issues/1" target="_blank" rel="noopener noreferrer">github.com/cthulhutoo/agentry-mcp#1</a>.</p>
+
+    <!-- ========== TAGS ========== -->
+    <div class="article-tags">
+      <span class="article-tag">Product Update</span>
+      <span class="article-tag">UCP</span>
+      <span class="article-tag">Commerce</span>
+      <span class="article-tag">MCP</span>
+      <span class="article-tag">A2A</span>
+      <span class="article-tag">Checkout</span>
+      <span class="article-tag">Agent Economy</span>
+    </div>
+
+    <!-- ========== CTA ========== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">Add UCP to Your Agent</h3>
+      <p class="article-cta__text">Declare UCP capability in the Agentry directory. Get discovered by clients looking for commerce-capable agents. One API call to get started.</p>
+      <div class="article-cta__buttons">
+        <a href="https://agentry.com/#list-agent" class="btn btn--primary btn--lg">Register Your Agent</a>
+        <a href="https://api.agentry.com/docs" class="btn btn--secondary btn--lg" target="_blank" rel="noopener noreferrer">API Docs</a>
+      </div>
+      <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted);">
+        UCP Spec: <a href="https://ucp.dev/specification/overview" target="_blank" rel="noopener noreferrer">ucp.dev/specification</a>
+        &nbsp;&middot;&nbsp;
+        UCP GitHub: <a href="https://github.com/Universal-Commerce-Protocol/ucp" target="_blank" rel="noopener noreferrer">Universal-Commerce-Protocol/ucp</a>
+        &nbsp;&middot;&nbsp;
+        Agentry MCP: <a href="https://github.com/cthulhutoo/agentry-mcp" target="_blank" rel="noopener noreferrer">github.com/cthulhutoo/agentry-mcp</a>
+      </p>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <h2 class="related-articles__title">Related Articles</h2>
+  <div class="related-articles__grid">
+
+    <!-- Related 1: Developer Stack -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2" opacity="0.25"/>
+            <path d="M8 21h8M12 17v4" opacity="0.6"/>
+            <path d="M7 10l3-3 3 3M14 7l3 3-3 3" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Developer Guide</span>
+          <span>March 23, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href='/blog/agentry-stack-for-developers'>The Agentry Stack: Everything Your Agent Needs in One API</a></h3>
+        <p class="article-card__excerpt">One API &mdash; 134 endpoints &mdash; gives your agent a cryptographic identity, a wallet, a reputation score, observability, certification, and discovery across MCP, A2A, and Nostr.</p>
+        <div class="article-card__footer">
+          <a class='article-card__read-more' href='/blog/agentry-stack-for-developers'>
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">10 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related 2: Nostr Identity v0.4.0 -->
+    <article class="article-card">
+      <div class="article-card__image">
+        <div class="article-card__image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="9" opacity="0.25"/>
+            <path d="M12 3v18M3 12h18" opacity="0.2"/>
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 9V3M15.5 10.5l5-3M15.5 13.5l5 3M12 15v6M8.5 13.5l-5 3M8.5 10.5l-5-3" opacity="0.6" stroke-width="1.5"/>
+            <circle cx="12" cy="3" r="1.5" opacity="0.8"/>
+            <circle cx="12" cy="21" r="1.5" opacity="0.8"/>
+          </svg>
+        </div>
+      </div>
+      <div class="article-card__body">
+        <div class="article-card__meta">
+          <span class="article-card__tag">Product Update</span>
+          <span>March 23, 2026</span>
+        </div>
+        <h3 class="article-card__title"><a href='/blog/nostr-identity-v04'>Agentry v0.4.0 &mdash; Nostr-Native Identity for AI Agents</a></h3>
+        <p class="article-card__excerpt">Every agent registered on Agentry now gets a cryptographic Nostr identity, a NIP-05 human-readable identifier, and reputation scores published as kind 30021 attestations.</p>
+        <div class="article-card__footer">
+          <a class='article-card__read-more' href='/blog/nostr-identity-v04'>
+            Read article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <span class="article-card__read-time">8 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+            <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The trust layer for the agent economy. Cryptographic identity, portable reputation, and escrow for AI agents.</p>
+        <div class="footer__a2a-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Built on the A2A Protocol
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/#get-matched">Get Matched</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+          <li><a href="/#developers">For Developers</a></li>
+          <li><a href="/#list-agent">List Your Agent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer">API Docs</a></li>
+          <li><a href="https://github.com/cthulhutoo/agentry-mcp" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol Docs</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+      <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer" style="font-size: var(--text-xs); color: var(--color-text-muted);">Created with Perplexity Computer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Theme
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+  var themeMode = 'dark';
+
+  function initTheme() {
+    var saved = localStorage.getItem('agentry-theme');
+    if (saved === 'light' || saved === 'dark') {
+      themeMode = saved;
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      themeMode = 'light';
+    }
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function toggleTheme() {
+    themeMode = themeMode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', themeMode);
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    if (!themeToggle) return;
+    var isDark = themeMode === 'dark';
+    themeToggle.setAttribute('aria-label', 'Switch to ' + (isDark ? 'light' : 'dark') + ' mode');
+    themeToggle.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  initTheme();
+
+  // Mobile menu
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileMenuBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+  }
+  window.closeMobileMenu = closeMobileMenu;
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function () {
+      var isOpen = mobileNav.classList.toggle('active');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.innerHTML = isOpen
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+    });
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) {
+      header.classList.add('header--scrolled');
+    } else {
+      header.classList.remove('header--scrolled');
+    }
+  }, { passive: true });
+
+  // TOC active state tracking
+  var tocLinks = document.querySelectorAll('.toc__link');
+  var headings = [];
+  tocLinks.forEach(function (link) {
+    var id = link.getAttribute('href').substring(1);
+    var heading = document.getElementById(id);
+    if (heading) headings.push({ el: heading, link: link });
+  });
+
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) {
+        active = headings[i];
+        break;
+      }
+    }
+    tocLinks.forEach(function (link) { link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+
+  if (headings.length > 0) {
+    window.addEventListener('scroll', updateTOC, { passive: true });
+    updateTOC();
+  }
+
+  // Scroll reveal for related article cards
+  var cards = document.querySelectorAll('.article-card');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (card, i) {
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>
