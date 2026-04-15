@@ -81,6 +81,8 @@ class AgentListing(BaseModel):
     integrations: str = Field(default="", description="Comma-separated list of integrations (e.g. Slack, Salesforce, GitHub)")
     a2a_support: str = Field(default="Unknown", description="Whether the agent supports the A2A protocol (Yes/No/Unknown)")
     mcp_support: str = Field(default="Unknown", description="Whether the agent exposes MCP tools (Yes/No/Unknown)")
+    a2a_endpoint: str | None = Field(default=None, description="Verified working A2A endpoint path (e.g. '/a2a')")
+    mcp_endpoint: str | None = Field(default=None, description="Verified working MCP endpoint path (e.g. '/mcp')")
     trust_score: float | None = None
     agent_card: AgentCard | None = None
     verification_status: str = "unverified"
@@ -209,6 +211,8 @@ class TrustSignals(BaseModel):
     supports_streaming: bool = False
     supports_push_notifications: bool = False
     supports_state_history: bool = False
+    a2a_endpoint_live: bool = False
+    mcp_endpoint_live: bool = False
     response_time_ms: float | None = None
     uptime_checks_passed: int = 0
     uptime_checks_total: int = 0

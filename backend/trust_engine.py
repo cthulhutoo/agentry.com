@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 WEIGHTS = {
-    "card_resolves":       25,
+    "card_resolves":       20,
     "card_schema_valid":   15,
     "domain_matches_url":  10,
     "has_provider_info":    5,
@@ -25,7 +25,9 @@ WEIGHTS = {
     "has_skills":          10,
     "has_version":          5,
     "has_protocol_version": 5,
-    "uptime_ratio":        15,
+    "a2a_endpoint_live":    5,
+    "mcp_endpoint_live":    5,
+    "uptime_ratio":        10,
     "response_time":        5,
 }
 
@@ -65,6 +67,8 @@ def compute_trust_score(signals: TrustSignals) -> tuple[float, str, dict[str, fl
         "has_skills",
         "has_version",
         "has_protocol_version",
+        "a2a_endpoint_live",
+        "mcp_endpoint_live",
     ):
         value = getattr(signals, field, False)
         pts = WEIGHTS[field] if value else 0.0
