@@ -11,6 +11,7 @@ from fastapi import APIRouter, Path, Query, Request, HTTPException
 from models import AgentListing, AgentRegistration, CategoryCount
 from email_service import send_agent_registration_confirmation, send_agent_registration_admin
 from spam_filter import check_agent_registration
+from backup import auto_backup
 
 logger = logging.getLogger(__name__)
 
@@ -129,6 +130,12 @@ async def register_agent(request: Request, body: AgentRegistration) -> dict[str,
     data["contact_email"] = body.contact_email
     store.add_agent(data)
     logger.info("Registered new agent: %s (%s)", body.name, listing.id)
+
+    # Backup after organic registration to prevent data loss
+    try:
+        auto_backup(store._store)
+    except Exception:
+        logger.warning("Auto-backup after registration failed (non-fatal)")
 
     # Send emails in background
     asyncio.create_task(_send_registration_emails(data))

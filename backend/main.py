@@ -40,6 +40,8 @@ from agents_json import router as agents_json_router
 from a2a_public import router as a2a_public_router
 from analytics import router as analytics_router, AnalyticsMiddleware
 from badges import router as badges_router
+from routes.backup import router as backup_router
+from backup import auto_backup
 from fastapi_mcp import FastApiMCP
 from fastapi.responses import JSONResponse, PlainTextResponse, RedirectResponse
 
@@ -112,6 +114,13 @@ app.include_router(agents_json_router)
 app.include_router(mcp_verify_router)
 app.include_router(analytics_router)
 app.include_router(badges_router)
+app.include_router(backup_router)
+
+# --- Auto-backup on startup ---
+try:
+    auto_backup(app.state.store._store)
+except Exception:
+    logger.exception("Startup auto-backup failed (non-fatal)")
 
 # --- MCP SSE Server (auto-exposes API endpoints as MCP tools) ---
 mcp = FastApiMCP(

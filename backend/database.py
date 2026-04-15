@@ -160,7 +160,9 @@ def _empty_store() -> dict[str, Any]:
 
 
 def _load_store() -> dict[str, Any]:
-    """Load the JSON store from disk, seeding from directory data if needed."""
+    """Load the JSON store from disk, with backup protection against data loss."""
+
+    # 1. If store.json exists and is valid, use it
     if _STORE_PATH.exists():
         try:
             with open(_STORE_PATH) as f:
@@ -171,9 +173,34 @@ def _load_store() -> dict[str, Any]:
                     data[key] = default
             return data
         except (json.JSONDecodeError, OSError):
-            logger.warning("Corrupt store.json — rebuilding from seed data.")
+            logger.error("store.json is corrupt, checking backups...")
 
-    # Seed from the agent directory dataset
+    # 2. store.json is missing or corrupt — check for backups before re-seeding
+    try:
+        from backup import list_backups, restore_backup
+
+        backups = list_backups()
+        if backups:
+            latest = backups[0]
+            agent_count = latest.get("agent_count", 0)
+            logger.warning(
+                "store.json missing! Found %d backups. Restoring from %s (%d agents)",
+                len(backups),
+                latest["filename"],
+                agent_count,
+            )
+            restored = restore_backup(latest["path"])
+            if restored and len(restored.get("agents", [])) > 0:
+                _save_store(restored)
+                logger.info("Successfully restored store from backup: %s", latest["filename"])
+                return restored
+            logger.error("Backup restore failed, falling back to seed data")
+        else:
+            logger.warning("store.json missing and no backups found — seeding from scratch")
+    except Exception:
+        logger.exception("Backup restore check failed — falling back to seed data")
+
+    # 3. Last resort: seed from agent_directory_data.json
     store = _empty_store()
     if _SEED_PATH.exists():
         try:

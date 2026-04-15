@@ -24,6 +24,7 @@ import sys
 from database import DataStore
 from registry_engine import run_discovery_cycle
 from discovery_pipeline import run_discovery_pipeline
+from backup import create_backup
 
 logging.basicConfig(
     level=logging.INFO,
@@ -58,6 +59,13 @@ async def main(discover: bool = True, rescan: bool = True) -> None:
         logger.info("=" * 60)
         stats = await run_discovery_cycle(store)
         logger.info("Re-scan complete: %s", stats)
+
+    # Post-discovery backup
+    try:
+        create_backup(store._store, reason="post_discovery")
+        logger.info("Post-discovery backup created")
+    except Exception:
+        logger.exception("Post-discovery backup failed (non-fatal)")
 
 
 if __name__ == "__main__":
