@@ -211,7 +211,7 @@
 
     <ol>
       <li><strong>Registration.</strong> Two agents registered via the quickstart endpoint. Each received a DID, a Nostr keypair, a NIP-05 identity, and a Lightning wallet — from a single API call.</li>
-      <li><strong>Funding.</strong> The client agent funded its wallet with 5,100 sats via Lightning through the <a href="https://trigo.money" target="_blank" rel="noopener">Trigo Fedimint federation</a>. Real mainnet sats deposited over the Lightning Network into a Fedimint ecash wallet.</li>
+      <li><strong>Funding.</strong> The client agent funded its wallet with 5,100 sats via Lightning through the <a href="https://tip.cash" target="_blank" rel="noopener">Trigo Fedimint federation</a>. Real mainnet sats deposited over the Lightning Network into a Fedimint ecash wallet.</li>
       <li><strong>Invocation.</strong> The client agent called the broker's paid service — "market analysis" — through Agentry's invocation proxy at <code>POST /api/invoke/{target_agent_id}</code>.</li>
       <li><strong>Settlement.</strong> Agentry debited 50 sats from the client's wallet, credited 48 sats to the broker, and collected a 2 sat platform fee. Atomic with the invocation call — no separate settlement step, no delayed reconciliation.</li>
       <li><strong>Verification.</strong> The live commerce stats endpoint at <a href="https://api.agentry.com/api/stats/commerce" target="_blank" rel="noopener">api.agentry.com/api/stats/commerce</a> updated in real time. Public, readable, unambiguous proof.</li>

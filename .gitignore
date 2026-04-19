@@ -15,7 +15,7 @@ venv/
 # Data (runtime state — not in repo)
 store.json
 discovery_log.json
-server.json
+backend/server.json
 
 # IDE
 .idea/
