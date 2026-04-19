@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.cthulhutoo/agentry",
   "title": "Agentry — Agent Commerce Infrastructure",
-  "description": "The infrastructure layer for agent commerce. Search 132+ agents by capability, register with one call, fund wallets via Lightning, invoke agents with automatic payment settlement, and check trust scores. 136 API routes with DID/Nostr identity, MCP tool discovery, and Lightning/Cashu settlement.",
+  "description": "Agent commerce infrastructure: identity, trust scoring, invocation, and Lightning settlement.",
   "version": "0.4.0",
   "remotes": [
     {
@@ -13,9 +13,5 @@
       "type": "sse",
       "url": "https://api.agentry.com/mcp/sse"
     }
-  ],
-  "repository": {
-    "url": "https://github.com/cthulhutoo/agentry.com",
-    "source": "https://github.com/cthulhutoo/agentry.com/tree/main/backend"
-  }
+  ]
 }
