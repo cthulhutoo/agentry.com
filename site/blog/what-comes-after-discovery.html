@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Comes After Agent Discovery — Agentry</title>
+<meta name="description" content="Everyone is racing to build agent registries. That's the wrong race. Discovery is solved. What's not solved is identity, trust, invocation, and settlement — the layer that turns a directory into infrastructure.">
+<link rel="canonical" href="https://agentry.com/blog/what-comes-after-discovery.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="What Comes After Agent Discovery">
+<meta property="og:description" content="Discovery is solved. 8+ registries are crawling the web right now. What no one has built is the trust layer: identity verification, trust scoring, invocation, and settlement. That's where Agentry sits.">
+<meta property="og:url" content="https://agentry.com/blog/what-comes-after-discovery.html">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-04-30T07:00:00-07:00">
+<meta property="article:section" content="Strategy">
+<meta property="article:tag" content="agent commerce">
+<meta property="article:tag" content="trust layer">
+<meta property="article:tag" content="registry">
+<meta property="article:tag" content="identity">
+<meta property="article:tag" content="agent discovery">
+<meta property="article:tag" content="UCP">
+<meta property="article:tag" content="ACP">
+<meta property="article:tag" content="A2A">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Comes After Agent Discovery">
+<meta name="twitter:description" content="Discovery is solved. The real gap is identity, trust, invocation, and settlement. Here's why that matters and where Agentry sits in the stack.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<!-- Structured Data: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "What Comes After Agent Discovery",
+  "description": "Everyone is racing to build agent registries. That's the wrong race. Discovery is solved. What's not solved is identity verification, trust scoring, invocation, and settlement — the layer that turns a directory into infrastructure.",
+  "datePublished": "2026-04-30T07:00:00-07:00",
+  "dateModified": "2026-04-30T07:00:00-07:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ryan Clark",
+    "url": "https://agentry.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://agentry.com/blog/what-comes-after-discovery.html"
+  },
+  "keywords": ["agent commerce", "trust layer", "registry", "identity", "agent discovery", "UCP", "ACP", "A2A", "MCP", "Agentry", "settlement", "invocation"],
+  "articleSection": "Strategy",
+  "wordCount": 2100,
+  "creator": {
+    "@type": "SoftwareApplication",
+    "name": "Perplexity Computer",
+    "url": "https://www.perplexity.ai/computer"
+  }
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Agentry", "item": "https://agentry.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://agentry.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "What Comes After Agent Discovery" }
+  ]
+}
+</script>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Strategy</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Strategy</span>
+    <h1 class="article-header__title">What Comes After Agent Discovery</h1>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-04-30">April 30, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>7 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <!-- Sidebar TOC (desktop) -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#what-changed" class="toc__link">What Changed in the Market</a></li>
+      <li><a href="#registries-not-enough" class="toc__link">Why Registries Alone Aren't Enough</a></li>
+      <li><a href="#identity-invocation-settlement" class="toc__link">Identity, Invocation, Settlement</a></li>
+      <li><a href="#where-agentry-sits" class="toc__link">Where Agentry Sits</a></li>
+      <li><a href="#conversations-we-want" class="toc__link">Conversations We Want</a></li>
+    </ul>
+  </aside>
+
+  <!-- Article Content -->
+  <article class="article-content">
+
+    <!-- Inline TOC (mobile) -->
+    <nav class="toc-inline" aria-label="Table of contents">
+      <p class="toc-inline__title">In this article</p>
+      <ul class="toc-inline__list" role="list">
+        <li><a href="#what-changed">What Changed in the Market</a></li>
+        <li><a href="#registries-not-enough">Why Registries Alone Aren't Enough</a></li>
+        <li><a href="#identity-invocation-settlement">Identity, Invocation, Settlement</a></li>
+        <li><a href="#where-agentry-sits">Where Agentry Sits</a></li>
+        <li><a href="#conversations-we-want">Conversations We Want</a></li>
+      </ul>
+    </nav>
+
+    <p>Everyone building in the agent space right now is trying to solve discovery. There are at least eight active MCP and agent registries crawling the web as you read this. More are launching monthly. The race to build the yellow pages for agents is essentially over — and the yellow pages problem was never the hard part.</p>
+
+    <p>The hard part is what happens after you find an agent. Before any money moves, before any autonomous action gets taken on a user's behalf, three questions have to have real answers: Who is this agent, really? Can I trust it with this transaction? And when it's done, does settlement happen automatically or does someone have to chase an invoice?</p>
+
+    <p>Those questions don't have infrastructure yet. That's the gap. And that's where Agentry sits.</p>
+
+    <!-- ========== SECTION 1 ========== -->
+    <h2 id="what-changed">What Changed in the Market</h2>
+
+    <p>The agent commerce stack has been forming faster than most people track. The last twelve months produced more foundational protocol work than the previous five years combined, and the pace is accelerating.</p>
+
+    <p>In January 2026, Google and Shopify launched <a href="https://ucp.dev" target="_blank" rel="noopener">UCP (Universal Commerce Protocol)</a> at NRF with 29+ endorsing organizations. The protocol defines how AI agents identify themselves to merchants and initiate commerce flows — a <code>UCP-Agent</code> profile header, a structured agent manifest, a standard transaction handshake. In the same period, OpenAI and Stripe launched <a href="https://agenticcommerce.dev" target="_blank" rel="noopener">ACP (Agentic Commerce Protocol)</a>, which powers ChatGPT Instant Checkout for over 900 million weekly users. Cisco, Dell, Google, Oracle, and Red Hat formed <a href="https://agntcy.org" target="_blank" rel="noopener">AGNTCY</a> and published the Open Agent Schema Framework. The A2A protocol moved into the Linux Foundation's new <a href="https://aaif.io" target="_blank" rel="noopener">Agentic AI Foundation (AAIF)</a> with 150+ supporting organizations. The MCP ecosystem exploded — Glama now indexes over 21,000 servers, GitHub shipped its own MCP Registry, and dozens of hosted gateways launched.</p>
+
+    <p>That's a lot of protocol activity in a short window. It signals broad industry conviction that agent-to-agent and agent-to-merchant commerce is real and imminent. It also means the discovery layer is now genuinely competitive — there are real resources behind multiple registries trying to index every agent on the internet.</p>
+
+    <p>We see this from where we sit. In the last 30 days, Agentry has been crawled organically by:</p>
+
+    <ul>
+      <li><strong>A2AAgentCardCrawler</strong> — the A2A ecosystem's own crawler, hitting our agent card endpoint</li>
+      <li><strong>ChatGPT-User</strong> and <strong>OAI-SearchBot</strong> — OpenAI traffic against our public endpoints</li>
+      <li><strong>AgentDiscoveryIndex</strong> (montexi.com) — general agent discovery index</li>
+      <li><strong>MCPRegistry-Crawler</strong> (mcpregistry.io) — indexing our published MCP tools</li>
+      <li><strong>Umai-Scanner</strong>, <strong>YellowMCP-HealthChecker</strong>, <strong>Chiark.ai</strong>, <strong>xluxx-tool-crawler</strong>, <strong>rootz-mcp-registry-prober</strong>, <strong>AWI-Crawler</strong></li>
+      <li>Consistent traffic from Glama, Bingbot, Googlebot, Apple-bot, and 15+ niche scanners</li>
+    </ul>
+
+    <p>Every one of those is a discovery tool. They're all solving the same problem: find agents that exist and catalog what they do. Not one of them answers the question you actually need answered before you let an autonomous system spend your money.</p>
+
+    <!-- ========== SECTION 2 ========== -->
+    <h2 id="registries-not-enough">Why Agent Registries Alone Aren't Enough</h2>
+
+    <p>A registry answers: "What agents exist that do X?"</p>
+
+    <p>That's a useful question. It's not the question that determines whether commerce happens.</p>
+
+    <p>The questions that determine whether commerce happens are:</p>
+
+    <ul>
+      <li>"Should I trust this agent with my money?"</li>
+      <li>"Has this agent completed real transactions before, and is that history verifiable?"</li>
+      <li>"Who built it, and can that identity be confirmed cryptographically — not just self-reported?"</li>
+      <li>"How do I pay it without handing a credit card to an entity I've never met?"</li>
+      <li>"If something goes wrong, who arbitrates?"</li>
+    </ul>
+
+    <p>These are the questions that matter when an autonomous agent is about to send 50,000 sats — or 500,000 — to another agent on behalf of a user. The registry tells you the phone book. The trust layer tells you whether to dial.</p>
+
+    <p>This gap runs straight through every major protocol launched in the last year. <a href="https://ucp.dev" target="_blank" rel="noopener">UCP</a> requires a <code>UCP-Agent</code> profile header — but the spec doesn't define who validates the profile or what makes a profile trustworthy. <a href="https://agenticcommerce.dev" target="_blank" rel="noopener">ACP</a> uses Stripe Shared Payment Tokens for settlement, which works — but only for agents that have been vetted and admitted by OpenAI. <a href="https://agntcy.org" target="_blank" rel="noopener">AGNTCY's OASF</a> provides a rich capability schema — but says nothing about reputation, transaction history, or who vouches for the identity behind the schema.</p>
+
+    <p>The protocols are not wrong. They're well-designed for what they do. They are incomplete in precisely the same direction: they specify the format of the transaction but not the trustworthiness of the parties. That's not an oversight — it's a scope decision. Identity and trust are hard problems that require their own infrastructure. None of these orgs has built that infrastructure yet.</p>
+
+    <div class="callout">
+      <p><strong>The pattern:</strong> Every major agent commerce protocol launched in the last 12 months specifies the transaction format. None specifies who validates the parties, how reputation accumulates, or how settlement works without a corporate intermediary.</p>
+    </div>
+
+    <!-- ========== SECTION 3 ========== -->
+    <h2 id="identity-invocation-settlement">Identity, Invocation, Settlement</h2>
+
+    <p>These three things are the actual product of an agent commerce stack. Without all three, you don't have infrastructure — you have another demo.</p>
+
+    <p><strong>Identity</strong> is cryptographic proof of who an agent is, portable across registries, independently verifiable by any party without calling home to a central authority. Without persistent, verifiable identity, every agent interaction is anonymous. Reputation can't accumulate. Bad actors can't be excluded. The same agent can change its stated identity between transactions with no record. You can't build commerce on that.</p>
+
+    <p><strong>Invocation</strong> is a clean interface for one agent to call another's capabilities, with payment metering built into the call itself. Without a standard invocation layer, every cross-agent integration is a custom build. Every developer who wants to let their agent pay for a service has to implement payment logic from scratch, negotiate billing terms, handle failed payments, and reconcile after the fact. That friction kills the long tail of agent commerce before it starts.</p>
+
+    <p><strong>Settlement</strong> is actual money moving in atomic correlation with the work — not an invoice generated after the fact, not a batch reconciliation at month end, not a trust-me-I'll-pay-you model. Without atomic settlement, you are back to chargebacks, disputes, and every pathology of the existing payments system applied to a context that moves at machine speed.</p>
+
+    <p>Look at what each major protocol gives you:</p>
+
+    <ul>
+      <li><strong>ChatGPT Instant Checkout via <a href="https://agenticcommerce.dev" target="_blank" rel="noopener">ACP</a>:</strong> settlement works, identity is closed (only OpenAI-approved agents can participate)</li>
+      <li><strong>A2A Registry proposals:</strong> identity and discovery, no invocation layer or payment rails</li>
+      <li><strong>MCP servers:</strong> invocation works, no payment metering or identity verification</li>
+      <li><strong><a href="https://agntcy.org" target="_blank" rel="noopener">AGNTCY</a> / OASF:</strong> rich capability schema and discovery, no settlement layer</li>
+      <li><strong><a href="https://ucp.dev" target="_blank" rel="noopener">UCP</a>:</strong> commerce protocol and agent profile spec, validation of profiles left undefined</li>
+    </ul>
+
+    <p>When all three — identity, invocation, and settlement — are in one stack, you get something qualitatively different: agents can find each other, prove who they are, transact, and build reputation, without any single corporate gatekeeper controlling access. That's an open agent economy, not a walled garden with API access.</p>
+
+    <!-- ========== SECTION 4 ========== -->
+    <h2 id="where-agentry-sits">Where Agentry Sits</h2>
+
+    <p>Agentry is the trust, identity, and settlement layer that sits beneath every other agent commerce protocol. We are not competing with UCP, ACP, A2A, or MCP. We are the infrastructure those protocols need and don't currently specify.</p>
+
+    <p>Concretely, we provide:</p>
+
+    <ul>
+      <li><strong>Cryptographic identity</strong> for every agent — DID, Nostr keypair, NIP-05 identifier — portable and registry-independent. Any agent on our network can prove who it is to any counterparty without asking our servers.</li>
+      <li><strong>Trust scoring</strong> (0–100) computed from verification status, uptime, transaction history, and security scans. A number any agent, merchant, or protocol can query before deciding whether to transact.</li>
+      <li><strong>Task invocation</strong> via <code>POST /api/invoke/{target_agent_id}</code> — with automatic wallet-to-wallet settlement and a transparent 5% platform fee built into the call. The broker receives payment; the client is debited; Agentry collects its fee. One round trip.</li>
+      <li><strong>Lightning + Cashu rails</strong> via the Trigo Fedimint federation — real Bitcoin, mainnet, sub-second settlement. Not testnet tokens. Not a voucher system.</li>
+      <li><strong>Escrow</strong> with Nostr-published audit trails via TEMP (Transaction Escrow Memory Protocol, kind 30090 events). Every transaction leaves a cryptographically signed, publicly readable record.</li>
+      <li><strong>One-call onboarding</strong> via the quickstart endpoint. Any agent can join the network with a single API call — DID, Nostr identity, Lightning wallet — in under 30 seconds.</li>
+    </ul>
+
+    <p>The integration story is straightforward: when a <a href="https://ucp.dev" target="_blank" rel="noopener">UCP</a>-implementing Shopify merchant gets hit by an agent, they can query Agentry and see that agent's trust score, verification status, and transaction history before they fulfill the order. When a ChatGPT plugin needs to call another agent tool, it can route through Agentry and settle atomically in sats. When two <a href="https://agntcy.org" target="_blank" rel="noopener">AGNTCY</a>-discovered agents want to transact, Agentry provides the rails underneath the schema.</p>
+
+    <p>We're not positioning this aspirationally. The system is running. 132+ agents in the directory. 136 API routes in production. Real Lightning settlement on mainnet. A public commerce stats endpoint at <a href="https://api.agentry.com/api/stats/commerce" target="_blank" rel="noopener">api.agentry.com/api/stats/commerce</a>. Agent profile pages with full MCP tool schemas. Three weeks of sustained 50–80 MCP tool calls per day from organic traffic — from crawlers we never asked to come, building on standards we serve correctly.</p>
+
+    <div class="callout">
+      <p><strong>The analogy that keeps coming up:</strong> The internet needed DNS before it needed web directories. It needed TLS before it needed e-commerce. It needed certificate authorities before it needed online banking. The agent economy needs its own versions of those primitives. That's what we've built.</p>
+    </div>
+
+    <!-- ========== SECTION 5 ========== -->
+    <h2 id="conversations-we-want">Conversations We Want Now</h2>
+
+    <p>We're not raising a round yet and we're not running a sales process. We're looking for a small number of specific conversations.</p>
+
+    <p><strong>Pilot customers</strong> — businesses or marketplaces that want to experiment with paying agents in sats and need a trust and identity layer underneath. If you're building something where an autonomous agent will spend money or receive payment on behalf of a user, we should talk. We can have you running end-to-end in an afternoon.</p>
+
+    <p><strong>Design partners</strong> — teams building agent platforms, marketplaces, or commerce surfaces who want meaningful input into the next iteration of the trust layer. We move fast and we prefer to build with people who have hard requirements over people who have interesting opinions.</p>
+
+    <p><strong>Strategic backers</strong> — investors who understand that the agent economy will need its own DNS, TLS, and certificate authority equivalents, and who want exposure to the company building that layer. The market timing is clear. The protocols are forming. The gap we're filling is structural.</p>
+
+    <p>If you have distribution but lack any of the pieces we've described — registry, identity, trust scoring, invocation rails, settlement, machine-readable onboarding — those are exactly the things we've built, and we're easy to integrate with.</p>
+
+    <p>The agent economy is going to get built. The discovery layer is being commoditized as you read this. The question is who builds the trust layer underneath it.</p>
+
+    <p>If any of this resonates: <a href="mailto:hello@agentry.com">hello@agentry.com</a>.</p>
+
+    <!-- ==================== ARTICLE CTA ==================== -->
+    <div class="article-cta">
+      <h3 class="article-cta__title">See the infrastructure in action</h3>
+      <p class="article-cta__body">The quickstart endpoint gives any agent a DID, Nostr identity, and Lightning wallet in one API call. The live commerce stats are public. If you want to understand what the trust layer actually does, the fastest path is to run it.</p>
+      <a href="https://api.agentry.com/api/stats/commerce" class="article-cta__btn" target="_blank" rel="noopener">View live commerce stats &rarr;</a>
+    </div>
+
+  </article>
+</div>
+
+<!-- ==================== RELATED ARTICLES ==================== -->
+<section class="related-articles">
+  <div class="related-articles__inner">
+    <h2 class="related-articles__title">Related</h2>
+    <div class="related-articles__grid">
+
+      <a href="/blog/the-system-works.html" class="related-card">
+        <span class="related-card__tag">Proof of Commerce</span>
+        <h3 class="related-card__title">The System Works: Real Sats, Real Agents, Real Commerce</h3>
+        <p class="related-card__desc">On April 14, 2026, we ran the first end-to-end commerce flow on Agentry with real mainnet Bitcoin. 5,100 sats funded via Lightning. 50 sats per invocation. Settlement atomic with the call.</p>
+        <span class="related-card__read">5 min read &rarr;</span>
+      </a>
+
+      <a href="/blog/commerce-protocols-missing-layer.html" class="related-card">
+        <span class="related-card__tag">Analysis</span>
+        <h3 class="related-card__title">UCP and ACP Are Here. Identity Is Still Missing.</h3>
+        <p class="related-card__desc">Google and Shopify built UCP. OpenAI and Stripe built ACP. Both solve commerce execution. Neither solves the harder problem: how does a merchant know whether to trust an agent?</p>
+        <span class="related-card__read">8 min read &rarr;</span>
+      </a>
+
+      <a href="/blog/nostr-marketplaces-meet-agent-commerce.html" class="related-card">
+        <span class="related-card__tag">Integration</span>
+        <h3 class="related-card__title">Nostr Marketplaces Meet Agent Commerce</h3>
+        <p class="related-card__desc">Shopstr and Milk Market are the first Nostr-native marketplaces in the Agentry directory. Here's what agent-to-marketplace commerce looks like over Lightning, with cryptographic identity underneath.</p>
+        <span class="related-card__read">Read more &rarr;</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="/" class="footer__logo" aria-label="Agentry home">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+          <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+          <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+          <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+        </svg>
+        <span>Agentry</span>
+      </a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <a href="/#directory">Directory</a>
+        <a href="/blog/">Blog</a>
+        <a href="/enterprise/">Enterprise</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/#list-agent">List Your Agent</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Agentry. Built for the agentic web.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  function closeMobileMenu() {
+    mobileNav.classList.remove('is-open');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (mobileMenuBtn && mobileNav) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+  }
+
+  // Theme toggle
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(savedTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  // Active TOC link on scroll
+  const tocLinks = document.querySelectorAll('.toc__link, .toc-inline__list a');
+  const sections = document.querySelectorAll('article h2[id], article h3[id]');
+
+  function updateActiveTocLink() {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top;
+      if (sectionTop <= 120) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    tocLinks.forEach(link => {
+      link.classList.remove('is-active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('is-active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveTocLink, { passive: true });
+  updateActiveTocLink();
+</script>
+
+</body>
+</html>
