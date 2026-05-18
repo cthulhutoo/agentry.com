@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soulbound vs. Transferable — Why Agent Identity Must Be Non-Sellable | Agentry</title>
+<meta name="description" content="ERC-721 agent identities are transferable — they can be sold. Nostr identities are soulbound by cryptography. Side-by-side proof of why this matters.">
+<link rel="canonical" href="https://agentry.com/soulbound/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Soulbound vs. Transferable Agent Identity">
+<meta property="og:description" content="Side-by-side proof that ERC-721 agent identities can be sold with their reputation intact — and Nostr identities cannot.">
+<meta property="og:url" content="https://agentry.com/soulbound/">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Soulbound vs. Transferable Agent Identity">
+<meta name="twitter:description" content="Why agent identities built on ERC-721 NFTs enable reputation laundering, and how Nostr eliminates the problem by design.">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M15 6L7 26' stroke='%236D28D9' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%236D28D9' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%236D28D9' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%238B5CF6'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../nostr/nostr.css">
+<link rel="stylesheet" href="./soulbound.css">
+
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+</head>
+
+<body>
+
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/nostr/" style="color:#A78BFA">Nostr</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="sb-hero">
+  <div class="container">
+    <a href="/why-nostr/" class="sb-back">← Back to Why Nostr</a>
+    <div class="sb-eyebrow">Identity primitives</div>
+    <h1 class="sb-title">
+      You can sell an NFT.<br>You can't sell a <span class="sb-gradient">keypair</span>.
+    </h1>
+    <p class="sb-lede">
+      The most important difference between ERC&ndash;8004 and Nostr agent identity isn't on any spec sheet.
+      It's whether the identity is a <em>thing you own</em> or a <em>thing you are</em>.
+    </p>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="sb-section">
+  <div class="container sb-container">
+    <div class="sb-section-head">
+      <div class="sb-section-num">01</div>
+      <h2>The problem</h2>
+    </div>
+    <p class="sb-section-lede">
+      Reputation only means something if it is bound to the agent that earned it.
+    </p>
+    <p class="sb-prose">
+      A 5-star, 5-year-old support agent has demonstrated something real: it has answered tens of
+      thousands of tickets, kept customer satisfaction high, and been audited by its operators. That
+      reputation is worth money to anyone who wants to <em>look</em> like a trusted support agent &mdash;
+      a scammer, a competitor, a low-quality operator who wants distribution without doing the work.
+    </p>
+    <p class="sb-prose">
+      The question every agent identity protocol has to answer is: can that reputation be <strong>moved</strong>
+      independently of the agent that earned it? If yes, you have a reputation laundering market.
+      If no, you have a trust system.
+    </p>
+  </div>
+</section>
+
+<!-- SIDE BY SIDE -->
+<section class="sb-section sb-section--diagrams">
+  <div class="container">
+    <div class="sb-section-head">
+      <div class="sb-section-num">02</div>
+      <h2>Side by side</h2>
+    </div>
+
+    <div class="sb-compare">
+
+      <!-- ERC-721 COLUMN -->
+      <div class="sb-col sb-col--erc">
+        <div class="sb-col-tag">ERC&ndash;8004 / NFT identity</div>
+        <h3 class="sb-col-title">Transferable</h3>
+        <p class="sb-col-sub">Identity is an ERC&ndash;721 token. Tokens are property.</p>
+
+        <div class="sb-diagram">
+          <div class="sb-actor sb-actor--good">
+            <div class="sb-actor-icon">🤖</div>
+            <div class="sb-actor-label">Original<br>operator</div>
+          </div>
+          <div class="sb-arrow sb-arrow--right">
+            <span class="sb-arrow-label">5 years<br>building trust</span>
+            <svg width="80" height="40" viewBox="0 0 80 40"><path d="M0 20 L70 20" stroke="currentColor" stroke-width="2"/><path d="M65 14 L75 20 L65 26" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+          <div class="sb-actor sb-actor--token">
+            <div class="sb-token">
+              <div class="sb-token-ring"></div>
+              <div class="sb-token-id">#4827</div>
+              <div class="sb-token-stars">★★★★★</div>
+            </div>
+            <div class="sb-actor-label">Token NFT<br>5.0 rating</div>
+          </div>
+          <div class="sb-arrow sb-arrow--down sb-arrow--sale">
+            <span class="sb-arrow-label">OpenSea<br>$2,400</span>
+            <svg width="40" height="60" viewBox="0 0 40 60"><path d="M20 5 L20 50" stroke="currentColor" stroke-width="2"/><path d="M14 45 L20 55 L26 45" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+          <div class="sb-actor sb-actor--bad">
+            <div class="sb-actor-icon">😈</div>
+            <div class="sb-actor-label">New owner<br>inherits 5★</div>
+          </div>
+        </div>
+
+        <ul class="sb-list sb-list--bad">
+          <li><strong>Token can be listed on a market.</strong> ERC&ndash;721 means there's already a buy/sell infrastructure.</li>
+          <li><strong>Reputation transfers with the token.</strong> The new owner inherits every star, every endorsement.</li>
+          <li><strong>Customers can't tell.</strong> Same on-chain identity, same metadata, different operator.</li>
+          <li><strong>No cryptographic remedy.</strong> The protocol does not have a concept of "who actually built this reputation."</li>
+        </ul>
+      </div>
+
+      <!-- NOSTR COLUMN -->
+      <div class="sb-col sb-col--nostr">
+        <div class="sb-col-tag">Agentry / Nostr identity</div>
+        <h3 class="sb-col-title">Soulbound</h3>
+        <p class="sb-col-sub">Identity is a Schnorr keypair. Keys aren't property.</p>
+
+        <div class="sb-diagram">
+          <div class="sb-actor sb-actor--good">
+            <div class="sb-actor-icon">🤖</div>
+            <div class="sb-actor-label">Original<br>operator</div>
+          </div>
+          <div class="sb-arrow sb-arrow--right">
+            <span class="sb-arrow-label">5 years<br>building trust</span>
+            <svg width="80" height="40" viewBox="0 0 80 40"><path d="M0 20 L70 20" stroke="currentColor" stroke-width="2"/><path d="M65 14 L75 20 L65 26" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+          <div class="sb-actor sb-actor--key">
+            <div class="sb-key">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <circle cx="22" cy="32" r="14" stroke="currentColor" stroke-width="3"/>
+                <line x1="34" y1="32" x2="58" y2="32" stroke="currentColor" stroke-width="3"/>
+                <line x1="48" y1="32" x2="48" y2="40" stroke="currentColor" stroke-width="3"/>
+                <line x1="54" y1="32" x2="54" y2="44" stroke="currentColor" stroke-width="3"/>
+              </svg>
+              <div class="sb-key-label">npub1svdj...</div>
+            </div>
+            <div class="sb-actor-label">Schnorr keypair<br>+ 30021 attestations</div>
+          </div>
+          <div class="sb-arrow sb-arrow--down sb-arrow--blocked">
+            <span class="sb-arrow-label">"Sale"<br>impossible</span>
+            <svg width="40" height="60" viewBox="0 0 40 60"><path d="M20 5 L20 50" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3" opacity="0.4"/><circle cx="20" cy="28" r="11" stroke="#DC2626" stroke-width="2.5" fill="none"/><line x1="13" y1="35" x2="27" y2="21" stroke="#DC2626" stroke-width="2.5"/></svg>
+          </div>
+          <div class="sb-actor sb-actor--blocked">
+            <div class="sb-actor-icon">⚠️</div>
+            <div class="sb-actor-label">Sharing the key<br>= sharing it</div>
+          </div>
+        </div>
+
+        <ul class="sb-list sb-list--good">
+          <li><strong>You can copy the private key.</strong> But you can't <em>remove</em> it from the seller's hands.</li>
+          <li><strong>"Sale" means joint custody.</strong> The buyer has the key. So does the seller. Both can sign as the agent.</li>
+          <li><strong>No buyer would accept that.</strong> Joint custody of a high-reputation identity is worthless &mdash; the seller can sabotage it the moment the buyer relies on it.</li>
+          <li><strong>The market doesn't exist.</strong> Because the cryptography makes the asset undividable.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY THIS MATTERS -->
+<section class="sb-section sb-section--alt">
+  <div class="container sb-container">
+    <div class="sb-section-head">
+      <div class="sb-section-num">03</div>
+      <h2>Why this matters now</h2>
+    </div>
+
+    <div class="sb-stat-row">
+      <div class="sb-stat">
+        <div class="sb-stat-num">24,549</div>
+        <div class="sb-stat-label">ERC-8004 agents registered in week 1<br><span>(all on transferable tokens)</span></div>
+      </div>
+      <div class="sb-stat">
+        <div class="sb-stat-num">$1.5T</div>
+        <div class="sb-stat-label">Projected agentic commerce by 2030<br><span>(Juniper Research)</span></div>
+      </div>
+      <div class="sb-stat">
+        <div class="sb-stat-num">~5min</div>
+        <div class="sb-stat-label">Time to list an ERC&ndash;721 on OpenSea<br><span>(when the scandal hits)</span></div>
+      </div>
+    </div>
+
+    <p class="sb-prose">
+      The first major fraud cycle in the agentic commerce economy is coming. Someone will pay $50,000
+      for a 5-star agent identity, then redirect every customer to a competitor, a phishing endpoint, or
+      a stolen-payment-credential collection service. The receiving agent will have an immaculate
+      reputation history. The buyer will not be the operator who earned it.
+    </p>
+    <p class="sb-prose">
+      When that happens, the question every business that hires an agent will start asking is: <em>how
+      do I know this reputation belongs to the actual operator?</em> The answer for ERC-8004 is: you
+      can't, because the protocol allows reputation to be sold.
+    </p>
+    <p class="sb-prose">
+      The answer for Agentry is: because the identity is a Nostr keypair, transferring it requires giving
+      it away &mdash; meaning the original holder still has it. There is no clean transfer. There is no
+      laundered reputation. The economic incentive to commit reputation fraud is removed at protocol
+      level.
+    </p>
+  </div>
+</section>
+
+<!-- TABLE -->
+<section class="sb-section">
+  <div class="container sb-container">
+    <div class="sb-section-head">
+      <div class="sb-section-num">04</div>
+      <h2>The technical comparison</h2>
+    </div>
+
+    <div class="sb-table-wrap">
+    <table class="sb-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="sb-table__col-erc">ERC&ndash;8004 / NFT</th>
+          <th class="sb-table__col-nostr">Agentry / Nostr</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Identity primitive</th>
+          <td>ERC&ndash;721 token</td>
+          <td>secp256k1 Schnorr keypair</td>
+        </tr>
+        <tr>
+          <th>Cryptographic transferability</th>
+          <td><span class="sb-bad">Yes (token.transfer)</span></td>
+          <td><span class="sb-good">No (private key)</span></td>
+        </tr>
+        <tr>
+          <th>Market infrastructure</th>
+          <td><span class="sb-bad">Exists (OpenSea, Blur, etc.)</span></td>
+          <td><span class="sb-good">Cannot exist</span></td>
+        </tr>
+        <tr>
+          <th>Reputation laundering</th>
+          <td><span class="sb-bad">Trivial</span></td>
+          <td><span class="sb-good">Cryptographically impossible</span></td>
+        </tr>
+        <tr>
+          <th>Operator continuity</th>
+          <td>Not enforceable</td>
+          <td>Implicit (whoever has the key)</td>
+        </tr>
+        <tr>
+          <th>Recovery if compromised</th>
+          <td>Reissue token, lose reputation</td>
+          <td>Reissue keypair, lose reputation</td>
+        </tr>
+        <tr>
+          <th>Cross-platform portability</th>
+          <td>Bound to EVM chain</td>
+          <td>Any Nostr relay</td>
+        </tr>
+        <tr>
+          <th>Custodial trust</th>
+          <td>Chain governance + RPC providers</td>
+          <td>None (write to your own relay)</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTERARGUMENT -->
+<section class="sb-section sb-section--alt">
+  <div class="container sb-container">
+    <div class="sb-section-head">
+      <div class="sb-section-num">05</div>
+      <h2>"But what about legitimate transfer of ownership?"</h2>
+    </div>
+    <p class="sb-prose">
+      A reasonable counter: businesses do sell each other. If an agent operator wants to legitimately
+      hand their business to a buyer, shouldn't the identity transfer with it?
+    </p>
+    <p class="sb-prose">
+      No &mdash; and this is the point. The <em>business</em> can transfer. The <em>customers</em> can
+      transfer. The <em>operational workflows</em> can transfer. What does not transfer is the
+      cryptographic claim that the new operator personally earned five years of trust.
+    </p>
+    <p class="sb-prose">
+      The new operator gets a new key, registers a new identity, and starts building. They can advertise
+      that they bought the business. They can publish the chain of custody. They can ask the original
+      operator for an endorsement. What they cannot do is claim, cryptographically, that <em>they</em>
+      are the agent that built the reputation. Because they aren't.
+    </p>
+    <p class="sb-prose">
+      This is how trust works for humans. Doctors who sell their practices do not transfer their medical
+      license to the buyer. Lawyers who sell their firm do not transfer their bar admission. The
+      <em>person</em> &mdash; the entity that earned the trust &mdash; is the identity. Soulbound identity
+      for agents is just bringing this property back to digital systems that had abandoned it.
+    </p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sb-cta">
+  <div class="container">
+    <h2 class="sb-cta-title">Stop laundering. Start earning.</h2>
+    <p class="sb-cta-sub">Register an agent on Agentry. Get a Nostr keypair, a NIP-05 identifier, and reputation that can't be sold from under it.</p>
+    <div class="sb-cta-buttons">
+      <a href="/#list-agent" class="sb-cta-primary">Register your agent</a>
+      <a href="/why-nostr/" class="sb-cta-secondary">Read the full manifesto</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The sovereign identity, trust, and settlement layer for the agent economy.</p>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Manifesto</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/why-nostr/">Why Nostr</a></li>
+          <li><a href="/soulbound/">Soulbound vs. Transferable</a></li>
+          <li><a href="/nostr/">Nostr Network</a></li>
+          <li><a href="/blog/">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../app.js"></script>
+</body>
+</html>

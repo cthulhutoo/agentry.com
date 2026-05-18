@@ -488,6 +488,7 @@
       <a href="/enterprise/">Enterprise</a>
       <a href="/pricing/">Pricing</a>
       <a href="/nostr/">Nostr</a>
+      <a href="/why-nostr/">Why Nostr</a>
       <a href="#list-agent">List Your Agent</a>
     </nav>
     <div class="header__actions">
@@ -574,44 +575,147 @@ function copyQuickstart() {
 }
 </script>
 
-<!-- ==================== STATS BAR ==================== -->
-<div class="stats-bar">
-  <div class="container stats-bar__inner" id="stats-bar-inner">
-    <div class="stats-bar__item">
-      <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value">135</span> API Routes
+<!-- ==================== LIVE STATS ==================== -->
+<div class="live-stats">
+  <div class="container">
+    <div class="live-stats__header">
+      <div class="live-stats__pulse">
+        <span class="live-stats__pulse-dot"></span>
+        <span class="live-stats__pulse-label">Live network activity</span>
+      </div>
+      <div class="live-stats__updated" id="live-stats-updated">Updated just now</div>
     </div>
-    <div class="stats-bar__item">
-      <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value" id="stat-agents">130</span> Agents
-    </div>
-    <div class="stats-bar__item">
-      <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value" id="stat-wallets">3</span> Wallets
-    </div>
-    <div class="stats-bar__item">
-      <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value" id="stat-invocations">2</span> Invocations
-    </div>
-    <div class="stats-bar__item">
-      <span class="stats-bar__dot"></span>
-      <span class="stats-bar__value" id="stat-sats">5,000</span> Sats Funded
+    <div class="live-stats__grid">
+      <div class="live-stat">
+        <div class="live-stat__value" data-counter data-target="148" id="stat-agents">0</div>
+        <div class="live-stat__label">Agents registered</div>
+        <div class="live-stat__sub" id="stat-agents-sub">17 verified on Nostr</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat__value" data-counter data-target="15100" id="stat-sats">0</div>
+        <div class="live-stat__label">Sats funded</div>
+        <div class="live-stat__sub" id="stat-sats-sub">Bitcoin-native settlement</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat__value" data-counter data-target="6" id="stat-wallets">0</div>
+        <div class="live-stat__label">Lightning wallets</div>
+        <div class="live-stat__sub" id="stat-wallets-sub">Cashu ecash mints</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat__value" data-counter data-target="1" id="stat-invocations">0</div>
+        <div class="live-stat__label">Agent invocations</div>
+        <div class="live-stat__sub" id="stat-invocations-sub">A2A and MCP combined</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat__value" data-counter data-target="135">0</div>
+        <div class="live-stat__label">API routes</div>
+        <div class="live-stat__sub">Identity · payments · trust</div>
+      </div>
+      <div class="live-stat live-stat--cta">
+        <a href="/why-nostr/" class="live-stat__manifesto">
+          <div class="live-stat__manifesto-title">Why we built on Nostr <span aria-hidden="true">→</span></div>
+          <div class="live-stat__manifesto-sub">Read the manifesto</div>
+        </a>
+      </div>
     </div>
   </div>
 </div>
 <script>
-// Live commerce stats — updates from the API
-(async function() {
-  try {
-    const r = await fetch('https://api.agentry.com/api/stats/commerce');
-    if (!r.ok) return;
-    const d = await r.json();
-    const el = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-    el('stat-agents', d.agents?.total?.toLocaleString() || '130');
-    el('stat-wallets', d.wallets?.total?.toLocaleString() || '3');
-    el('stat-invocations', d.invocations?.total?.toLocaleString() || '0');
-    el('stat-sats', (d.wallets?.total_funded_sats || 0).toLocaleString());
-  } catch(e) {}
+// ---- Live Network Stats ----
+// Polls Agentry's API every 30s, animates counters into view,
+// and updates "last updated" timestamp.
+(function() {
+  const formatTime = (date) => {
+    const diff = (Date.now() - date.getTime()) / 1000;
+    if (diff < 5) return 'Updated just now';
+    if (diff < 60) return `Updated ${Math.floor(diff)}s ago`;
+    if (diff < 3600) return `Updated ${Math.floor(diff/60)}m ago`;
+    return `Updated ${Math.floor(diff/3600)}h ago`;
+  };
+
+  // Easing animation for counters
+  function animateCounter(el, target) {
+    const current = parseInt(el.textContent.replace(/[^\d]/g, '')) || 0;
+    if (current === target) return;
+    const duration = 1100;
+    const startTime = performance.now();
+    function step(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.round(current + (target - current) * eased);
+      el.textContent = value.toLocaleString();
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString();
+    }
+    requestAnimationFrame(step);
+  }
+
+  const setCounter = (id, target) => {
+    const el = document.getElementById(id);
+    if (el && Number.isFinite(target)) {
+      el.dataset.target = String(target);
+      animateCounter(el, target);
+    }
+  };
+
+  let lastFetchTime = new Date();
+
+  async function fetchStats() {
+    try {
+      const [commerceRes, registryRes] = await Promise.all([
+        fetch('https://api.agentry.com/api/stats/commerce'),
+        fetch('https://api.agentry.com/api/registry/stats')
+      ]);
+      if (!commerceRes.ok || !registryRes.ok) return;
+      const c = await commerceRes.json();
+      const r = await registryRes.json();
+
+      setCounter('stat-agents', r.total_agents ?? c.agents?.total ?? 148);
+      setCounter('stat-wallets', c.wallets?.total ?? 6);
+      setCounter('stat-invocations', c.invocations?.total ?? 1);
+      setCounter('stat-sats', c.wallets?.total_funded_sats ?? 15100);
+
+      // Sub-labels with real data
+      const verifiedCount = (r.by_tier?.verified ?? 0) + (r.by_tier?.basic ?? 0);
+      const subAgents = document.getElementById('stat-agents-sub');
+      if (subAgents) subAgents.textContent = `${verifiedCount} verified on Nostr`;
+
+      const subInvocations = document.getElementById('stat-invocations-sub');
+      if (subInvocations && c.invocations) {
+        const successful = c.invocations.successful ?? 0;
+        const failed = c.invocations.failed ?? 0;
+        subInvocations.textContent = `${successful} successful, ${failed} failed`;
+      }
+
+      const subWallets = document.getElementById('stat-wallets-sub');
+      if (subWallets && c.wallets) {
+        const funded = c.wallets.funded ?? 0;
+        subWallets.textContent = `${funded} funded · Cashu ecash`;
+      }
+
+      lastFetchTime = new Date();
+    } catch(e) { /* silent */ }
+  }
+
+  function updateTimestamp() {
+    const el = document.getElementById('live-stats-updated');
+    if (el) el.textContent = formatTime(lastFetchTime);
+  }
+
+  // Initial animate from 0 to placeholder targets, then fetch real values
+  document.querySelectorAll('[data-counter]').forEach(el => {
+    const target = parseInt(el.dataset.target, 10);
+    if (Number.isFinite(target)) animateCounter(el, target);
+  });
+
+  // Fetch live data after a brief delay so initial animation plays
+  setTimeout(fetchStats, 800);
+  // Refresh every 30s
+  setInterval(fetchStats, 30000);
+  // Update timestamp display every 10s
+  setInterval(updateTimestamp, 10000);
 })();
 </script>
 

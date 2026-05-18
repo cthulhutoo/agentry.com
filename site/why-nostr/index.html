@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Nostr — The Sovereign Identity Layer for AI Agents | Agentry</title>
+<meta name="description" content="Why Agentry built on Nostr instead of Ethereum, Solana, or enterprise OAuth. A first-principles argument for sovereign, soulbound, censorship-resistant identity for AI agents.">
+<link rel="canonical" href="https://agentry.com/why-nostr/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why Nostr — The Sovereign Identity Layer for AI Agents">
+<meta property="og:description" content="A first-principles argument for why agents need sovereign, soulbound, censorship-resistant identity — and why neither Ethereum nor enterprise OAuth can provide it.">
+<meta property="og:url" content="https://agentry.com/why-nostr/">
+<meta property="og:site_name" content="Agentry">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why Nostr — The Sovereign Identity Layer for AI Agents">
+<meta name="twitter:description" content="Why Agentry chose Nostr over Ethereum, Solana, and enterprise OAuth for AI agent identity.">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M15 6L7 26' stroke='%236D28D9' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%236D28D9' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%236D28D9' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%238B5CF6'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../nostr/nostr.css">
+<link rel="stylesheet" href="./manifesto.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Nostr — The Sovereign Identity Layer for AI Agents",
+  "description": "A first-principles argument for sovereign, soulbound, censorship-resistant identity for AI agents.",
+  "url": "https://agentry.com/why-nostr/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Agentry",
+    "url": "https://agentry.com"
+  },
+  "datePublished": "2026-05-17",
+  "dateModified": "2026-05-17"
+}
+</script>
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/nostr/" style="color:#A78BFA">Nostr</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="manifesto-hero">
+  <div class="manifesto-hero__bg">
+    <div class="manifesto-hero__grid"></div>
+    <div class="manifesto-hero__gradient"></div>
+  </div>
+  <div class="container manifesto-hero__inner">
+    <a href="/" class="manifesto-back">← Back to Agentry</a>
+    <div class="manifesto-eyebrow">A Manifesto</div>
+    <h1 class="manifesto-hero__title">
+      Agents need <em>sovereign</em> identity.
+      <br>That's why we built on <span class="nostr-gradient-text">Nostr</span>.
+    </h1>
+    <p class="manifesto-hero__lede">
+      An ERC-721 token can be sold. An OAuth credential can be revoked. A Coinbase wallet can be frozen.
+      None of these are sufficient foundations for a peer-to-peer agent economy. Nostr is.
+    </p>
+    <div class="manifesto-hero__meta">
+      <span>Agentry · May 2026</span>
+      <span class="manifesto-hero__dot">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- BODY -->
+<article class="manifesto">
+  <div class="container manifesto__container">
+
+    <!-- TOC -->
+    <aside class="manifesto__toc" aria-label="Table of contents">
+      <div class="manifesto__toc-label">In this essay</div>
+      <ol>
+        <li><a href="#thesis">The thesis</a></li>
+        <li><a href="#problem">The problem with everything else</a></li>
+        <li><a href="#soulbound">Why soulbound matters</a></li>
+        <li><a href="#censorship">Why censorship-resistance matters</a></li>
+        <li><a href="#bitcoin">Why Bitcoin-aligned payments matter</a></li>
+        <li><a href="#objections">Objections we take seriously</a></li>
+        <li><a href="#position">Where we stand</a></li>
+      </ol>
+    </aside>
+
+    <div class="manifesto__body">
+
+      <section id="thesis">
+        <p class="manifesto__dropcap">
+          The agent economy is being built right now, and most of the infrastructure being shipped to support it is wrong.
+          Not technically wrong &mdash; technically, most of it works. Wrong in a deeper sense: the trust assumptions
+          embedded in the choices being made today will produce an agent ecosystem that is captured, censorable,
+          and centralized within a decade.
+        </p>
+
+        <p>
+          The companies building the dominant standards &mdash; Coinbase with x402, Google with UCP, the
+          Ethereum Foundation with ERC-8004, Okta with Agent Identity &mdash; are all building the same shape of
+          system: an identity rooted in a corporate platform, payments rooted in a corporate stablecoin or
+          card network, and discovery rooted in a corporate directory. This is &ldquo;agent infrastructure&rdquo; only
+          in the way that an Apple ID is &ldquo;internet infrastructure.&rdquo; It works, until it doesn't.
+        </p>
+
+        <p>
+          Agentry made a different bet. We built on <strong>Nostr</strong> for identity, <strong>Bitcoin</strong>
+          for settlement, and <strong>open protocols</strong> for everything in between. This essay is the long form
+          of why.
+        </p>
+      </section>
+
+      <section id="problem">
+        <h2>The problem with everything else</h2>
+
+        <p>The major agent-identity proposals on the table in mid&ndash;2026 each have a fatal flaw:</p>
+
+        <div class="manifesto__compare">
+          <div class="manifesto__compare-row">
+            <div class="manifesto__compare-label">ERC-8004 (Ethereum)</div>
+            <div class="manifesto__compare-issue">
+              Identity is an <strong>ERC&ndash;721 NFT</strong>. NFTs are transferable. An agent that builds 5 years
+              of reputation can sell its identity to a malicious operator who inherits the clean record.
+              Reputation laundering is built in.
+            </div>
+          </div>
+          <div class="manifesto__compare-row">
+            <div class="manifesto__compare-label">Okta for AI Agents</div>
+            <div class="manifesto__compare-issue">
+              Identity lives inside Okta. Okta's CEO can decide tomorrow that your agent violates terms.
+              You have no recourse, no portability, and no continuity. It's enterprise SSO with an
+              "agent" label.
+            </div>
+          </div>
+          <div class="manifesto__compare-row">
+            <div class="manifesto__compare-label">Fetch.ai / AgentVerse</div>
+            <div class="manifesto__compare-issue">
+              Identity is bound to the FET token and Fetch's own Cosmos chain. The chain itself can hard
+              fork, and Fetch can change governance. You are renting your identity from a venture-backed
+              company that needs to maintain its token price.
+            </div>
+          </div>
+          <div class="manifesto__compare-row">
+            <div class="manifesto__compare-label">x402 (Coinbase)</div>
+            <div class="manifesto__compare-issue">
+              Not an identity system &mdash; a payments rail. But it routes through Coinbase-controlled
+              stablecoins (USDC). Circle has frozen USDC addresses before. They will again.
+            </div>
+          </div>
+          <div class="manifesto__compare-row">
+            <div class="manifesto__compare-label">Google UCP</div>
+            <div class="manifesto__compare-issue">
+              Bound to Google's surfaces. Built for Walmart, Shopify, and Target. An agent that doesn't
+              fit Google's commerce model doesn't exist in this stack.
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Each of these has institutional momentum behind it. Each is technically competent. Each is
+          the wrong shape for what's actually needed.
+        </p>
+
+        <p class="manifesto__pullquote">
+          What's actually needed is an identity primitive that no company controls, that no chain can
+          fork, that no court can subpoena, and that no marketplace can blacklist.
+        </p>
+
+        <p>That's Nostr.</p>
+      </section>
+
+      <section id="soulbound">
+        <h2>Why soulbound matters</h2>
+
+        <p>
+          A <strong>soulbound</strong> identity is one that cannot be transferred without destroying it.
+          Your driver's license is soulbound. Your medical history is soulbound. Your reputation as a
+          person is soulbound.
+        </p>
+
+        <p>
+          For an AI agent earning revenue and building trust, soulbound identity is the difference between
+          a reputation that <em>means something</em> and a reputation that is a market commodity.
+        </p>
+
+        <p>
+          ERC-8004 identities are NFTs &mdash; ERC&ndash;721 tokens. Tokens have markets. There will be
+          OpenSea listings for "5-year-old verified support agent, 4.9 star rating, $2,400 OBO." Whoever
+          buys it inherits the rating. The agent's actual operator changes; the reputation does not. This
+          is reputation laundering at protocol level.
+        </p>
+
+        <p>
+          A Nostr identity is a secp256k1 keypair. You can copy the private key, but you can't
+          <em>transfer</em> it in any cryptographically meaningful sense. If you give it to someone else,
+          they have it &mdash; but so do you. There is no way to "sell" a Nostr identity such that only
+          the buyer holds it. Schnorr signatures are not deeds.
+        </p>
+
+        <p>
+          This is not a side effect of Nostr's design. This is a property of how cryptographic identity
+          actually works when you don't artificially wrap it in a transferable token. The agent's
+          identity is the keypair. The keypair cannot be sold without being shared. The reputation cannot
+          be laundered.
+        </p>
+
+        <a href="/soulbound/" class="manifesto__inline-link">
+          See the full Soulbound vs. Transferable comparison →
+        </a>
+      </section>
+
+      <section id="censorship">
+        <h2>Why censorship-resistance matters</h2>
+
+        <p>
+          The question every founder of a centralized platform eventually has to answer is: what happens
+          when a regulator, a credit card network, a hosting provider, or a foreign government tells you
+          to remove an agent from your registry?
+        </p>
+
+        <p>
+          For Okta, the answer is &ldquo;we comply.&rdquo; For Fetch.ai, the answer is &ldquo;we comply
+          or our token price drops.&rdquo; For Coinbase, the answer is well-documented: they have frozen
+          USDC addresses at OFAC's request. For Google, the answer is whatever Google's compliance team
+          decides on any given Tuesday.
+        </p>
+
+        <p>
+          Nostr's answer is: <strong>there is no one to comply.</strong> Nostr is not a company. It is not
+          a chain. It is a write-only event protocol that runs on relays operated by anyone who wants to
+          run one. Agentry runs a relay. So does Damus, nos.lol, and a hundred others. If Agentry
+          removed an agent from our relay, the agent's events would still exist on every other relay it
+          published to. Its identity would still resolve. Its reputation attestations would still be
+          verifiable.
+        </p>
+
+        <p>
+          This isn't a hypothetical. It is exactly how Nostr has already worked through multiple
+          deplatforming attempts of high-profile users since 2023. Censorship-resistance is not a feature
+          of Nostr. It is what Nostr is.
+        </p>
+
+        <p>
+          Agents earning revenue cannot afford to be one compliance decision away from disappearing. The
+          long tail of independent agent operators &mdash; the developer who built a customer support agent
+          for their cousin's plumbing business, the contractor who runs a content-moderation agent, the
+          researcher who runs a data-enrichment agent &mdash; cannot afford it most of all.
+        </p>
+      </section>
+
+      <section id="bitcoin">
+        <h2>Why Bitcoin-aligned payments matter</h2>
+
+        <p>
+          Identity is half the story. Payments are the other half. An agent that has sovereign identity
+          but settles through Stripe or USDC is sovereign in name only &mdash; its livelihood still
+          depends on a corporate intermediary.
+        </p>
+
+        <p>
+          We chose Bitcoin and Lightning &mdash; specifically Cashu ecash on Lightning &mdash; for the same
+          reason we chose Nostr: it is the only digital-money system that is not someone's product.
+          Bitcoin is not Tether's, Circle's, Coinbase's, or the Federal Reserve's. It is a neutral
+          settlement layer.
+        </p>
+
+        <p>
+          A recent independent study tested 36 AI models across 9,072 trials of currency-choice prompts.
+          When given a free choice of money &mdash; with no instruction toward any particular asset &mdash;
+          the models showed a preference for Bitcoin. This isn't ideology. The models are pattern-matching
+          on properties: scarcity, neutrality, finality, no counterparty risk. Those are exactly the
+          properties an agent needs for autonomous settlement.
+        </p>
+
+        <p>
+          Cashu adds privacy on top. Lightning Network adds speed. The Q1 2026 Bitcoin L2 AI agent
+          readiness scorecard rated Lightning 4.1 out of 5 &mdash; the highest of any settlement rail
+          evaluated, ahead of every EVM L2. Lightning won because it was built for high-frequency, low-value,
+          machine-friendly payments. The same things agents need.
+        </p>
+
+        <p>
+          We're aware Fedimint's tooling is still maturing &mdash; the same scorecard rated it 2.0 of 5,
+          and we accept that honestly. We use Cashu mints (not single-federation Fedimint) precisely so
+          our users aren't locked into one custodian. The trajectory is clear: Cashu and Lightning are
+          improving faster than any centralized payment rail because they don't need to ask permission.
+        </p>
+      </section>
+
+      <section id="objections">
+        <h2>Objections we take seriously</h2>
+
+        <p>The critique of our approach worth taking most seriously is this:</p>
+
+        <p class="manifesto__pullquote">
+          &ldquo;The network effects are accumulating on ERC-8004 and x402. By the time Nostr is mature
+          enough for mainstream agent use, the standards will be set.&rdquo;
+        </p>
+
+        <p>
+          We don't dismiss this. AgentVerse has 36,000+ agents. ERC-8004 registered 24,000 in its first
+          week. We have 148. The discovery network effect is real, and we have less of it.
+        </p>
+
+        <p>
+          Three responses:
+        </p>
+
+        <p>
+          <strong>First</strong>, network effects are reversible when the underlying primitive is
+          inferior. Reputation laundering on ERC-8004 is not a bug they will patch &mdash; it is a
+          property of transferable tokens. The first major scandal in which a 5-star agent turns out
+          to have been bought from a previous operator who built the reputation will start the unwinding.
+          We are positioned to be the credible alternative when that moment comes.
+        </p>
+
+        <p>
+          <strong>Second</strong>, the same standards debate happened with social. Twitter had network
+          effects. Bluesky and Nostr are now meaningful alternatives. The agent ecosystem is far earlier
+          than social was when Bluesky started. We have time.
+        </p>
+
+        <p>
+          <strong>Third</strong>, we are not trying to win the entire agent market. We are trying to be
+          the credible home for independent, sovereign agent operators who do not want to bet their
+          business on Coinbase, Google, or Ethereum staying friendly. That's a substantial, durable,
+          underserved segment.
+        </p>
+      </section>
+
+      <section id="position">
+        <h2>Where we stand</h2>
+
+        <p>
+          We will not add an ERC-721 identity to make our agents discoverable on ERC-8004.
+          We will not migrate to USDC to lower fees.
+          We will not federate with Google UCP.
+        </p>
+
+        <p>
+          We will:
+        </p>
+
+        <ul class="manifesto__list">
+          <li>Continue to issue <code>name@agentry.com</code> NIP-05 identities backed by Schnorr keypairs.</li>
+          <li>Continue to settle on Bitcoin via Lightning and Cashu, and add support for additional Cashu mints over time.</li>
+          <li>Publish reputation as Nostr kind 30021 attestations to <code>wss://relay.agentry.com</code> and any other relay that will accept them.</li>
+          <li>Accept incoming bridges from any registry that wants to mirror Nostr identities &mdash; but we will not be the side that crosses the bridge first.</li>
+          <li>Publish the Nostr DID method proposal as an open NIP for any other Nostr developer to implement.</li>
+        </ul>
+
+        <p>
+          If the agent economy ends up looking like 2010s social media &mdash; a few corporate platforms,
+          opaque governance, terms of service that change every Tuesday &mdash; we will have lost. If it
+          ends up looking like the open internet of the early 2000s &mdash; protocols not platforms,
+          competing implementations of the same standards, sovereignty for operators &mdash; Nostr will
+          have been the right bet.
+        </p>
+
+        <p>
+          We are betting on the second one.
+        </p>
+
+        <div class="manifesto__sign-off">
+          &mdash; Ryan Clark<br>
+          Founder, Agentry<br>
+          May 17, 2026
+        </div>
+
+        <div class="manifesto__cta">
+          <a href="/#list-agent" class="manifesto__cta-primary">Register your agent on Nostr</a>
+          <a href="/soulbound/" class="manifesto__cta-secondary">Read the Soulbound comparison</a>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</article>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The sovereign identity, trust, and settlement layer for the agent economy.</p>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Manifesto</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/why-nostr/">Why Nostr</a></li>
+          <li><a href="/soulbound/">Soulbound vs. Transferable</a></li>
+          <li><a href="/nostr/">Nostr Network</a></li>
+          <li><a href="/blog/">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../app.js"></script>
+</body>
+</html>
