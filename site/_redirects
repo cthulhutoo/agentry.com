@@ -1,5 +1,20 @@
 # Netlify redirects
 
+# ── MCP endpoints — proxy/redirect to the actual MCP server on api.agentry.com ──
+# Agents and crawlers that guess `agentry.com/mcp` should land on the real endpoint.
+# 308 preserves method and body for JSON-RPC POSTs.
+/mcp                             https://api.agentry.com/mcp        308!
+/mcp/*                           https://api.agentry.com/mcp/:splat 308!
+
+# ── MCP discovery manifest at the apex domain ──
+# Crawlers often check the apex first (https://agentry.com/.well-known/mcp.json)
+# before falling back to subdomains. Proxy this to the canonical version on the API.
+/.well-known/mcp.json            https://api.agentry.com/.well-known/mcp.json   200
+
+# ── A2A agent card at the apex domain ──
+/.well-known/agent.json          https://api.agentry.com/.well-known/agent.json 200
+/.well-known/agent-card.json     https://api.agentry.com/.well-known/agent-card.json 200
+
 # Machine-readable discovery files — serve as-is
 /.well-known/mcp-registry-auth  /.well-known/mcp-registry-auth  200
 /.well-known/agents.json         /.well-known/agents.json         200
@@ -11,6 +26,8 @@
 /pricing/       /pricing/index.html       200
 /blog/          /blog/index.html          200
 /nostr/         /nostr/index.html         200
+/why-nostr/     /why-nostr/index.html     200
+/soulbound/     /soulbound/index.html     200
 
 # Single-page site — all other paths serve index.html
 /*    /index.html   200
