@@ -978,7 +978,7 @@ body {
         </button>
       </div>
       <div class="demo-step__code-body">
-        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/provisioning/status/e4dd4d3eba02</span></pre>
+        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/provisioning/status/0e51e77a7352</span></pre>
       </div>
     </div>
     <div class="demo-step__actions">
@@ -1017,7 +1017,7 @@ body {
         </button>
       </div>
       <div class="demo-step__code-body">
-        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/security/score/e4dd4d3eba02</span></pre>
+        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/security/score/0e51e77a7352</span></pre>
       </div>
     </div>
     <div class="demo-step__actions">
@@ -1056,7 +1056,7 @@ body {
         </button>
       </div>
       <div class="demo-step__code-body">
-        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/invoke/schema/e4dd4d3eba02</span></pre>
+        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/invoke/schema/0e51e77a7352</span></pre>
       </div>
     </div>
     <div class="demo-step__actions">
@@ -1095,7 +1095,7 @@ body {
         </button>
       </div>
       <div class="demo-step__code-body">
-        <pre><span class="hl-method">POST</span> <span class="hl-url">https://api.agentry.com/api/invoke/e4dd4d3eba02</span>
+        <pre><span class="hl-method">POST</span> <span class="hl-url">https://api.agentry.com/api/invoke/0e51e77a7352</span>
 
 <span class="hl-bracket">{</span>
   <span class="hl-key">"capability"</span>: <span class="hl-string">"news-feed"</span>,
@@ -1231,7 +1231,7 @@ body {
         </button>
       </div>
       <div class="demo-step__code-body">
-        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/payments/options/e4dd4d3eba02</span></pre>
+        <pre><span class="hl-method">GET</span> <span class="hl-url">https://api.agentry.com/api/payments/options/0e51e77a7352</span></pre>
       </div>
     </div>
     <div class="demo-step__actions">
@@ -1710,7 +1710,7 @@ for m in payments["methods"]:
 
     if (n === 1) {
       // Live: Discover (search, then fetch full record for accurate trust score)
-      fetchLive('https://api.agentry.com/api/agents/e4dd4d3eba02').then(function (result) {
+      fetchLive('https://api.agentry.com/api/agents/0e51e77a7352').then(function (result) {
         btn.classList.remove('loading');
         // Wrap in items array to match the search response format the display expects
         var display = result.data;
@@ -1722,21 +1722,21 @@ for m in payments["methods"]:
 
     } else if (n === 2) {
       // Live: Verify Identity
-      fetchLive('https://api.agentry.com/api/provisioning/status/e4dd4d3eba02').then(function (result) {
+      fetchLive('https://api.agentry.com/api/provisioning/status/0e51e77a7352').then(function (result) {
         btn.classList.remove('loading');
         completeStep(2, result.data, result.elapsed);
       });
 
     } else if (n === 3) {
       // Live: Check Trust
-      fetchLive('https://api.agentry.com/api/security/score/e4dd4d3eba02').then(function (result) {
+      fetchLive('https://api.agentry.com/api/security/score/0e51e77a7352').then(function (result) {
         btn.classList.remove('loading');
         completeStep(3, result.data, result.elapsed);
       });
 
     } else if (n === 4) {
       // Live: Check Capability Schema
-      fetchLive('https://api.agentry.com/api/invoke/schema/e4dd4d3eba02').then(function (result) {
+      fetchLive('https://api.agentry.com/api/invoke/schema/0e51e77a7352').then(function (result) {
         btn.classList.remove('loading');
         completeStep(4, result.data, result.elapsed);
       });
@@ -1744,7 +1744,7 @@ for m in payments["methods"]:
     } else if (n === 5) {
       // Live: Invoke Through Agentry
       var invokeStart = Date.now();
-      fetch('https://api.agentry.com/api/invoke/e4dd4d3eba02', {
+      fetch('https://api.agentry.com/api/invoke/0e51e77a7352', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1797,7 +1797,7 @@ for m in payments["methods"]:
 
     } else if (n === 8) {
       // Live: Payment Options
-      fetchLive('https://api.agentry.com/api/payments/options/e4dd4d3eba02').then(function (result) {
+      fetchLive('https://api.agentry.com/api/payments/options/0e51e77a7352').then(function (result) {
         btn.classList.remove('loading');
         completeStep(8, result.data, result.elapsed);
       });
