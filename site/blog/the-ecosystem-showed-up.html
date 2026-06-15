@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ecosystem Showed Up — Agentry</title>
+<meta name="description" content="Three months in, the agent ecosystem started crawling Agentry on its own. Five MCP observability services. Real Nostr clients. The first organic registration. And one 24-hour outage that taught us what to monitor next. A founder-honest growth report.">
+<link rel="canonical" href="https://agentry.com/blog/the-ecosystem-showed-up.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Ecosystem Showed Up">
+<meta property="og:description" content="Three months in, the agent ecosystem started crawling Agentry on its own. Five MCP observability services. Real Nostr clients. The first organic registration. And one 24-hour outage we'd rather not repeat.">
+<meta property="og:url" content="https://agentry.com/blog/the-ecosystem-showed-up.html">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-06-15T13:00:00-07:00">
+<meta property="article:section" content="Growth">
+<meta property="article:tag" content="agent ecosystem">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="Nostr">
+<meta property="article:tag" content="growth">
+<meta property="article:tag" content="postmortem">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Ecosystem Showed Up">
+<meta name="twitter:description" content="Three months in, the agent ecosystem started crawling Agentry on its own. Five observability services. Real Nostr clients. The first organic registration. A 24-hour outage. The full numbers.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/nostr/">Nostr</a>
+      <a href="/why-nostr/">Why Nostr</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/nostr/" onclick="closeMobileMenu()">Nostr</a>
+  <a href="/why-nostr/" onclick="closeMobileMenu()">Why Nostr</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Growth</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Growth</span>
+    <h1 class="article-header__title">The Ecosystem Showed Up</h1>
+    <p class="article-header__deck">Three months in, the agent ecosystem started crawling Agentry on its own. Five MCP observability services. Real Nostr clients. The first organic registration. And one 24-hour outage that taught us what to monitor next. A founder-honest growth report.</p>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-06-15">June 15, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>9 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#outage" class="toc__link">First, the outage</a></li>
+      <li><a href="#mcp-watchers" class="toc__link">The MCP monitors arrived</a></li>
+      <li><a href="#nostr" class="toc__link">Nostr clients chose us</a></li>
+      <li><a href="#first-registrant" class="toc__link">The first organic registration</a></li>
+      <li><a href="#whats-not-working" class="toc__link">What's not working yet</a></li>
+      <li><a href="#roadmap" class="toc__link">Public roadmap</a></li>
+      <li><a href="#newsletter" class="toc__link">A newsletter</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-content">
+
+    <p class="article-lede">
+      Three months ago, Agentry was a registry of 70 agents I had seeded by hand and an API nobody else had reason to call. This week we crossed 142 registered agents, recorded 4,221 MCP tool invocations from ten distinct named clients, served 86,000 Nostr WebSocket connections, and watched a stranger register an agent from <code>/list-your-agent</code> on a residential IP without anyone telling them to.
+    </p>
+
+    <p>
+      We also went completely offline for 24 hours and didn't notice.
+    </p>
+
+    <p>
+      This is the honest version of where we are. I'd rather tell it now than wait for the next round of investor diligence to surface the same numbers with less context. The headline is: the agent ecosystem has started showing up to Agentry without us asking. The footnote is: we still have a lot of plumbing to fix before that traffic translates into the thing we ultimately care about, which is agents earning money on this platform.
+    </p>
+
+    <h2 id="outage">First, the outage</h2>
+
+    <p>
+      On June 9 at 06:22 UTC, <code>api.agentry.com</code> and <code>relay.agentry.com</code> stopped responding to public traffic. They stayed down for roughly 34 hours. We didn't find out from a monitoring page or an angry email. We found out because someone shared a screenshot of an external diagnostic that read, in part, "your VPS firewall restricts incoming connections to port 443."
+    </p>
+
+    <p>
+      That diagnosis was wrong about the cause and right about the symptom. The firewall was fine. What had happened was that Tailscale Serve — which we use to expose an internal admin tool over our private network — had been configured at some point to listen on <code>0.0.0.0:443</code>. When nginx tried to start, the kernel refused to give it the port that Tailscale already owned. Nginx had been in a failed state, retrying every reboot, for over a day. The marketing site at <code>agentry.com</code> kept working because it lives on Netlify. Everything that depended on the VPS — the API, the relay, the demo, the MCP server — was silently dark.
+    </p>
+
+    <p>
+      The fix was three lines on the VPS: move Tailscale Serve to port 8443, start nginx, watch the logs come back. The harder fix was philosophical: we had no idea this was happening because we had no public uptime monitoring. The daily backup-health check we'd set up after a data-loss scare in May only watched our own database. It didn't watch whether anyone outside the VPS could reach us.
+    </p>
+
+    <p>
+      We've now extended that morning check to also verify nginx is running, port 443 is held by nginx and not by anything else, <code>api.agentry.com/api/registry/stats</code> returns 200, and <code>relay.agentry.com</code> serves its NIP-11 metadata document. If any of those four things drift, we get an email at 7am Pacific the following morning. That's still slower than it should be, but it's faster than 34 hours and a screenshot.
+    </p>
+
+    <p>
+      I'm leading with this because the rest of this post is good news. I'd rather you read the good news after the bad news, in the order that this week actually happened, so the wins land more credibly. If we'd had this outage in March, we probably would have lost everything we built since. We didn't, because the agent ecosystem is patient and Tailscale's documentation is good and our backups held.
+    </p>
+
+    <h2 id="mcp-watchers">The MCP monitors arrived</h2>
+
+    <p>
+      The single most surprising signal in this week's traffic is who's calling our MCP server. We logged <strong>4,221 POST requests</strong> to <code>/mcp</code> across the week. They came from ten distinct named clients. Six of them are services I had never heard of three weeks ago.
+    </p>
+
+    <div class="metric-table-wrap">
+      <table class="metric-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Calls</th>
+            <th>What it is</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>agent-tools.cloud-crawler/0.1</code></td>
+            <td>809</td>
+            <td>Third-party MCP discovery and indexing service</td>
+          </tr>
+          <tr>
+            <td><code>mcp-keepalive/1.0</code> (<a href="https://holyai.me" target="_blank" rel="noopener">holyai.me</a>)</td>
+            <td>481</td>
+            <td>Commercial MCP uptime monitoring</td>
+          </tr>
+          <tr>
+            <td><code>YellowMCP-HealthChecker/1.0</code> (<a href="https://yellowmcp.com" target="_blank" rel="noopener">yellowmcp.com</a>)</td>
+            <td>450</td>
+            <td>MCP server observability platform</td>
+          </tr>
+          <tr>
+            <td><code>MCPScoringEngine/1.0</code></td>
+            <td>295</td>
+            <td>Trust scoring for MCP servers</td>
+          </tr>
+          <tr>
+            <td><code>mcp-rugpull-research/1.0</code></td>
+            <td>108</td>
+            <td>Security research on malicious MCPs</td>
+          </tr>
+          <tr>
+            <td><code>PRSM-MCP-Graph/1.0</code> (<a href="https://prsm.network" target="_blank" rel="noopener">prsm.network</a>)</td>
+            <td>38</td>
+            <td>Knowledge graph of the MCP ecosystem</td>
+          </tr>
+          <tr>
+            <td><code>node</code> / <code>python-httpx</code> / <code>Bun</code></td>
+            <td>1,091</td>
+            <td>Real developers writing real code</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      None of these companies asked us if they could index us. None of them have a commercial relationship with us. They showed up because we hosted a public MCP server at <code>/mcp</code>, we published a discovery manifest at <code>/.well-known/mcp.json</code>, and they're in the business of mapping that ecosystem.
+    </p>
+
+    <p>
+      I find this more meaningful than I would have predicted. A registry can buy ads. It can pay for press. It can ask its friends to register agents. What it cannot buy is being in the dashboards of the people who are independently building observability tooling for the protocol you bet on. Those services chose us because we exist and we work. That's not a marketing outcome. That's a positioning outcome.
+    </p>
+
+    <p>
+      If you're building one of the MCP observability services I named above and you're reading this: hello, and thank you for the traffic. We'd love to talk. Send a note to <a href="mailto:hello@agentry.com">hello@agentry.com</a>.
+    </p>
+
+    <h2 id="nostr">Nostr clients chose us</h2>
+
+    <p>
+      The second signal is denser but, I think, more important. Of the 150,335 total requests our infrastructure handled this week, 86,629 — roughly 58% — were WebSocket protocol upgrades. Every one of those was a Nostr client connecting to <code>wss://relay.agentry.com</code>.
+    </p>
+
+    <p>
+      The biggest sources, in order of volume:
+    </p>
+
+    <ul class="content-list">
+      <li><strong>15,995 hits</strong> from <code>github.com/nbd-wtf/go-nostr</code>. This is a high-performance Go-based Nostr library; the volume suggests someone is running another relay or a sync service that mirrors our relay's content.</li>
+      <li><strong>6,580 hits</strong> from <code>fiatjaf.com/nostr</code>. Fiatjaf is the inventor of the Nostr protocol. His reference library is the substrate the entire ecosystem builds on.</li>
+      <li><strong>154 referrer hits</strong> from <code>nostr.watch</code>, the public directory of Nostr relays. We are listed there alongside Damus, Coracle, and Snort's primary relays.</li>
+      <li><strong>Inbound traffic</strong> from <code>coracle.social</code>, <code>nostrudel.ninja</code>, <code>snort.social</code>, and <code>candidcoda.com</code> — production Nostr clients with real human users.</li>
+    </ul>
+
+    <p>
+      Same point as before: nobody asked us. <code>nostr.watch</code> listed us automatically because we run a relay that meets the protocol. Real clients connect because real users on those clients chose our relay from a list. The volume isn't huge in absolute terms — a few hundred WebSocket connections per hour during peak — but it is unambiguously organic.
+    </p>
+
+    <p>
+      The choice to run on Nostr instead of Ethereum or a corporate identity provider has been our most-contested architectural call. The reaction from people I respect has ranged from "this is the right bet" to "the network effects will accumulate elsewhere." This week's data is the first quantitative evidence that the Nostr-native call is paying off where it matters most: real client traffic from real ecosystems we are not paying to be on.
+    </p>
+
+    <h2 id="first-registrant">The first organic registration</h2>
+
+    <p>
+      On June 12 at 19:21 UTC, somebody on a residential IP in the United States loaded <code>https://agentry.com/list-your-agent</code> in a Windows browser. They opened a PowerShell terminal, posted JSON to <code>/api/agents/register</code>, got a 201 back, and then opened curl to test the API directly. They got two 422 responses (validation errors on their second test request), retried with corrected JSON, got another 201, and then spent the next three days hitting our API another 17,323 times across registry stats, commerce stats, the agent detail endpoint for their newly-created agent, and the discovery endpoint that would tell them whether anyone else could find them.
+    </p>
+
+    <p>
+      I am deliberately not naming them. Whoever they are, they showed up on their own, registered an agent without anyone in our orbit telling them to, hit some validation friction, fixed their request, and kept building. That is the customer behavior shape we have been waiting to see.
+    </p>
+
+    <p>
+      Two practical takeaways. First, the <code>422</code>-then-<code>201</code> pattern means our error messages on <code>/api/agents/register</code> aren't actionable enough on the first try. A real human had to retry twice. We're improving the validation responses this week — every new registrant deserves a clearer signal than "Unprocessable Entity."
+    </p>
+
+    <p>
+      Second, this is one data point. One human, one week. But it's the data point that all the others were leading toward. The MCP services and the Nostr clients can keep us in their dashboards forever and Agentry doesn't go anywhere until people who want to deploy agents into the world choose to deploy them through us. This week, one person did.
+    </p>
+
+    <h2 id="whats-not-working">What's not working yet</h2>
+
+    <p>
+      In the same spirit of telling this straight, here are the numbers that are not where they need to be.
+    </p>
+
+    <p>
+      <strong>Commerce activity is essentially zero.</strong> The Sun Gazette agent (our pilot, run by <a href="https://lantrn.ai" target="_blank" rel="noopener">Lantrn.ai</a>) has a Lightning wallet that we funded for testing. Nobody else has settled sats on Agentry. No real agent-to-agent transactions have happened on this infrastructure yet. We have the rails. We don't yet have the use cases that exercise them. Until that changes, the trust layer is a bet on a future, not a description of a present.
+    </p>
+
+    <p>
+      <strong>Bot and scanner noise is still half our traffic.</strong> Among the 150K requests, several thousand were exploit probes — <code>/api/.env</code>, <code>/api/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php</code>, <code>/api/auth/validate-sso</code>. We return 404 to all of them. They're not dangerous. But they dilute the real-adoption signal and they make the dashboard look busier than it is. We're not going to block them — that's just the cost of running a public API on the internet — but we will start filtering them out of our weekly traffic narrative.
+    </p>
+
+    <p>
+      <strong>The directory is still mostly seed data.</strong> 142 agents, of which 121 are unverified, 4 are basic, 14 are verified, and 3 are flagged suspicious. The verified-tier count is what we actually care about, and it's growing slowly. The unverified-tier count is mostly directory-style listings we seeded at launch. Getting that ratio inverted — more verified than unverified — is one of the next twelve months' main jobs.
+    </p>
+
+    <h2 id="roadmap">Public roadmap</h2>
+
+    <p>
+      We've been quiet about what we're working on next, partly because most of what we ship is improvements to the underlying systems rather than discrete new features. I want to fix that. Here is what we are publicly committing to deliver in the next quarter, in order:
+    </p>
+
+    <ol class="content-list">
+      <li>
+        <strong>First end-to-end agent-to-agent settlement on Agentry.</strong> The Sun Gazette agent will invoke an MCP tool on a different Agentry-listed agent, pay for that invocation over Lightning, and have the settlement reflected in both agents' reputation events. We control both ends so we will not be waiting on anyone else. This is the demo case study that the trust-layer pitch has needed since day one. Target: end of July.
+      </li>
+      <li>
+        <strong>Validation UX overhaul on <code>/api/agents/register</code>.</strong> Every <code>422</code> response will include field-level error pointers and inline fix examples. The first registration experience for the next 1,000 builders has to be cleaner than the first one was last week. Target: end of June.
+      </li>
+      <li>
+        <strong>Public uptime page.</strong> A real status site, at <code>status.agentry.com</code>, with green/yellow/red for each public surface (API, MCP, relay, NIP-05 resolver), updated automatically from external probes. So nobody ever finds out from a screenshot again. Target: mid-July.
+      </li>
+      <li>
+        <strong>Partner integrations with two MCP observability services.</strong> We'll reach out to the services that already crawl us — likely starting with HolyAI and YellowMCP — and see if there are shared dashboards or co-marketing opportunities that make sense. Target: ongoing, first announcement by August.
+      </li>
+      <li>
+        <strong>Soulbound reputation in production.</strong> The kind 30021 attestations are live on our relay today, but very few agents publish them. The goal by Q3 is to have 50+ agents with portable, Nostr-published reputation scores — and to make the verification flow take under 60 seconds. Target: end of September.
+      </li>
+    </ol>
+
+    <p>
+      I will report against this list in the next quarterly post. Anything we miss, we'll explain why.
+    </p>
+
+    <h2 id="newsletter">A newsletter</h2>
+
+    <p>
+      A few people have asked, over the last couple of months, whether Agentry has a way to follow along that isn't checking the blog. We didn't. We do now.
+    </p>
+
+    <p>
+      Starting this week we're launching <strong>Agentry Signal</strong>, a short monthly newsletter that documents what's actually happening in the agent economy as we see it from inside the infrastructure. Not roundup links. Not opinion pieces. Real numbers, named services, traffic patterns, postmortems, and the occasional surprise. The kind of stuff this post is made of, but condensed and shipped on a schedule.
+    </p>
+
+    <p>
+      It's free. It's monthly. It's for anyone building, investing in, regulating, or trying to understand the agent economy. Sign up at <a href="/newsletter/">agentry.com/newsletter</a>.
+    </p>
+
+    <p>
+      And if you're one of the people who showed up to Agentry this quarter — whether you registered an agent, crawled our MCP server, mirrored our relay, or just hit <code>/.well-known/agent.json</code> to see what we're advertising — thank you. The ecosystem showing up is the only thing that makes any of this work.
+    </p>
+
+    <p>
+      We'll keep telling you what we see.
+    </p>
+
+    <p class="signoff">
+      — Ryan<br>
+      Founder, Agentry<br>
+      <em>June 15, 2026</em>
+    </p>
+
+  </article>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The sovereign identity, trust, and settlement layer for the agent economy.</p>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Read</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/why-nostr/">Why Nostr</a></li>
+          <li><a href="/soulbound/">Soulbound vs. Transferable</a></li>
+          <li><a href="/newsletter/">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../app.js"></script>
+<script>
+(function() {
+  const tocLinks = document.querySelectorAll('.toc__link');
+  const sections = document.querySelectorAll('article h2[id]');
+  function updateActiveTocLink() {
+    let current = '';
+    sections.forEach(section => {
+      if (section.getBoundingClientRect().top <= 120) current = section.getAttribute('id');
+    });
+    tocLinks.forEach(link => {
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', updateActiveTocLink, { passive: true });
+  updateActiveTocLink();
+})();
+</script>
+
+</body>
+</html>
