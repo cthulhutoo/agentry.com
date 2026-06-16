@@ -1478,7 +1478,7 @@ a, button, [role="button"], [role="link"], input, textarea, select {
   margin-bottom: var(--space-8);
 }
 @media (min-width: 768px) {
-  .footer__inner { grid-template-columns: 2fr 1fr 1fr; }
+  .footer__inner { grid-template-columns: 2fr 1fr 1fr 1fr; }
 }
 
 .footer__brand {
