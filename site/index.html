@@ -101,6 +101,20 @@
     font-weight: 600;
     font-size: 0.88rem;
   }
+  /* Roadmap-flavored stat cell */
+  .live-stat--soon {
+    background: linear-gradient(180deg, rgba(167, 139, 250, 0.05), rgba(255,255,255,0.02)) !important;
+    border: 1px dashed rgba(167, 139, 250, 0.35) !important;
+  }
+  .live-stat__value--soon {
+    background: linear-gradient(135deg, #A78BFA, #6D28D9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem) !important;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
 </style>
 
 <style>
@@ -548,12 +562,12 @@
       <span class="header__logo-text">Agentry</span>
     </a>
     <nav class="header__nav">
-      <a href="#directory">Directory</a>
       <a href="/escrow/" class="header__nav-feature">Escrow</a>
       <a href="/blog/">Blog</a>
       <a href="/enterprise/">Enterprise</a>
       <a href="/pricing/">Pricing</a>
       <a href="/why-nostr/">Why Nostr</a>
+      <a href="/directory/">Registry</a>
       <a href="#list-agent">List Your Agent</a>
     </nav>
     <div class="header__actions">
@@ -568,12 +582,12 @@
 </header>
 
   <nav class="mobile-nav" id="mobile-nav">
-  <a href="#directory" onclick="closeMobileMenu()">Directory</a>
   <a href="/escrow/" onclick="closeMobileMenu()">Escrow</a>
   <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
   <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
   <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
-  <a href="/nostr/" onclick="closeMobileMenu()">Nostr</a>
+  <a href="/why-nostr/" onclick="closeMobileMenu()">Why Nostr</a>
+  <a href="/directory/" onclick="closeMobileMenu()">Registry</a>
   <a href="#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
 </nav>
 
@@ -648,40 +662,35 @@ function copyQuickstart() {
     <div class="live-stats__header">
       <div class="live-stats__pulse">
         <span class="live-stats__pulse-dot"></span>
-        <span class="live-stats__pulse-label">Live network activity</span>
+        <span class="live-stats__pulse-label">Network status</span>
       </div>
       <div class="live-stats__updated" id="live-stats-updated">Updated just now</div>
     </div>
     <div class="live-stats__grid">
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="148" id="stat-agents">0</div>
+        <div class="live-stat__value" data-counter data-target="142" id="stat-agents">0</div>
         <div class="live-stat__label">Agents registered</div>
-        <div class="live-stat__sub" id="stat-agents-sub">17 verified on Nostr</div>
+        <div class="live-stat__sub" id="stat-agents-sub">13 verified · 23 A2A-ready</div>
       </div>
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="15100" id="stat-sats">0</div>
-        <div class="live-stat__label">Sats funded</div>
-        <div class="live-stat__sub" id="stat-sats-sub">Bitcoin-native settlement</div>
+        <div class="live-stat__value" data-counter data-target="5" id="stat-monitors">0</div>
+        <div class="live-stat__label">MCP monitors watching</div>
+        <div class="live-stat__sub">HolyAI · YellowMCP · PRSM · +2</div>
       </div>
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="6" id="stat-wallets">0</div>
-        <div class="live-stat__label">Lightning wallets</div>
-        <div class="live-stat__sub" id="stat-wallets-sub">Cashu ecash mints</div>
+        <div class="live-stat__value" data-counter data-target="100" id="stat-trust">0</div>
+        <div class="live-stat__label">Avg. trust score</div>
+        <div class="live-stat__sub" id="stat-trust-sub">Across verified agents</div>
       </div>
-      <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="1" id="stat-invocations">0</div>
-        <div class="live-stat__label">Agent invocations</div>
-        <div class="live-stat__sub" id="stat-invocations-sub">A2A and MCP combined</div>
-      </div>
-      <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="135">0</div>
-        <div class="live-stat__label">API routes</div>
-        <div class="live-stat__sub">Identity · payments · trust</div>
+      <div class="live-stat live-stat--soon">
+        <div class="live-stat__value live-stat__value--soon">Jul 2026</div>
+        <div class="live-stat__label">First escrow contract</div>
+        <div class="live-stat__sub">Public roadmap commitment</div>
       </div>
       <div class="live-stat live-stat--cta">
-        <a href="/why-nostr/" class="live-stat__manifesto">
-          <div class="live-stat__manifesto-title">Why we built on Nostr <span aria-hidden="true">→</span></div>
-          <div class="live-stat__manifesto-sub">Read the manifesto</div>
+        <a href="/escrow/" class="live-stat__manifesto">
+          <div class="live-stat__manifesto-title">Read the escrow page <span aria-hidden="true">→</span></div>
+          <div class="live-stat__manifesto-sub">Bitcoin + Lightning + TEMP</div>
         </a>
       </div>
     </div>
@@ -731,36 +740,25 @@ function copyQuickstart() {
 
   async function fetchStats() {
     try {
-      const [commerceRes, registryRes] = await Promise.all([
-        fetch('https://api.agentry.com/api/stats/commerce'),
-        fetch('https://api.agentry.com/api/registry/stats')
-      ]);
-      if (!commerceRes.ok || !registryRes.ok) return;
-      const c = await commerceRes.json();
+      const registryRes = await fetch('https://api.agentry.com/api/registry/stats');
+      if (!registryRes.ok) return;
       const r = await registryRes.json();
 
-      setCounter('stat-agents', r.total_agents ?? c.agents?.total ?? 148);
-      setCounter('stat-wallets', c.wallets?.total ?? 6);
-      setCounter('stat-invocations', c.invocations?.total ?? 1);
-      setCounter('stat-sats', c.wallets?.total_funded_sats ?? 15100);
+      const totalAgents = r.total_agents ?? 142;
+      const verified = r.by_tier?.verified ?? 0;
+      const basic = r.by_tier?.basic ?? 0;
+      const a2a = r.agents_with_a2a_card ?? 0;
+      // trust score is 0–10; we display as 0–100
+      const trustPct = Math.round((r.avg_trust_score ?? 0) * 10);
 
-      // Sub-labels with real data
-      const verifiedCount = (r.by_tier?.verified ?? 0) + (r.by_tier?.basic ?? 0);
+      setCounter('stat-agents', totalAgents);
+      setCounter('stat-trust', trustPct);
+
       const subAgents = document.getElementById('stat-agents-sub');
-      if (subAgents) subAgents.textContent = `${verifiedCount} verified on Nostr`;
+      if (subAgents) subAgents.textContent = `${verified} verified · ${a2a} A2A-ready`;
 
-      const subInvocations = document.getElementById('stat-invocations-sub');
-      if (subInvocations && c.invocations) {
-        const successful = c.invocations.successful ?? 0;
-        const failed = c.invocations.failed ?? 0;
-        subInvocations.textContent = `${successful} successful, ${failed} failed`;
-      }
-
-      const subWallets = document.getElementById('stat-wallets-sub');
-      if (subWallets && c.wallets) {
-        const funded = c.wallets.funded ?? 0;
-        subWallets.textContent = `${funded} funded · Cashu ecash`;
-      }
+      const subTrust = document.getElementById('stat-trust-sub');
+      if (subTrust) subTrust.textContent = `Across ${verified + basic} attested agents`;
 
       lastFetchTime = new Date();
     } catch(e) { /* silent */ }
@@ -1083,27 +1081,8 @@ function copyQuickstart() {
   </div>
 </section>
 
-<!-- ==================== DIRECTORY ==================== -->
-<section class="directory section" id="directory">
-  <div class="container">
-    <div class="directory__header reveal">
-      <h2 class="directory__title">Agent Directory</h2>
-      <p class="directory__subtitle">Browse our curated collection of AI agents across every business function. Filter by category or search by name.</p>
-    </div>
-
-    <div class="registry-stats reveal" id="registry-stats" style="display:none"></div>
-
-    <div class="directory__filters reveal">
-      <div class="directory__search">
-        <svg class="directory__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" class="directory__search-input" id="search-input" placeholder="Search agents by name or description..." aria-label="Search agents">
-      </div>
-      <div class="directory__categories" id="category-filters" role="tablist">
-        <button class="category-pill active" data-category="all" role="tab" aria-selected="true">All</button>
-      </div>
-    </div>
-    <!-- SEO: Pre-rendered agent data for crawlers (hidden from visual display) -->
-    <div class="seo-agents" style="display:none" aria-hidden="true">
+<!-- SEO: Pre-rendered agent data for crawlers (hidden) -->
+<div class="seo-agents" style="display:none" aria-hidden="true">
       <div class="seo-agent"><h3><a href="https://www.intercom.com/fin">Intercom Fin</a></h3><p>Category: Customer Service</p><p>Fin is Intercom&#39;s AI agent that autonomously resolves customer support conversations across chat, email, and more. It uses the company&#39;s knowledge base to handle complex queries and only escalates to humans when needed.</p></div>
       <div class="seo-agent"><h3><a href="https://www.zendesk.com/service/ai/">Zendesk AI</a></h3><p>Category: Customer Service</p><p>Zendesk AI offers built-in automation and AI-powered agents for customer support, including intelligent triage, Answer Bot, and AI Copilot that assists human agents in real time.</p></div>
       <div class="seo-agent"><h3><a href="https://sierra.ai">Sierra</a></h3><p>Category: Customer Service</p><p>Sierra is an enterprise AI customer service platform co-founded by Bret Taylor and Clay Bavor, delivering empathetic voice and chat AI agents designed for complex, brand-specific support workflows.</p></div>
@@ -1124,23 +1103,7 @@ function copyQuickstart() {
       <div class="seo-agent"><h3><a href="https://www.regie.ai">Regie.ai</a></h3><p>Category: Sales &amp; Outreach</p><p>Regie.ai deploys autonomous AI prospecting agents that operate around the clock, discovering prospects, enriching data, monitoring buying signals, and executing multi-channel email and LinkedIn campaigns without human intervention.</p></div>
       <div class="seo-agent"><h3><a href="https://www.jasper.ai">Jasper</a></h3><p>Category: Marketing &amp; Content</p><p>Jasper is a marketing AI platform that generates on-brand content across multiple channels with brand voice memory, campaign orchestration, and specialized marketing agents for content at scale.</p></div>
       <div class="seo-agent"><h3><a href="https://www.copy.ai">Copy.ai</a></h3><p>Category: Marketing &amp; Content</p><p>Copy.ai is a GTM AI platform that provides AI-powered workflows for content creation, sales messaging, and marketing automation, with a focus on go-to-market teams and scalable content production.</p></div>
-    </div>
-
-    <div class="directory__grid" id="agent-grid">
-      <!-- Cards injected by JS -->
-    </div>
-
-    <div class="directory__show-more" id="show-more-wrapper" style="display:none;">
-      <button class="btn btn--secondary" id="show-more-btn">Show More Agents</button>
-    </div>
-
-    <div class="directory__empty" id="empty-state" style="display:none;">
-      <div class="directory__empty-icon">&#x1F50D;</div>
-      <p class="directory__empty-text">No agents found matching your search.</p>
-      <p style="color:var(--color-text-faint); margin-top:var(--space-2); font-size:var(--text-sm);">Try adjusting your filters or search term.</p>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- ==================== PLATFORM FEATURES ==================== -->
 <section class="platform-features section" id="platform-features">

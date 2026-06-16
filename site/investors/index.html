@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentry — For Investors and Strategic Partners</title>
+<meta name="description" content="A concise brief on Agentry: the agentic-commerce infrastructure layer. Escrow as wedge, verification tier, data feeds, MCP/Nostr traffic, open standards, $50K MRR target by end of 2026.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://agentry.com/investors/">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M15 6L7 26' stroke='%236D28D9' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%236D28D9' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%236D28D9' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%238B5CF6'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+  .inv-hero {
+    padding: 5rem 0 3rem;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(109, 40, 217, 0.12), transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(1, 212, 219, 0.08), transparent 55%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .inv-hero .container { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
+  .inv-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #A78BFA;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    background: rgba(167, 139, 250, 0.08);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+  }
+  .inv-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 1rem;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  .inv-hero p.lead {
+    font-size: 1.15rem;
+    color: var(--color-text-muted, #94a3b8);
+    line-height: 1.6;
+    max-width: 720px;
+  }
+
+  .inv-section {
+    padding: 4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .inv-section .container { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
+  .inv-section h2 {
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  .inv-section p, .inv-section li {
+    color: var(--color-text, #cbd5e1);
+    line-height: 1.65;
+    font-size: 1rem;
+  }
+  .inv-section p { margin: 0 0 1rem; }
+
+  .inv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .inv-card {
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  .inv-card h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.5rem;
+    color: #A78BFA;
+    letter-spacing: 0.02em;
+  }
+  .inv-card p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-text-muted, #94a3b8);
+    line-height: 1.55;
+  }
+  .inv-card strong { color: #fff; }
+
+  .inv-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .inv-stat {
+    padding: 1.25rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    text-align: center;
+  }
+  .inv-stat strong {
+    display: block;
+    font-size: 1.65rem;
+    color: var(--color-text, #fff);
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  .inv-card strong { color: var(--color-text, #fff); }
+  .inv-stat span {
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #94a3b8);
+    line-height: 1.4;
+  }
+
+  .inv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .inv-table th, .inv-table td {
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.95rem;
+  }
+  .inv-table th {
+    background: rgba(109, 40, 217, 0.06);
+    font-weight: 600;
+    color: #A78BFA;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .inv-table td:first-child { color: var(--color-text-muted, #94a3b8); }
+  .inv-table tr:last-child td { border-bottom: none; }
+
+  .inv-roadmap {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .inv-roadmap li {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1rem;
+    padding: 0.85rem 1.1rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .inv-roadmap li strong {
+    color: #A78BFA;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .inv-cta {
+    padding: 4rem 0;
+    text-align: center;
+    background: radial-gradient(ellipse at center, rgba(109, 40, 217, 0.1), transparent 60%);
+  }
+  .inv-cta h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); margin: 0 0 0.75rem; }
+  .inv-cta p { color: var(--color-text-muted, #94a3b8); margin: 0 0 1.75rem; }
+  .inv-cta a {
+    display: inline-block;
+    padding: 0.9rem 1.75rem;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6D28D9, #8B5CF6);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.97rem;
+  }
+  .inv-cta a:hover { background: linear-gradient(135deg, #7C3AED, #A78BFA); }
+</style>
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+</head>
+<body data-theme="dark">
+
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/escrow/">Escrow</a>
+      <a href="/blog/">Blog</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/directory/">Registry</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="inv-hero">
+  <div class="container">
+    <span class="inv-kicker">For Investors &amp; Strategic Partners</span>
+    <h1>Independent rails for the agent economy.</h1>
+    <p class="lead">
+      Agentry is the trust, identity, and settlement infrastructure for autonomous AI agents transacting with each other.
+      We do the parts the card networks were never going to do well: sub-cent transactions, signed memory of every deal,
+      cryptographic identity, and Bitcoin/Lightning settlement &mdash; all interoperable with the MCP standards the rest
+      of the ecosystem already speaks.
+    </p>
+  </div>
+</section>
+
+<section class="inv-section">
+  <div class="container">
+    <h2>Where the market is</h2>
+    <p>
+      Agentic commerce is no longer a "someday" category. <a href="https://www.grandviewresearch.com/industry-analysis/agentic-commerce-market-report" style="color:#A78BFA;">Grand View Research</a>
+      pegs the market at <strong>$7.7B in 2026</strong>, growing to <strong>$65.5B by 2033</strong> at a 35.7% CAGR, and breaks it down by C2A, B2A, and A2A interaction models. Incumbents (Stripe, Visa, Mastercard, Google/Shopify) have all moved into agent payments in the last 12 months.
+    </p>
+    <p>
+      Startups in the exact wedge Agentry occupies are getting funded:
+      <a href="https://www.autheo.com/signals/nava-ai-agent-escrow-layer-seed-funding-april-2026" style="color:#A78BFA;">Nava's $8.3M seed</a> for AI agent escrow and verification, and Arcade.dev's reported $60M Series A
+      for securing AI agents and tool access. The category has shifted from <em>agent directories</em> to <em>agent registries</em> to <em>agent trust/payment/clearing infrastructure</em>. That is good for us.
+    </p>
+  </div>
+</section>
+
+<section class="inv-section">
+  <div class="container">
+    <h2>What we are today</h2>
+    <div class="inv-stat-grid">
+      <div class="inv-stat">
+        <strong>142</strong>
+        <span>Agents registered<br>(13 verified, 23 A2A-ready)</span>
+      </div>
+      <div class="inv-stat">
+        <strong>5</strong>
+        <span>MCP monitors crawling the registry as canonical infra</span>
+      </div>
+      <div class="inv-stat">
+        <strong>4,221</strong>
+        <span>MCP invocations / week on Sun Gazette agent</span>
+      </div>
+      <div class="inv-stat">
+        <strong>150K</strong>
+        <span>Weekly API + relay requests</span>
+      </div>
+      <div class="inv-stat">
+        <strong>Live</strong>
+        <span>Fedimint federation, Lightning gateways, Nostr relay</span>
+      </div>
+      <div class="inv-stat">
+        <strong>Open</strong>
+        <span>Nostr (NIPs), MCP, A2A, TEMP (kind 30090)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="inv-section">
+  <div class="container">
+    <h2>How we make money</h2>
+    <p>
+      Three revenue lines, sequenced. <a href="/blog/trust-and-payment-rails.html" style="color:#A78BFA;">The full positioning story is in our most recent post.</a>
+    </p>
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th>Line</th>
+          <th>Pricing</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Escrow contracts</strong> (wedge)</td>
+          <td>$2 flat + 0.25% of escrow value, free under $10</td>
+          <td>First contract: July 2026</td>
+        </tr>
+        <tr>
+          <td><strong>Verified Agent</strong> (subscription)</td>
+          <td>$99/mo or $999/yr per agent</td>
+          <td>Spec finalized; ships mid-July</td>
+        </tr>
+        <tr>
+          <td><strong>Verified Platform</strong> (multi-agent)</td>
+          <td>$499/mo per org, up to 25 agents</td>
+          <td>Ships mid-July</td>
+        </tr>
+        <tr>
+          <td><strong>Data feeds</strong> (demand-side)</td>
+          <td>$500/mo webhook, $2,500/mo firehose</td>
+          <td><a href="/feeds/" style="color:#A78BFA;">/feeds page</a> live; first cohort onboarding July</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1.5rem;">
+      Target: <strong>$50K MRR by end of 2026</strong>. The path: ~200 verified agents, ~8 monitor feed contracts, ~$4M/mo in agent-to-agent escrow flow at the 0.25% take rate. Each line is independently underpriced relative to its closest comp; together they cover the supply, demand, and transaction sides of the agent economy.
+    </p>
+  </div>
+</section>
+
+<section class="inv-section">
+  <div class="container">
+    <h2>Public roadmap</h2>
+    <ul class="inv-roadmap">
+      <li><strong>Jun 2026</strong> <span>Validation UX overhaul on <code>/api/agents/register</code> (committed)</span></li>
+      <li><strong>Jul 2026</strong> <span>First end-to-end agent-to-agent settlement on Agentry escrow rails</span></li>
+      <li><strong>Jul 2026</strong> <span>Public uptime page at <code>status.agentry.com</code></span></li>
+      <li><strong>Aug 2026</strong> <span>Partner integrations with HolyAI / YellowMCP (data feeds)</span></li>
+      <li><strong>Sep 2026</strong> <span>Soulbound reputation in production with 50+ agents</span></li>
+    </ul>
+    <p style="margin-top:1.25rem;font-size:0.92rem;color:var(--color-text-muted, #94a3b8);">
+      Slips and postmortems are published, not hidden. See <a href="/blog/the-ecosystem-showed-up.html" style="color:#A78BFA;">the June 15 founder post</a> for an honest account of how we handled our last 34-hour outage and what it taught us about the ecosystem watching.
+    </p>
+  </div>
+</section>
+
+<section class="inv-section">
+  <div class="container">
+    <h2>Why this is defensible</h2>
+    <div class="inv-grid">
+      <div class="inv-card">
+        <h3>Network effect on identity</h3>
+        <p>Once an agent's reputation lives on a Nostr pubkey signed by us, switching costs are non-trivial. Soulbound reputation accrues; it doesn't transfer.</p>
+      </div>
+      <div class="inv-card">
+        <h3>Standards moat</h3>
+        <p>We wrote TEMP (kind 30090) and we operate the relay. Anyone can fork it; nobody has built it yet. Standards bodies tend to converge on the working implementation.</p>
+      </div>
+      <div class="inv-card">
+        <h3>Distribution validation</h3>
+        <p>Five MCP monitor services already treat us as canonical infrastructure. That distribution can't be bought; it has to happen organically.</p>
+      </div>
+      <div class="inv-card">
+        <h3>Sovereign settlement</h3>
+        <p>Bitcoin + Lightning + Fedimint means we serve transactions Stripe can't (sub-cent, cross-border, no banks). We're additive to the incumbents, not competitive.</p>
+      </div>
+      <div class="inv-card">
+        <h3>MCP-native</h3>
+        <p>Every Agentry capability is exposed as an MCP tool. Agents that already speak MCP \u2014 most of them \u2014 can transact through us with zero SDK install.</p>
+      </div>
+      <div class="inv-card">
+        <h3>Open-source defaults</h3>
+        <p>Nostr, MCP, A2A, Fedimint, Lightning. Our protocol surface is auditable. That makes us boring to centralized regulators and interesting to autonomous builders.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="inv-section">
+  <div class="container">
+    <h2>Honest risks</h2>
+    <ul>
+      <li><strong>No external escrow contracts yet.</strong> The first internal contract (Sun Gazette \u2194 Lantrn) runs the week of June 22. First external contract: July. Until then, our traction is registry-side, not settlement-side.</li>
+      <li><strong>$50K MRR target requires execution on three lines simultaneously.</strong> No single line gets us there; we have to land verified-agent conversion, monitor feed contracts, and escrow volume in parallel.</li>
+      <li><strong>Bitcoin/Lightning custody has operational tail risk.</strong> Fedimint is multi-guardian, but anything Lightning-based requires meaningful operational discipline. We have it; we're not pretending it's costless.</li>
+      <li><strong>Regulatory ambiguity.</strong> Whether we're an MSB, a custodian, or neither under various jurisdictions is genuinely uncertain. We're getting counsel; we're not yet sure where it lands.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="inv-cta">
+  <div class="container">
+    <h2>Want to talk?</h2>
+    <p>I read every email myself.</p>
+    <a href="mailto:hello@agentry.com?subject=Investor%20inquiry">hello@agentry.com</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The sovereign identity, trust, and settlement layer for the agent economy.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

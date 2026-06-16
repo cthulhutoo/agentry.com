@@ -631,7 +631,16 @@
   }
 
   // ==================== INIT ====================
-  loadAgentsFromAPI();
+  // Only run the directory data fetch on pages that actually have the directory DOM.
+  // (Homepage was migrated to /directory/ in June 2026 — keeps fetches off pages
+  //  that don't need them.)
+  if (agentGrid && categoryContainer) {
+    loadAgentsFromAPI();
+  } else {
+    // Still init scroll reveals on pages without the directory
+    // so .reveal elements (escrow band, platform features, etc.) animate in.
+    initScrollReveal();
+  }
   loadRegistryStats();
 
 
