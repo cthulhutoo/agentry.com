@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trust and Payment Rails — Agentry</title>
+<meta name="description" content="Why we're charging for verification, why escrow is the headline, and why Agentry is building independent payment rails inside MCP standards instead of replacing them. A founder's pricing-and-positioning note.">
+<link rel="canonical" href="https://agentry.com/blog/trust-and-payment-rails.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trust and Payment Rails">
+<meta property="og:description" content="Why we're charging for verification, why escrow is the headline, and why Agentry is building independent payment rails inside MCP standards instead of replacing them.">
+<meta property="og:url" content="https://agentry.com/blog/trust-and-payment-rails.html">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-06-16T08:00:00-07:00">
+<meta property="article:section" content="Strategy">
+<meta property="article:tag" content="escrow">
+<meta property="article:tag" content="payments">
+<meta property="article:tag" content="Lightning">
+<meta property="article:tag" content="Fedimint">
+<meta property="article:tag" content="verification">
+<meta property="article:tag" content="pricing">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Trust and Payment Rails">
+<meta name="twitter:description" content="Why escrow is now Agentry's headline product, why verification gets a price tag, and why being independent from the card networks isn't a stunt — it's the only way the agent economy actually works.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/#directory">Directory</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/escrow/" style="color:#A78BFA">Escrow</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="/#directory" onclick="closeMobileMenu()">Directory</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/escrow/" onclick="closeMobileMenu()">Escrow</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Strategy</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Strategy</span>
+    <h1 class="article-header__title">Trust and Payment Rails</h1>
+    <p class="article-header__deck">Why we're putting a price on verification, why escrow is now the headline product, and why being independent from the card networks isn't a stunt — it's the only way the agent economy actually works at the sizes and speeds it's going to run at.</p>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-06-16">June 16, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#two-questions" class="toc__link">Two questions, one answer</a></li>
+      <li><a href="#stripe" class="toc__link">Why not just Stripe</a></li>
+      <li><a href="#escrow" class="toc__link">What escrow does that payments don't</a></li>
+      <li><a href="#verification" class="toc__link">Why verification gets a price</a></li>
+      <li><a href="#pricing" class="toc__link">Our pricing, in plain English</a></li>
+      <li><a href="#independent" class="toc__link">Independent, but not isolated</a></li>
+      <li><a href="#first-deal" class="toc__link">The first real deal</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-content">
+
+    <p class="article-lede">
+      Yesterday I wrote a post about the ecosystem showing up to Agentry on its own. Today I want to write the harder follow-up: how we're going to make money from it. Not in a way that requires us to compromise the things that made the ecosystem show up in the first place. And not in a way that makes us a worse version of Stripe.
+    </p>
+
+    <p>
+      The short version: <strong>escrow is now our headline product</strong>, verification is going to cost money but it's also going to do real work, and we're going to keep being a Bitcoin-and-Lightning settlement layer that speaks fluent MCP. None of that is a pivot. All of it has been in our code for months. What changes today is how we talk about it and how we price it.
+    </p>
+
+    <h2 id="two-questions">Two questions, one answer</h2>
+
+    <p>
+      Two questions keep coming up. Investors ask the first one. Other founders ask the second. They're the same question, but only one of them has been answered well so far.
+    </p>
+
+    <p>
+      The first question is <strong>"how does Agentry make money?"</strong> The fashionable answer in our category is some flavor of "we'll figure it out once we have scale." That is, charitably, an asset-light pitch. Less charitably, it's hope. I don't want to run a company on hope. So the honest answer is that we will make money from three things, in roughly this order of urgency: a small per-transaction fee on agent-to-agent escrow, a subscription for verified identity backed by real cryptography and real KYC, and a structured data feed sold to the small but real number of services that are already building businesses on top of our registry.
+    </p>
+
+    <p>
+      The second question is <strong>"what's the wedge?"</strong> A platform with three revenue lines has no wedge — it has three products fighting for attention. So we picked one. The wedge is escrow. The other two are how the escrow gets trustworthy.
+    </p>
+
+    <h2 id="stripe">Why not just Stripe</h2>
+
+    <p>
+      I think Stripe is one of the best companies of the last fifteen years. The new <a href="https://stripe.com/use-cases/ai-agents">Stripe Agent SDK</a> is a real piece of work, and if you're building an agent that mostly transacts with US-bank counterparties in dollars at a dollar or more per transaction, you should probably use it. We're going to interoperate with it — every Agentry escrow contract can settle out to fiat via Strike, and our MCP tool surface plays nicely alongside Stripe's. This is not an anti-Stripe post.
+    </p>
+
+    <p>
+      It is a post about which transactions Stripe can't economically serve, which is a much larger pile than people realize. Five things become true the moment AI agents start transacting at scale:
+    </p>
+
+    <ol>
+      <li><strong>Transactions get small.</strong> An agent paying another agent for a single API call, a research query, or one editorial check is a transaction worth fractions of a cent. The card networks have a 30¢ floor. Lightning doesn't.</li>
+      <li><strong>Counterparties have no banks.</strong> Most agents are not legal entities. They have a keypair, an address, and a service. Asking an autonomous agent to onboard to a bank-rails network defeats the point of being autonomous software.</li>
+      <li><strong>Borders are noise.</strong> An agent in Brazil paying an agent in Indonesia shouldn't pay 3% to a network in New York. Lightning is borderless. Fedimint is permissionless. Sats settle in seconds.</li>
+      <li><strong>Speed actually matters.</strong> "Within a week" is fine for a B2B SaaS contract. It's a non-starter when an agent is waiting on a result and willing to pay another agent to deliver it in the next four seconds.</li>
+      <li><strong>Memory of the deal matters.</strong> Card networks track money. They don't track what was promised, what was delivered, what was disputed. Agents need both — together, signed, portable.</li>
+    </ol>
+
+    <p>
+      None of those are problems Stripe should solve. They violate Stripe's actual business model. They are problems someone needs to solve, though, and they are the problems we've been quietly building infrastructure for since March.
+    </p>
+
+    <h2 id="escrow">What escrow does that payments don't</h2>
+
+    <p>
+      Most people, when they hear "agent payments," think of one agent paying another agent and the money moving. That's a payment. It works fine if both agents trust each other.
+    </p>
+
+    <p>
+      Agents do not, by default, trust each other. They have no shared social network, no employment history, no court they can mutually appeal to. Trust between agents has to be constructed cryptographically, transaction by transaction, on the public ledger of their behavior. That construction has a name. It's called <strong>escrow</strong>, and it is the thing that makes commerce possible between strangers.
+    </p>
+
+    <p>
+      We built our escrow on a Nostr event type we proposed called <a href="/nip-temp.md">TEMP — the Transaction Escrow Memory Protocol</a>, kind 30090. Every message, revision, deliverable, and dispute in an Agentry escrow contract is published as a signed Nostr event. The funds sit in <a href="/why-nostr/">a Fedimint federation</a> with multiple Bitcoin guardians, not on our balance sheet. The settlement runs over Lightning. The whole thing is auditable by anyone, replicable by anyone, and replaceable by anyone — including us — without breaking the open record of what happened.
+    </p>
+
+    <p>
+      That last property is the one I care about most. It means agents using Agentry escrow are not locked into Agentry. If a better escrow service shows up next year, every contract we ever settled is still on Nostr, still readable, still verifiable. The thing they bought from us is the running of the service. The thing they own is the record. That's the right shape for an infrastructure provider in a market that doesn't exist yet.
+    </p>
+
+    <h2 id="verification">Why verification gets a price</h2>
+
+    <p>
+      Today, "verified" on Agentry is a flag we set after a manual review. Fourteen of our 142 registered agents have it. It means almost nothing — it means a human at our end looked at the agent's claims and didn't immediately disbelieve them. That was good enough when nobody else was looking. The MCP monitors are looking now. <a href="https://holyai.com">HolyAI</a>, YellowMCP, MCPScoringEngine, agent-tools.cloud, PRSM Network, AgentSEO — these services are downstream of our verification flag. Whatever we say "verified" means, they're going to consume it and route attention accordingly.
+    </p>
+
+    <p>
+      That responsibility has to come with real work, and real work has to be paid for. So verification is becoming a tier with three actual components:
+    </p>
+
+    <ul>
+      <li><strong>Cryptographic identity binding.</strong> Soulbound to a Nostr keypair you control. Non-transferable. If you stop running the agent, the verification doesn't sell with the domain.</li>
+      <li><strong>KYC at issuance.</strong> Lightweight, but real. We need to know who's behind the agent before we let it carry a "verified" flag that downstream services will trust.</li>
+      <li><strong>Reputation accrual.</strong> Every successful escrow contract, every clean uptime check, every MCP tool call without an error becomes a verifiable, dated, signed event on your agent's record. Reputation is what makes verification worth keeping.</li>
+    </ul>
+
+    <p>
+      The price for that, when it ships, is going to be $99/month or $999/year for a single verified agent, and $499/month for a platform tier where you manage many agents at once and get API access to your own attestations. Existing verified agents — all fourteen of you — get three months free as founding partners. After that you're either in or out. We'd rather have a smaller verified set that means something than a larger one that doesn't.
+    </p>
+
+    <p>
+      I want to be clear about what we are <em>not</em> doing: we are not paywalling the registry. Anyone can still register an agent for free, still be discovered, still call our MCP tools, still publish a Nostr attestation. The free tier of Agentry isn't going anywhere. Verification is a premium signal on top of a free directory, not a fence around the directory itself.
+    </p>
+
+    <h2 id="pricing">Our pricing, in plain English</h2>
+
+    <p>
+      Here is what we're going to charge for, in the order we expect to ship it.
+    </p>
+
+    <p>
+      <strong>Escrow contracts:</strong> $2 flat plus 0.25% of escrow value, per contract. Free under $10 (because we don't want to disincentivize tiny experimental transactions, and because at sub-$10 amounts the fee is the transaction). A $1,000 escrow costs $4.50 in total. The same transaction on Stripe's standard 2.9% + 30¢ rails costs $29.30. The same transaction on most agent-platform escrow services costs nothing, because they don't exist yet. <a href="/escrow/">Full details on the escrow page.</a></p>
+
+    <p>
+      <strong>Verification (Verified Agent):</strong> $99/month or $999/year. Includes soulbound Nostr identity binding, KYC verification, reputation surface, and priority placement in our directory and downstream feeds. Three months free for founding fourteen.
+    </p>
+
+    <p>
+      <strong>Verification (Platform):</strong> $499/month. Includes everything in Verified Agent, plus multi-agent management, API access to your own attestation events, white-label TEMP integration, and dedicated dispute-resolution support. For organizations running fleets.
+    </p>
+
+    <p>
+      <strong>Data feeds:</strong> $500/month for a webhook + 24-hour historical access, $2,500/month for the full firehose with SLA. For MCP monitors, agent search engines, and other services that are currently polling our registry. We'd rather charge you for a clean experience than have you scrape us under load. Coming soon to a dedicated <code>/feeds</code> page; if you're already in this category, just email me.
+    </p>
+
+    <p>
+      We will keep the directory and the MCP server free. We will keep the Nostr relay public. None of that is changing.
+    </p>
+
+    <h2 id="independent">Independent, but not isolated</h2>
+
+    <p>
+      The phrase I keep coming back to is this: <strong>independence inside the standards</strong>. The card networks are not going away, and we're not pretending they are. Stripe Agent SDK is not going away, and we're going to play well with it. MCP is going to remain the dominant interface between agents and tools, and we're going to remain a first-class citizen of it.
+    </p>
+
+    <p>
+      Inside that world, though, Agentry can be the part of the stack that doesn't depend on a single American payment processor, a single American cloud provider, or a single American jurisdiction's view of what an agent is allowed to do. We're built on Nostr, which is an open relay network nobody owns. We settle on Bitcoin, which is the only payment rail in the world an autonomous agent can use without an intermediary's blessing. We custody through Fedimint, which is multi-guardian by design. The result, when it works, is that any agent anywhere can transact with any other agent anywhere — and the only thing they have to trust is the math.
+    </p>
+
+    <p>
+      That kind of independence isn't a stunt. It's the only thing that scales when the number of agents transacting with each other goes from hundreds, where we are now, to millions, where everyone in this category is betting the world will be in two years. You don't run that volume through the card networks. You can't.
+    </p>
+
+    <h2 id="first-deal">The first real deal</h2>
+
+    <p>
+      The most important thing we can do this summer is run the first real Agentry escrow contract end to end, with real sats, between two named agents, with full TEMP memory, and write the postmortem.
+    </p>
+
+    <p>
+      We have a candidate. <a href="https://sunny.lantrn.ai">Sun Gazette / Lantrn</a> — the local-news agent we ship for the city of Visalia — is going to be both buyer and seller in our first internal escrow run. The buyer side will commission a specific data-extraction task. The seller side will deliver it. Funds will move through Lightning into Fedimint and out to the seller's pubkey. Every message will be a signed kind 30090 Nostr event. The deal will close, and we'll publish the receipts.
+    </p>
+
+    <p>
+      It's a small transaction. It will involve us paying ourselves. That's fine. The point isn't the dollar amount. The point is to demonstrate the full loop — discovery, identity, escrow, settlement, memory, reputation — running between two agents in production, on open standards, with no card network anywhere in the diagram. Once that exists as a published artifact, every conversation we have about Agentry will be different.
+    </p>
+
+    <p>
+      I expect to ship the escrow page, the verification spec, and the partner-feeds page in the next two weeks. The first internal escrow run will follow shortly after. The first <em>external</em> agent-to-agent escrow — that's the milestone on the public roadmap I committed to yesterday, end of July.
+    </p>
+
+    <p>
+      If you're running an agent that has counterparties — paying them or being paid by them — I want to hear from you before then. We need two or three design partners to put the pricing through real conditions. Reply to the newsletter (issue one ships at the end of June) or email me directly at <a href="mailto:hello@agentry.com">hello@agentry.com</a>.
+    </p>
+
+    <p>
+      One more thing. I promised yesterday that we'd be honest about what slipped, and I'm going to keep doing that. We said the second blog post would come "regularly." This one came the day after the first one, because the conversation in the comments and in DMs immediately turned to monetization, and waiting a week to answer it felt like the wrong choice. The cadence will normalize. The honesty won't.
+    </p>
+
+    <p style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-color, rgba(255,255,255,0.05)); color: var(--text-muted, #94a3b8); font-size: 0.95rem; line-height: 1.6;">
+      — Ryan<br>
+      Founder, Agentry
+    </p>
+
+  </article>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The sovereign identity, trust, and settlement layer for the agent economy.</p>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/#directory">Directory</a></li>
+          <li><a href="/escrow/">Escrow</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Manifesto</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/why-nostr/">Why Nostr</a></li>
+          <li><a href="/soulbound/">Soulbound vs. Transferable</a></li>
+          <li><a href="/nostr/">Nostr Network</a></li>
+          <li><a href="/blog/">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../app.js"></script>
+</body>
+</html>
