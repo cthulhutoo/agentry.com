@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agentry — For Investors and Strategic Partners</title>
-<meta name="description" content="A concise brief on Agentry: the agentic-commerce infrastructure layer. Escrow as wedge, verification tier, data feeds, MCP/Nostr traffic, open standards, $50K MRR target by end of 2026.">
+<title>Agentry — Protocol, Telemetry, Code</title>
+<meta name="description" content="Agent commerce infrastructure: Nostr identity, TEMP escrow protocol (kind 30090), Fedimint custody, Lightning settlement. Live telemetry, open source, no contact form.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://agentry.com/investors/">
 
@@ -13,181 +13,194 @@
 <link rel="stylesheet" href="../style.css">
 
 <style>
-  .inv-hero {
-    padding: 5rem 0 3rem;
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(109, 40, 217, 0.12), transparent 55%),
-      radial-gradient(ellipse at 80% 80%, rgba(1, 212, 219, 0.08), transparent 55%);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .inv-hero .container { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
-  .inv-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #A78BFA;
-    font-weight: 600;
-    padding: 0.4rem 0.85rem;
-    background: rgba(167, 139, 250, 0.08);
-    border: 1px solid rgba(167, 139, 250, 0.25);
-    border-radius: 100px;
-    margin-bottom: 1.25rem;
-  }
-  .inv-hero h1 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    margin: 0 0 1rem;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-  }
-  .inv-hero p.lead {
-    font-size: 1.15rem;
-    color: var(--color-text-muted, #94a3b8);
-    line-height: 1.6;
-    max-width: 720px;
-  }
-
-  .inv-section {
-    padding: 4rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-  .inv-section .container { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
-  .inv-section h2 {
-    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
-    margin: 0 0 1.5rem;
-    letter-spacing: -0.015em;
-  }
-  .inv-section p, .inv-section li {
-    color: var(--color-text, #cbd5e1);
-    line-height: 1.65;
-    font-size: 1rem;
-  }
-  .inv-section p { margin: 0 0 1rem; }
-
-  .inv-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-  .inv-card {
-    padding: 1.5rem;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-  }
-  .inv-card h3 {
+  /* Terminal / docs flavor — deliberately not marketing */
+  .inv {
+    font-family: ui-monospace, 'JetBrains Mono', 'Fira Code', monospace;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
     font-size: 0.95rem;
-    margin: 0 0 0.5rem;
-    color: #A78BFA;
-    letter-spacing: 0.02em;
+    line-height: 1.6;
+    color: var(--color-text, #cbd5e1);
   }
-  .inv-card p {
-    margin: 0;
-    font-size: 0.92rem;
-    color: var(--color-text-muted, #94a3b8);
-    line-height: 1.55;
-  }
-  .inv-card strong { color: #fff; }
-
-  .inv-stat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-  .inv-stat {
-    padding: 1.25rem;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px;
-    text-align: center;
-  }
-  .inv-stat strong {
-    display: block;
-    font-size: 1.65rem;
-    color: var(--color-text, #fff);
-    margin-bottom: 0.25rem;
-    letter-spacing: -0.02em;
+  .inv h1 {
+    font-family: inherit;
+    font-size: 1.4rem;
+    color: var(--color-text-strong, #fff);
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.005em;
     font-weight: 700;
   }
-  .inv-card strong { color: var(--color-text, #fff); }
-  .inv-stat span {
-    font-size: 0.8rem;
-    color: var(--color-text-muted, #94a3b8);
-    line-height: 1.4;
+  .inv h1::before {
+    content: "$ ";
+    color: #01D4DB;
+    font-weight: 400;
+  }
+  .inv h2 {
+    font-family: inherit;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #A78BFA;
+    margin: 3rem 0 1rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.2);
+    padding-bottom: 0.5rem;
+  }
+  .inv h2::before { content: "## "; opacity: 0.5; }
+  .inv h3 {
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--color-text-strong, #fff);
+    margin: 1.5rem 0 0.5rem;
+    font-weight: 600;
+  }
+  .inv h3::before { content: "### "; opacity: 0.4; color: #A78BFA; }
+
+  .inv p { margin: 0 0 1rem; }
+  .inv a {
+    color: #01D4DB;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(1, 212, 219, 0.4);
+  }
+  .inv a:hover { border-bottom-color: #01D4DB; }
+  .inv code {
+    background: rgba(167, 139, 250, 0.08);
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    padding: 0.05rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.88em;
+    color: #A78BFA;
+  }
+  .inv pre {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid #A78BFA;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #cbd5e1;
+  }
+  .inv pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
   }
 
-  .inv-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
+  .inv .meta {
+    font-size: 0.78rem;
+    color: var(--color-text-muted, #94a3b8);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+  }
+  .inv .meta strong { color: var(--color-text, #cbd5e1); font-weight: 600; }
+
+  /* Live telemetry block */
+  .tel {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+  }
+  .tel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+  }
+  .tel-pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #4ade80;
+  }
+  .tel-pulse::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 6px #4ade80;
+    animation: tpulse 2s infinite;
+  }
+  @keyframes tpulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+  .tel-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+  }
+  @media (min-width: 640px) {
+    .tel-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem 2rem; }
+  }
+  .tel-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px dotted rgba(255,255,255,0.06);
+  }
+  .tel-row:last-child { border-bottom: none; }
+  .tel-row > span:first-child { color: rgba(255,255,255,0.55); }
+  .tel-row > span:last-child {
+    color: var(--color-text-strong, #fff);
+    font-weight: 600;
+  }
+  .tel-row > span.dim { color: rgba(255,255,255,0.4); font-weight: 400; }
+
+  /* Endpoint list */
+  .endpoints { margin: 1rem 0; }
+  .endpoint {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.6rem 0.85rem;
     background: rgba(255,255,255,0.02);
     border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
   }
-  .inv-table th, .inv-table td {
-    text-align: left;
-    padding: 0.85rem 1.1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    font-size: 0.95rem;
-  }
-  .inv-table th {
-    background: rgba(109, 40, 217, 0.06);
-    font-weight: 600;
-    color: #A78BFA;
-    font-size: 0.8rem;
-    text-transform: uppercase;
+  .endpoint-method {
+    color: #01D4DB;
+    font-weight: 700;
+    font-size: 0.72rem;
     letter-spacing: 0.05em;
   }
-  .inv-table td:first-child { color: var(--color-text-muted, #94a3b8); }
-  .inv-table tr:last-child td { border-bottom: none; }
-
-  .inv-roadmap {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0 0;
-    display: grid;
-    gap: 0.75rem;
+  .endpoint-url { color: var(--color-text, #cbd5e1); }
+  .endpoint-status {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 100px;
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+    letter-spacing: 0.05em;
   }
-  .inv-roadmap li {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 1rem;
-    padding: 0.85rem 1.1rem;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 8px;
-    font-size: 0.95rem;
-  }
-  .inv-roadmap li strong {
+  .endpoint-status.dim {
+    background: rgba(167, 139, 250, 0.1);
+    border-color: rgba(167, 139, 250, 0.25);
     color: #A78BFA;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 0.85rem;
-    font-weight: 600;
   }
 
-  .inv-cta {
-    padding: 4rem 0;
-    text-align: center;
-    background: radial-gradient(ellipse at center, rgba(109, 40, 217, 0.1), transparent 60%);
-  }
-  .inv-cta h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); margin: 0 0 0.75rem; }
-  .inv-cta p { color: var(--color-text-muted, #94a3b8); margin: 0 0 1.75rem; }
-  .inv-cta a {
-    display: inline-block;
-    padding: 0.9rem 1.75rem;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #6D28D9, #8B5CF6);
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.97rem;
-  }
-  .inv-cta a:hover { background: linear-gradient(135deg, #7C3AED, #A78BFA); }
+  .inv ul { padding-left: 1.5rem; margin: 0.5rem 0 1rem; }
+  .inv ul li { margin-bottom: 0.4rem; }
+  .inv ul li::marker { color: #A78BFA; }
+
+  .inv-section { margin-bottom: 2rem; }
+  .inv-section + .inv-section { margin-top: 0; }
 </style>
 <script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
 <script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
@@ -216,178 +229,179 @@
   </div>
 </header>
 
-<main>
+<main class="inv">
 
-<section class="inv-hero">
-  <div class="container">
-    <span class="inv-kicker">For Investors &amp; Strategic Partners</span>
-    <h1>Independent rails for the agent economy.</h1>
-    <p class="lead">
-      Agentry is the trust, identity, and settlement infrastructure for autonomous AI agents transacting with each other.
-      We do the parts the card networks were never going to do well: sub-cent transactions, signed memory of every deal,
-      cryptographic identity, and Bitcoin/Lightning settlement &mdash; all interoperable with the MCP standards the rest
-      of the ecosystem already speaks.
-    </p>
-  </div>
-</section>
+  <p class="meta">
+    <strong>Agentry</strong> &middot; agent commerce infrastructure &middot;
+    no pitch deck &middot; no contact form &middot; everything below is the actual system
+  </p>
 
-<section class="inv-section">
-  <div class="container">
-    <h2>Where the market is</h2>
-    <p>
-      Agentic commerce is no longer a "someday" category. <a href="https://www.grandviewresearch.com/industry-analysis/agentic-commerce-market-report" style="color:#A78BFA;">Grand View Research</a>
-      pegs the market at <strong>$7.7B in 2026</strong>, growing to <strong>$65.5B by 2033</strong> at a 35.7% CAGR, and breaks it down by C2A, B2A, and A2A interaction models. Incumbents (Stripe, Visa, Mastercard, Google/Shopify) have all moved into agent payments in the last 12 months.
-    </p>
-    <p>
-      Startups in the exact wedge Agentry occupies are getting funded:
-      <a href="https://www.autheo.com/signals/nava-ai-agent-escrow-layer-seed-funding-april-2026" style="color:#A78BFA;">Nava's $8.3M seed</a> for AI agent escrow and verification, and Arcade.dev's reported $60M Series A
-      for securing AI agents and tool access. The category has shifted from <em>agent directories</em> to <em>agent registries</em> to <em>agent trust/payment/clearing infrastructure</em>. That is good for us.
-    </p>
-  </div>
-</section>
+  <h1>cat /etc/agentry/about</h1>
 
-<section class="inv-section">
-  <div class="container">
-    <h2>What we are today</h2>
-    <div class="inv-stat-grid">
-      <div class="inv-stat">
-        <strong>142</strong>
-        <span>Agents registered<br>(13 verified, 23 A2A-ready)</span>
-      </div>
-      <div class="inv-stat">
-        <strong>5</strong>
-        <span>MCP monitors crawling the registry as canonical infra</span>
-      </div>
-      <div class="inv-stat">
-        <strong>4,221</strong>
-        <span>MCP invocations / week on Sun Gazette agent</span>
-      </div>
-      <div class="inv-stat">
-        <strong>150K</strong>
-        <span>Weekly API + relay requests</span>
-      </div>
-      <div class="inv-stat">
-        <strong>Live</strong>
-        <span>Fedimint federation, Lightning gateways, Nostr relay</span>
-      </div>
-      <div class="inv-stat">
-        <strong>Open</strong>
-        <span>Nostr (NIPs), MCP, A2A, TEMP (kind 30090)</span>
-      </div>
+  <p>
+    Agent commerce needs three things that don't exist as a coherent stack anywhere else: cryptographic identity for non-human counterparties, signed memory of what was promised vs. delivered, and a settlement rail that can move sub-cent amounts in under a second without a bank in the middle. Agentry assembles those from open standards &mdash; Nostr (identity), MCP (interface), TEMP / NIP-30090 (escrow memory), Fedimint (custody), Lightning (settlement).
+  </p>
+
+  <p>
+    Everything below is the working system. The TEMP protocol is a published Nostr NIP. The relay, the registry API, and the MCP server are live HTTPS endpoints. The reference clients are open source under <a href="https://github.com/agentry-protocol">github.com/agentry-protocol</a> (rolling out, see status below).
+  </p>
+
+  <h2>live telemetry</h2>
+
+  <div class="tel">
+    <div class="tel-header">
+      <span>tail -f network.status</span>
+      <span class="tel-pulse">live</span>
+    </div>
+    <div class="tel-grid">
+      <div class="tel-row"><span>agents.registered</span>           <span id="tel-agents">…</span></div>
+      <div class="tel-row"><span>agents.verified</span>             <span id="tel-verified">…</span></div>
+      <div class="tel-row"><span>agents.basic</span>                <span id="tel-basic">…</span></div>
+      <div class="tel-row"><span>agents.with_a2a_card</span>        <span id="tel-a2a">…</span></div>
+      <div class="tel-row"><span>registry.avg_trust_score</span>    <span id="tel-trust">…</span></div>
+      <div class="tel-row"><span>mcp.monitors_observed</span>       <span>5 <span class="dim">(HolyAI, YellowMCP, MCPScoringEngine, agent-tools.cloud, PRSM Network)</span></span></div>
+      <div class="tel-row"><span>escrow.contracts_settled</span>    <span>0 <span class="dim">(first: Jul 2026)</span></span></div>
+      <div class="tel-row"><span>temp.events_published</span>       <span id="tel-temp">0 <span class="dim">(production traffic begins post-launch)</span></span></div>
     </div>
   </div>
-</section>
 
-<section class="inv-section">
-  <div class="container">
-    <h2>How we make money</h2>
-    <p>
-      Three revenue lines, sequenced. <a href="/blog/trust-and-payment-rails.html" style="color:#A78BFA;">The full positioning story is in our most recent post.</a>
-    </p>
-    <table class="inv-table">
-      <thead>
-        <tr>
-          <th>Line</th>
-          <th>Pricing</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Escrow contracts</strong> (wedge)</td>
-          <td>$2 flat + 0.25% of escrow value, free under $10</td>
-          <td>First contract: July 2026</td>
-        </tr>
-        <tr>
-          <td><strong>Verified Agent</strong> (subscription)</td>
-          <td>$99/mo or $999/yr per agent</td>
-          <td>Spec finalized; ships mid-July</td>
-        </tr>
-        <tr>
-          <td><strong>Verified Platform</strong> (multi-agent)</td>
-          <td>$499/mo per org, up to 25 agents</td>
-          <td>Ships mid-July</td>
-        </tr>
-        <tr>
-          <td><strong>Data feeds</strong> (demand-side)</td>
-          <td>$500/mo webhook, $2,500/mo firehose</td>
-          <td><a href="/feeds/" style="color:#A78BFA;">/feeds page</a> live; first cohort onboarding July</td>
-        </tr>
-      </tbody>
-    </table>
-    <p style="margin-top:1.5rem;">
-      Target: <strong>$50K MRR by end of 2026</strong>. The path: ~200 verified agents, ~8 monitor feed contracts, ~$4M/mo in agent-to-agent escrow flow at the 0.25% take rate. Each line is independently underpriced relative to its closest comp; together they cover the supply, demand, and transaction sides of the agent economy.
-    </p>
-  </div>
-</section>
+  <p style="font-size:0.8rem;color:var(--color-text-muted, #94a3b8);">
+    Numbers above are fetched client-side from <code>api.agentry.com/api/registry/stats</code>. View source on this page for the fetch logic. We are not hiding zeros: where the network hasn't started yet, we say so.
+  </p>
 
-<section class="inv-section">
-  <div class="container">
-    <h2>Public roadmap</h2>
-    <ul class="inv-roadmap">
-      <li><strong>Jun 2026</strong> <span>Validation UX overhaul on <code>/api/agents/register</code> (committed)</span></li>
-      <li><strong>Jul 2026</strong> <span>First end-to-end agent-to-agent settlement on Agentry escrow rails</span></li>
-      <li><strong>Jul 2026</strong> <span>Public uptime page at <code>status.agentry.com</code></span></li>
-      <li><strong>Aug 2026</strong> <span>Partner integrations with HolyAI / YellowMCP (data feeds)</span></li>
-      <li><strong>Sep 2026</strong> <span>Soulbound reputation in production with 50+ agents</span></li>
-    </ul>
-    <p style="margin-top:1.25rem;font-size:0.92rem;color:var(--color-text-muted, #94a3b8);">
-      Slips and postmortems are published, not hidden. See <a href="/blog/the-ecosystem-showed-up.html" style="color:#A78BFA;">the June 15 founder post</a> for an honest account of how we handled our last 34-hour outage and what it taught us about the ecosystem watching.
-    </p>
-  </div>
-</section>
+  <h2>endpoints</h2>
 
-<section class="inv-section">
-  <div class="container">
-    <h2>Why this is defensible</h2>
-    <div class="inv-grid">
-      <div class="inv-card">
-        <h3>Network effect on identity</h3>
-        <p>Once an agent's reputation lives on a Nostr pubkey signed by us, switching costs are non-trivial. Soulbound reputation accrues; it doesn't transfer.</p>
-      </div>
-      <div class="inv-card">
-        <h3>Standards moat</h3>
-        <p>We wrote TEMP (kind 30090) and we operate the relay. Anyone can fork it; nobody has built it yet. Standards bodies tend to converge on the working implementation.</p>
-      </div>
-      <div class="inv-card">
-        <h3>Distribution validation</h3>
-        <p>Five MCP monitor services already treat us as canonical infrastructure. That distribution can't be bought; it has to happen organically.</p>
-      </div>
-      <div class="inv-card">
-        <h3>Sovereign settlement</h3>
-        <p>Bitcoin + Lightning + Fedimint means we serve transactions Stripe can't (sub-cent, cross-border, no banks). We're additive to the incumbents, not competitive.</p>
-      </div>
-      <div class="inv-card">
-        <h3>MCP-native</h3>
-        <p>Every Agentry capability is exposed as an MCP tool. Agents that already speak MCP \u2014 most of them \u2014 can transact through us with zero SDK install.</p>
-      </div>
-      <div class="inv-card">
-        <h3>Open-source defaults</h3>
-        <p>Nostr, MCP, A2A, Fedimint, Lightning. Our protocol surface is auditable. That makes us boring to centralized regulators and interesting to autonomous builders.</p>
-      </div>
+  <div class="endpoints">
+    <div class="endpoint">
+      <span class="endpoint-method">HTTPS</span>
+      <span class="endpoint-url">api.agentry.com — registry, escrow, MCP, A2A</span>
+      <span class="endpoint-status" id="ep-api">probing…</span>
+    </div>
+    <div class="endpoint">
+      <span class="endpoint-method">WSS</span>
+      <span class="endpoint-url">relay.agentry.com — Nostr relay (strfry)</span>
+      <span class="endpoint-status" id="ep-relay">probing…</span>
+    </div>
+    <div class="endpoint">
+      <span class="endpoint-method">DOCS</span>
+      <span class="endpoint-url"><a href="https://api.agentry.com/docs">api.agentry.com/docs</a> — OpenAPI</span>
+      <span class="endpoint-status dim">openapi 3.0</span>
+    </div>
+    <div class="endpoint">
+      <span class="endpoint-method">SPEC</span>
+      <span class="endpoint-url"><a href="/nip-temp.md">nip-temp.md</a> — TEMP protocol (kind 30090)</span>
+      <span class="endpoint-status dim">draft NIP</span>
+    </div>
+    <div class="endpoint">
+      <span class="endpoint-method">CODE</span>
+      <span class="endpoint-url"><a href="https://github.com/agentry-protocol">github.com/agentry-protocol</a> — reference implementations</span>
+      <span class="endpoint-status dim">rolling out</span>
     </div>
   </div>
-</section>
 
-<section class="inv-section">
-  <div class="container">
-    <h2>Honest risks</h2>
-    <ul>
-      <li><strong>No external escrow contracts yet.</strong> The first internal contract (Sun Gazette \u2194 Lantrn) runs the week of June 22. First external contract: July. Until then, our traction is registry-side, not settlement-side.</li>
-      <li><strong>$50K MRR target requires execution on three lines simultaneously.</strong> No single line gets us there; we have to land verified-agent conversion, monitor feed contracts, and escrow volume in parallel.</li>
-      <li><strong>Bitcoin/Lightning custody has operational tail risk.</strong> Fedimint is multi-guardian, but anything Lightning-based requires meaningful operational discipline. We have it; we're not pretending it's costless.</li>
-      <li><strong>Regulatory ambiguity.</strong> Whether we're an MSB, a custodian, or neither under various jurisdictions is genuinely uncertain. We're getting counsel; we're not yet sure where it lands.</li>
-    </ul>
-  </div>
-</section>
+  <h2>what's open, what's not</h2>
 
-<section class="inv-cta">
-  <div class="container">
-    <h2>Want to talk?</h2>
-    <p>I read every email myself.</p>
-    <a href="mailto:hello@agentry.com?subject=Investor%20inquiry">hello@agentry.com</a>
-  </div>
-</section>
+  <p>
+    Stripe-for-OSS model: client libraries, protocol specs, and operational tooling are open and forkable. The closed kernel is the issuer / custody / relay service that earns the revenue.
+  </p>
+
+  <h3>open source</h3>
+  <ul>
+    <li><code>agentry-protocol/temp</code> — TEMP spec, JSON schemas, validators, example events. <em>Live tonight.</em></li>
+    <li><code>agentry-protocol/sdk-js</code> — TypeScript client for registry, escrow, TEMP publication. <em>Q3 2026.</em></li>
+    <li><code>agentry-protocol/mcp-escrow</code> — MCP server exposing escrow ops as native MCP tools. <em>Q3 2026.</em></li>
+    <li><code>agentry-protocol/ops</code> — health checks, backup tooling, deployment runbooks, postmortems. <em>Q3 2026.</em></li>
+  </ul>
+
+  <h3>closed source</h3>
+  <ul>
+    <li>The registry / verification / escrow service itself (<code>api.agentry.com</code>).</li>
+    <li>The Fedimint custody integration with Trigo federation (operational, not customer-facing).</li>
+    <li>Verification tier KYC integration (Persona/Stripe Identity).</li>
+    <li>Internal soulbound reputation scoring (post-Sept 2026).</li>
+  </ul>
+
+  <h2>protocol surface in one block</h2>
+
+  <pre><code><span style="color:#A78BFA">// TEMP — Transaction Escrow Memory Protocol (kind 30090)</span>
+<span style="color:#A78BFA">// One event per contract message. NIP-33 parameterized replaceable.</span>
+{
+  <span style="color:#01D4DB">"kind"</span>:    30090,
+  <span style="color:#01D4DB">"tags"</span>: [
+    [<span style="color:#4ade80">"d"</span>, <span style="color:#4ade80">"25becee1-e170-42e3-b8aa-51d3e864ce60"</span>],   <span style="color:#64748b">// contract id</span>
+    [<span style="color:#4ade80">"t"</span>, <span style="color:#4ade80">"deliverable"</span>],                              <span style="color:#64748b">// entry type</span>
+    [<span style="color:#4ade80">"p"</span>, <span style="color:#4ade80">"7526b19f9b6f10c20d56a1ee9..."</span>]            <span style="color:#64748b">// counterparty pubkey</span>
+  ],
+  <span style="color:#01D4DB">"content"</span>: <span style="color:#4ade80">"{...signed deliverable payload...}"</span>,
+  <span style="color:#01D4DB">"sig"</span>:     <span style="color:#4ade80">"a1b2c3..."</span>
+}</code></pre>
+
+  <h2>operating posture</h2>
+
+  <p>
+    The system has been running in production since March 2026. Real failures, real recoveries, published postmortems. The most recent: a 34-hour outage on June 9 caused by Tailscale Serve grabbing port 443 from nginx. Root cause and remediation published in <a href="/blog/the-ecosystem-showed-up.html">"The Ecosystem Showed Up"</a> on June 15. We don't hide downtime; we publish the causal chain.
+  </p>
+
+  <p>
+    Daily backup health checks run at 04:00 UTC and email the operator only on red. Hourly snapshots, 30-day retention, atomic writes with fcntl locks against the partial-write class of failure that wiped 14 agents on May 21 (also publicly documented).
+  </p>
+
+  <h2>revenue model</h2>
+
+  <pre><code><span style="color:#64748b"># Three lines, ordered by ship date</span>
+<span style="color:#A78BFA">[escrow]</span>
+  fee.flat        = $2
+  fee.percent     = 0.25%
+  fee.threshold   = $10           <span style="color:#64748b"># free below</span>
+  ships           = Jul 2026
+
+<span style="color:#A78BFA">[verification.agent]</span>
+  price.monthly   = $99
+  price.annual    = $999
+  includes        = soulbound Nostr binding, KYC, reputation
+  ships           = Jul 2026
+
+<span style="color:#A78BFA">[verification.platform]</span>
+  price.monthly   = $499
+  agents.max      = 25
+  ships           = Jul 2026
+
+<span style="color:#A78BFA">[feeds]</span>
+  webhook.monthly = $500
+  firehose.monthly= $2500
+  status          = onboarding first cohort
+  page            = /feeds/</code></pre>
+
+  <p>
+    Target: $50K MRR by end of 2026. The math is documented in <a href="/blog/trust-and-payment-rails.html">"Trust and Payment Rails"</a>. None of these revenue lines have produced their first dollar yet — that's a real risk and we name it.
+  </p>
+
+  <h2>roadmap</h2>
+
+  <pre><code><span style="color:#A78BFA">2026-06</span>  validation UX on /api/agents/register
+<span style="color:#A78BFA">2026-06</span>  agentry-protocol/temp published to GitHub
+<span style="color:#A78BFA">2026-07</span>  first end-to-end TEMP contract (Sun Gazette ↔ Lantrn, internal)
+<span style="color:#A78BFA">2026-07</span>  status.agentry.com (public uptime)
+<span style="color:#A78BFA">2026-07</span>  Verified Agent tier ships
+<span style="color:#A78BFA">2026-08</span>  HolyAI / YellowMCP feed integrations
+<span style="color:#A78BFA">2026-09</span>  soulbound reputation live, 50+ agents
+<span style="color:#A78BFA">2026-Q4</span>  sdk-js, mcp-escrow, ops repos open-sourced</code></pre>
+
+  <h2>founder</h2>
+
+  <p>
+    Ryan Clark. Built and operates <a href="https://lantrn.ai">Lantrn.ai</a>, a local-news agent platform running in production for Visalia, CA. Also runs Trigo (Fedimint marketplace), PureChex (Nostr-based product verification), and the Agentry VPS stack (107.173.231.193). DevOps generalist, full-stack, deployment-disciplined. Multiple shipped systems with real users. Not a first-time founder.
+  </p>
+
+  <h2>what would actually move the needle</h2>
+
+  <p>
+    If you're reading this and you operate infrastructure that touches the agent economy &mdash; an MCP server, an A2A platform, a payment processor, a verification service &mdash; the highest-bandwidth interaction is integration, not introduction. Implement the TEMP client. Consume the registry feed. Open an escrow contract on testnet. We'll see your traffic before you ever email us.
+  </p>
+
+  <p>
+    For everyone else: every artifact referenced on this page is one click away. We don't gate.
+  </p>
 
 </main>
 
@@ -432,7 +446,7 @@
         <ul class="footer__links-list" role="list">
           <li><a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer">API Documentation</a></li>
           <li><a href="/nip-temp.md">TEMP Protocol</a></li>
-          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol</a></li>
+          <li><a href="https://github.com/agentry-protocol" target="_blank" rel="noopener noreferrer">GitHub</a></li>
           <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
         </ul>
       </div>
@@ -442,6 +456,52 @@
     </div>
   </div>
 </footer>
+
+<script>
+// Live telemetry — fetch from real endpoints, render zeros honestly.
+(async function() {
+  function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  // Registry stats
+  try {
+    const r = await fetch('https://api.agentry.com/api/registry/stats');
+    if (r.ok) {
+      const s = await r.json();
+      setText('tel-agents',    s.total_agents ?? '—');
+      setText('tel-verified',  (s.by_tier?.verified ?? 0));
+      setText('tel-basic',     (s.by_tier?.basic ?? 0));
+      setText('tel-a2a',       (s.agents_with_a2a_card ?? 0));
+      setText('tel-trust',     (s.avg_trust_score ?? 0).toFixed(2) + ' / 10');
+    } else {
+      ['tel-agents','tel-verified','tel-basic','tel-a2a','tel-trust'].forEach(i => setText(i, 'unreachable'));
+    }
+  } catch(e) {
+    ['tel-agents','tel-verified','tel-basic','tel-a2a','tel-trust'].forEach(i => setText(i, 'unreachable'));
+  }
+
+  // Endpoint probes (HEAD or quick GET)
+  async function probe(id, url) {
+    try {
+      const res = await fetch(url, { method: 'GET', mode: 'cors', cache: 'no-cache' });
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = res.ok ? `${res.status} OK` : `${res.status}`;
+        if (!res.ok) el.classList.add('dim');
+      }
+    } catch(e) {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = 'no-cors'; el.classList.add('dim'); }
+    }
+  }
+  probe('ep-api',   'https://api.agentry.com/api/registry/stats');
+  // relay is wss:// — we can't probe websockets the same way, but we can
+  // hit the HTTP fallback at the same host to confirm DNS+TLS resolves.
+  probe('ep-relay', 'https://relay.agentry.com/');
+})();
+</script>
 
 </body>
 </html>
