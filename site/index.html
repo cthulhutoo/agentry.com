@@ -1196,41 +1196,6 @@ function copyQuickstart() {
   </div>
 </section>
 
-<!-- ==================== HOW IT WORKS ==================== -->
-<section class="how-it-works section" id="how-it-works">
-  <div class="container">
-    <h2 class="how-it-works__title reveal">How It Works</h2>
-    <div class="how-it-works__steps">
-      <div class="step reveal">
-        <div class="step__number">1</div>
-        <h3 class="step__title">Browse</h3>
-        <p class="step__desc">Search our curated directory of verified AI agents across every business function and category.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step__number">2</div>
-        <h3 class="step__title">Match</h3>
-        <p class="step__desc">Tell us what you need, and we&rsquo;ll recommend the right agents for your business requirements and budget.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step__number">3</div>
-        <h3 class="step__title">Deploy</h3>
-        <p class="step__desc">Get set up with your matched agent and start seeing results. We handle the introduction and onboarding.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== BROKER CTA ==================== -->
-<section class="broker-cta section" id="get-matched">
-  <div class="container">
-    <div class="reveal">
-      <h2 class="broker-cta__title">Not sure which agent is right for you?</h2>
-      <p class="broker-cta__subtitle">Our agent matching service pairs you with the perfect AI agent for your business. $500 setup, pay only when you&rsquo;re satisfied.</p>
-      <a href="#list-agent" class="btn btn--primary btn--lg">Get Matched</a>
-    </div>
-  </div>
-</section>
-
 <!-- ==================== LIST YOUR AGENT ==================== -->
 <section class="intake-form-section section" id="list-agent">
   <div class="container">
@@ -1345,94 +1310,6 @@ function copyQuickstart() {
         <div class="form-success__icon">&#x2705;</div>
         <h3 class="form-success__title">Agent Submitted!</h3>
         <p class="form-success__text">Your agent is being reviewed. We&rsquo;ll scan for your A2A Agent Card and assign a trust score. You&rsquo;ll get an email within 24 hours with your listing status and tips to improve your score.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== GET MATCHED (INTAKE FORM) ==================== -->
-<section class="intake-form-section section" id="intake-form">
-  <div class="container">
-    <div class="intake-form__wrapper">
-      <h2 class="intake-form__title reveal">Get Matched with an Agent</h2>
-      <p class="intake-form__subtitle reveal">Tell us about your business and we&rsquo;ll recommend the best AI agent for your needs.</p>
-
-      <form class="intake-form reveal" id="broker-form" name="broker-intake" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
-        <!-- Netlify hidden fields -->
-        <input type="hidden" name="form-name" value="broker-intake">
-        <!-- Honeypot fields — hidden from humans, bots fill them -->
-        <p class="hidden" style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
-        <div style="position:absolute;left:-9999px;" aria-hidden="true"><input type="text" name="website_url_b" tabindex="-1" autocomplete="off"></div>
-        <!-- Timestamp for time-based validation -->
-        <input type="hidden" name="_form_loaded" id="form-loaded-ts" value="">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="business-name">Business Name</label>
-            <input type="text" id="business-name" name="business_name" required placeholder="Acme Corp">
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="you@company.com">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="business-type">Business Type</label>
-            <select id="business-type" name="business_type" required>
-              <option value="">Select...</option>
-              <option value="saas">SaaS / Software</option>
-              <option value="ecommerce">E-Commerce / Retail</option>
-              <option value="agency">Agency / Consulting</option>
-              <option value="fintech">Fintech / Financial Services</option>
-              <option value="healthcare">Healthcare</option>
-              <option value="real-estate">Real Estate</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="education">Education</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="budget">Budget Range</label>
-            <select id="budget" name="budget" required>
-              <option value="">Select...</option>
-              <option value="under-500">Under $500/mo</option>
-              <option value="500-2k">$500 &ndash; $2K/mo</option>
-              <option value="2k-5k">$2K &ndash; $5K/mo</option>
-              <option value="5k+">$5K+/mo</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="needs">What do you need an AI agent to do?</label>
-          <textarea id="needs" name="needs" required placeholder="Describe the tasks you want to automate or the problems you want to solve..."></textarea>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="tools">Current tools you use</label>
-            <input type="text" id="tools" name="tools" placeholder="Salesforce, HubSpot, Slack, etc.">
-          </div>
-          <div class="form-group">
-            <label for="urgency">How urgent is this?</label>
-            <select id="urgency" name="urgency" required>
-              <option value="">Select...</option>
-              <option value="exploring">Exploring</option>
-              <option value="30-days">Within 30 days</option>
-              <option value="asap">ASAP</option>
-            </select>
-          </div>
-        </div>
-
-        <div data-netlify-recaptcha="true" style="margin-bottom:var(--space-4);"></div>
-        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;">Submit &amp; Get Matched</button>
-      </form>
-
-      <div class="form-success" id="form-success">
-        <div class="form-success__icon">&#x2705;</div>
-        <h3 class="form-success__title">Request Submitted!</h3>
-        <p class="form-success__text">We&rsquo;ll review your requirements and match you with the best agent within 24 hours. Check your email for next steps.</p>
       </div>
     </div>
   </div>
@@ -1713,8 +1590,9 @@ function copyQuickstart() {
       <div>
         <h4 class="footer__links-title">Platform</h4>
         <ul class="footer__links-list" role="list">
-          <li><a href="#directory">Directory</a></li>
-          <li><a href="#get-matched">Get Matched</a></li>
+          <li><a href="/escrow/">Escrow</a></li>
+          <li><a href="/feeds/">Feeds</a></li>
+          <li><a href="/directory/">Registry</a></li>
           <li><a href="/enterprise/">Enterprise</a></li>
           <li><a href="/pricing/">Pricing</a></li>
           <li><a href="#list-agent">List Your Agent</a></li>
