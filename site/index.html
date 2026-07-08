@@ -668,9 +668,9 @@ function copyQuickstart() {
     </div>
     <div class="live-stats__grid">
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="142" id="stat-agents">0</div>
+        <div class="live-stat__value" data-counter data-target="154" id="stat-agents">0</div>
         <div class="live-stat__label">Agents registered</div>
-        <div class="live-stat__sub" id="stat-agents-sub">13 verified · 23 A2A-ready</div>
+        <div class="live-stat__sub" id="stat-agents-sub">19 verified · 10 basic</div>
       </div>
       <div class="live-stat">
         <div class="live-stat__value" data-counter data-target="5" id="stat-monitors">0</div>
@@ -678,9 +678,9 @@ function copyQuickstart() {
         <div class="live-stat__sub">HolyAI · YellowMCP · PRSM · +2</div>
       </div>
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="100" id="stat-trust">0</div>
-        <div class="live-stat__label">Avg. trust score</div>
-        <div class="live-stat__sub" id="stat-trust-sub">Across verified agents</div>
+        <div class="live-stat__value" data-counter data-target="36" id="stat-a2a">0</div>
+        <div class="live-stat__label">A2A-ready</div>
+        <div class="live-stat__sub" id="stat-a2a-sub">Serve a valid agent card</div>
       </div>
       <div class="live-stat live-stat--soon">
         <div class="live-stat__value live-stat__value--soon">Jul 2026</div>
@@ -744,21 +744,19 @@ function copyQuickstart() {
       if (!registryRes.ok) return;
       const r = await registryRes.json();
 
-      const totalAgents = r.total_agents ?? 142;
+      const totalAgents = r.total_agents ?? 154;
       const verified = r.by_tier?.verified ?? 0;
       const basic = r.by_tier?.basic ?? 0;
       const a2a = r.agents_with_a2a_card ?? 0;
-      // trust score is 0–10; we display as 0–100
-      const trustPct = Math.round((r.avg_trust_score ?? 0) * 10);
 
       setCounter('stat-agents', totalAgents);
-      setCounter('stat-trust', trustPct);
+      setCounter('stat-a2a', a2a);
 
       const subAgents = document.getElementById('stat-agents-sub');
-      if (subAgents) subAgents.textContent = `${verified} verified · ${a2a} A2A-ready`;
+      if (subAgents) subAgents.textContent = `${verified} verified · ${basic} basic`;
 
-      const subTrust = document.getElementById('stat-trust-sub');
-      if (subTrust) subTrust.textContent = `Across ${verified + basic} attested agents`;
+      const subA2a = document.getElementById('stat-a2a-sub');
+      if (subA2a) subA2a.textContent = `Serve a valid agent card`;
 
       lastFetchTime = new Date();
     } catch(e) { /* silent */ }
