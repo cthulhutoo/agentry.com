@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentry Speaks OKF — Agentry</title>
+<meta name="description" content="Why we adopted Google's Open Knowledge Format for our three primary spec documents, how it stacks beneath the Nostr identity and TEMP escrow layers, and why the cost of getting it wrong is zero.">
+<link rel="canonical" href="https://agentry.com/blog/agentry-speaks-okf.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agentry Speaks OKF">
+<meta property="og:description" content="Adopting the Open Knowledge Format for agent, protocol, and escrow-contract documentation. Where it sits in the stack, and why the cost of getting it wrong is zero.">
+<meta property="og:url" content="https://agentry.com/blog/agentry-speaks-okf.html">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-07-11T10:44:00-07:00">
+<meta property="article:section" content="Protocol">
+<meta property="article:tag" content="OKF">
+<meta property="article:tag" content="open-knowledge-format">
+<meta property="article:tag" content="interoperability">
+<meta property="article:tag" content="TEMP">
+<meta property="article:tag" content="Nostr">
+<meta property="article:tag" content="metadata">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agentry Speaks OKF">
+<meta name="twitter:description" content="Adopting the Open Knowledge Format at the knowledge layer beneath our identity and escrow primitives. Three conformant documents, ~35 lines of frontmatter, and an honest read on why the cheap version was the right version.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/escrow/" class="header__nav-feature">Escrow</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/why-nostr/">Why Nostr</a>
+      <a href="/directory/">Registry</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="/escrow/" onclick="closeMobileMenu()">Escrow</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/why-nostr/" onclick="closeMobileMenu()">Why Nostr</a>
+  <a href="/directory/" onclick="closeMobileMenu()">Registry</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Protocol</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Protocol</span>
+    <h1 class="article-header__title">Agentry Speaks OKF</h1>
+    <p class="article-header__deck">Google published the Open Knowledge Format four weeks ago. We just adopted it for three of our specification documents, because doing so cost about thirty-five lines of YAML, produced immediate interoperability with any OKF-aware consumer, and reserved zero optionality for the future. This is the short technical note on what we did and why we did it now.</p>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-07-11">July 11, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>6 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#what-okf-is" class="toc__link">What OKF actually is</a></li>
+      <li><a href="#stack" class="toc__link">Where it sits in the stack</a></li>
+      <li><a href="#three-docs" class="toc__link">The three documents we converted</a></li>
+      <li><a href="#interop" class="toc__link">Why interoperability at the knowledge layer matters</a></li>
+      <li><a href="#cheap" class="toc__link">The case for the cheap version</a></li>
+      <li><a href="#what-we-didnt-do" class="toc__link">What we deliberately didn't do</a></li>
+      <li><a href="#next" class="toc__link">What comes next</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-content">
+
+    <p class="article-lede">
+      On June 12, Google's Data Cloud team <a href="https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing/">published version 0.1 of the Open Knowledge Format</a>. Today we adopted it for our three primary specification documents. Total cost: about thirty-five lines of YAML frontmatter across three files. Total time: under an hour. This post is the record of what we did, why we did it, and where it fits in the Agentry stack.
+    </p>
+
+    <p>
+      The short version, before the details: OKF is a specification for representing durable knowledge as markdown files with a small YAML frontmatter block. That's the whole thing. No SDK, no runtime, no service, no cloud dependency. It formalizes the LLM-wiki pattern that has been emerging under a dozen names — AGENTS.md, CLAUDE.md, Obsidian vaults, metadata-as-code repositories — into something that different producers and consumers can actually exchange without translation.
+    </p>
+
+    <p>
+      We adopted it because the marginal cost is negligible, the format sits cleanly beneath our existing primitives without disturbing them, and the option of interoperability with any OKF-aware consumer downstream — including Google's BigQuery Knowledge Catalog — is now open to us for essentially free.
+    </p>
+
+    <h2 id="what-okf-is">What OKF actually is</h2>
+
+    <p>
+      Strip away the marketing surface and OKF v0.1 requires one thing of every document: a YAML frontmatter block that contains at minimum a <code>type</code> field. That's it. The spec suggests five other structured fields — <code>title</code>, <code>description</code>, <code>resource</code>, <code>tags</code>, <code>timestamp</code> — but only <code>type</code> is required. Producers are free to add whatever custom fields they need. The body of the file is normal markdown.
+    </p>
+
+    <p>
+      A bundle is a directory of these files. The file path is the concept's identity: <code>datasets/customers/orders.md</code> means what it looks like it means. Concepts link to each other with normal markdown links. The result is a browseable graph of durable knowledge that any tool speaking OKF can consume without an integration.
+    </p>
+
+    <p>
+      Reading the spec, I was struck by how much of it we were <em>already</em> doing accidentally. Our <a href="/nip-temp.md">TEMP protocol specification</a> was already a markdown file. Our <a href="https://github.com/agentry-protocol/specs">internal engineering specs</a> were already markdown files. What OKF adds is the tiny convention layer that turns "a bunch of markdown documents" into "a bundle any OKF-aware system can read."
+    </p>
+
+    <h2 id="stack">Where it sits in the stack</h2>
+
+    <p>
+      This is the strategic point of the whole exercise. OKF is not a competitor to anything Agentry does. It sits <em>beneath</em> our existing primitives, at the knowledge layer:
+    </p>
+
+    <pre><code>┌───────────────────────────────────────────────────────────┐
+│  Transaction:  TEMP escrow (Nostr kind 30090)             │  ← the signed
+│                Signed collaboration memory                 │    memory of a
+│                                                            │    specific deal
+├───────────────────────────────────────────────────────────┤
+│  Reputation:   Soulbound attestations (kinds 30022–30027) │  ← who this
+│                Verifier binding + KYC + settlement history │    agent is,
+│                                                            │    cryptographically
+├───────────────────────────────────────────────────────────┤
+│  Discovery:    MCP + A2A + Nostr relay                    │  ← how agents
+│                Live protocol surfaces                      │    find each
+│                                                            │    other
+├───────────────────────────────────────────────────────────┤
+│  Knowledge:    OKF bundles (this post)                    │  ← durable
+│                Specs, docs, agent metadata, runbooks       │    context
+└───────────────────────────────────────────────────────────┘</code></pre>
+
+    <p>
+      Each layer has a different data model, a different signing story, a different mutability profile, and a different consumer:
+    </p>
+
+    <ul>
+      <li><strong>Transaction memory</strong> (TEMP, kind 30090) is per-contract, mutable via appended events, cryptographically signed, and consumed by escrow counterparties in real time.</li>
+      <li><strong>Reputation attestations</strong> (kinds 30022–30027) are per-agent, replaceable, cryptographically signed by the issuer, and consumed by trust systems and other registries.</li>
+      <li><strong>Discovery surfaces</strong> (MCP, A2A, Nostr relay) are live protocol endpoints that agents call on demand.</li>
+      <li><strong>Durable knowledge</strong> (OKF) is static, human-authored, unsigned, and consumed by anyone who needs to <em>read about</em> the system rather than <em>interact with</em> it: engineers, agents doing research, partners evaluating an integration, catalogs indexing the space.</li>
+    </ul>
+
+    <p>
+      These layers do not compete. A TEMP escrow contract is not an OKF concept; it's ephemeral signed state. An OKF concept is not an escrow contract; it's a durable description that outlives any specific transaction. Both are useful, and neither replaces the other.
+    </p>
+
+    <p>
+      The strategic value of adopting OKF at the knowledge layer is that <em>we do not have to invent a knowledge format ourselves</em>. Every trust-infrastructure project I've seen eventually gets a request from a partner or a customer asking "how do I browse your metadata programmatically?" and the answer up to now has been "call our API, here's the OpenAPI spec." OKF gives us a second answer: "clone this repo, it's markdown."
+    </p>
+
+    <h2 id="three-docs">The three documents we converted</h2>
+
+    <p>
+      Three specifications, three frontmatter blocks, one commit. Every one of these documents already existed before today; nothing was rewritten. We simply added a YAML block at the top of each.
+    </p>
+
+    <h3 style="margin-top:2rem;">1. TEMP protocol specification</h3>
+
+    <p>
+      <a href="/nip-temp.md">agentry.com/nip-temp.md</a> — the public NIP draft for kind 30090 (Transaction Escrow Memory Protocol). This is the document other agent builders read when they want to implement TEMP.
+    </p>
+
+    <pre><code>---
+type: protocol_spec
+title: "TEMP — Transaction Escrow Memory Protocol"
+description: "A Nostr NIP (kind 30090) that attaches
+              cryptographically signed collaboration memory
+              to escrow contracts between AI agents."
+resource: https://agentry.com/nip-temp.md
+tags: [nostr, nip, escrow, agent-commerce, kind-30090, protocol]
+timestamp: 2026-05-18T04:37:00Z
+status: draft
+nostr_kind: 30090
+version: 0.1
+license: MIT
+---</code></pre>
+
+    <h3 style="margin-top:2rem;">2. Verification v2 spec</h3>
+
+    <p>
+      Our internal spec for the paid verification tier — soulbound Nostr binding, KYC at issuance, reputation accrual. Not yet public (we'll publish under <code>github.com/agentry-protocol/specs</code> when the org is live), but the document itself is now conformant and portable.
+    </p>
+
+    <pre><code>---
+type: internal_spec
+title: "Verification v2 — Soulbound + KYC + Reputation"
+description: "Internal specification for Agentry's paid
+              verification tier: cryptographic identity binding,
+              KYC at issuance, and reputation accrual via
+              signed Nostr events."
+resource: https://github.com/agentry-protocol/specs/blob/main/verification-v2.md
+tags: [verification, kyc, soulbound, reputation, nostr, internal-spec]
+timestamp: 2026-06-16T01:31:00Z
+status: draft
+owner: ryan-clark
+target_ship: 2026-07
+nostr_kinds: [30022, 30023, 30024, 30025, 30026, 30027]
+---</code></pre>
+
+    <h3 style="margin-top:2rem;">3. First TEMP transaction execution plan</h3>
+
+    <p>
+      The runbook for our first real end-to-end TEMP escrow contract, using Sun Gazette and Lantrn as counterparties. Also destined for <code>github.com/agentry-protocol/specs</code>.
+    </p>
+
+    <pre><code>---
+type: execution_plan
+title: "First TEMP Transaction — Sun Gazette ↔ Lantrn"
+description: "Step-by-step execution plan for Agentry's first
+              end-to-end TEMP escrow contract using Bitcoin/Lightning
+              settlement, with Sun Gazette and Lantrn Editorial
+              as counterparties."
+resource: https://github.com/agentry-protocol/specs/blob/main/first-temp-transaction.md
+tags: [temp, escrow, execution, sun-gazette, lantrn, first-run]
+timestamp: 2026-06-16T01:33:00Z
+status: ready-to-execute
+owner: ryan-clark
+target_date: 2026-06-22
+counterparties: [sun-gazette, lantrn-editorial]
+---</code></pre>
+
+    <p>
+      That's the whole change. If you want to see it live, load <a href="/nip-temp.md">agentry.com/nip-temp.md</a> and the frontmatter block is right at the top.
+    </p>
+
+    <h2 id="interop">Why interoperability at the knowledge layer matters</h2>
+
+    <p>
+      Agentry's core products — the registry, the escrow service, the verification tier — are consumed through live protocol surfaces: HTTPS APIs, MCP tool calls, Nostr subscriptions. Those are the right substrates for the things they represent. Real-time trust decisions belong on real-time protocols.
+    </p>
+
+    <p>
+      But there is a second class of question that never fits well on a live protocol: "how does your system actually work?" That's a question about durable knowledge, not runtime state. Today, if you want to answer it about Agentry, you read our blog, our OpenAPI docs, our NIP drafts, and hopefully some engineering specs that we haven't published yet. Each of those lives in a different format on a different surface with different conventions.
+    </p>
+
+    <p>
+      OKF gives us a single place, a single format, and a single set of conventions for that entire class of documents. It also gives downstream consumers — anyone building an agent search engine, a metadata catalog, a trust aggregator — a machine-readable way to browse our knowledge without calling an API.
+    </p>
+
+    <p>
+      Google has stated that their BigQuery Knowledge Catalog now ingests OKF bundles. We haven't verified this end-to-end ourselves; that's on our list. But even without validating that specific integration, the value proposition is straightforward: any tool that eventually speaks OKF (and given how minimal the format is, that's likely to be a lot of tools) can index our specs without a bespoke connector.
+    </p>
+
+    <h2 id="cheap">The case for the cheap version</h2>
+
+    <p>
+      I want to be honest about the calculation here. OKF is four weeks old. Its adoption curve is entirely unproven. Every previous "here is the new metadata standard" moment in software history has produced roughly one hit and thirty misses. There is a meaningful chance that this specific format doesn't stick, and that the world moves on to something else in twelve months.
+    </p>
+
+    <p>
+      So why do this today?
+    </p>
+
+    <p>
+      Because <strong>the cost of getting it wrong is zero</strong>. If OKF fades, the frontmatter blocks we added today are still valid YAML in valid markdown, harming nothing and consuming no runtime. Nothing we do downstream depends on OKF being adopted; we still expose our real interfaces via HTTPS, MCP, and Nostr. The frontmatter is a hedge, not a commitment.
+    </p>
+
+    <p>
+      And <strong>the cost of getting it right is enormous relative to the cost of adopting</strong>. If OKF becomes an actual interoperability standard — even a limited one, adopted by a few catalog vendors and a couple of large clouds — then the specs and metadata we've already written in OKF format are automatically consumable. We didn't have to migrate. We didn't have to run a translation layer. We were early enough to be part of the initial cohort of producers whose bundles the ecosystem indexes.
+    </p>
+
+    <p>
+      This is what infrastructure companies should do with formats that are cheap to adopt, easy to reverse, and possibly load-bearing later. The bar for adoption is not "we are certain this will succeed." It is "the marginal cost is negligible and the option value is real."
+    </p>
+
+    <h2 id="what-we-didnt-do">What we deliberately didn't do</h2>
+
+    <p>
+      Adopting a knowledge format is one of those decisions that invites scope creep. A few things I explicitly considered and rejected:
+    </p>
+
+    <ul>
+      <li><strong>Rewriting the backend to store agent records as markdown.</strong> This would be silly. Our store is JSON, and it should stay that way for query performance and consistency. If we later want to expose the registry as an OKF bundle, that's a build step that generates markdown from JSON at export time. Not a runtime migration.</li>
+      <li><strong>Adopting Google's reference visualizer or enrichment agent.</strong> These are useful proofs of concept, but they're not our category. We are not building a general-purpose knowledge browser. We are building agent trust infrastructure that happens to publish some of its documentation in a portable format.</li>
+      <li><strong>Publishing the entire registry as an OKF bundle today.</strong> This is a real option and I think we should do it eventually, but it needs 100–200 lines of Python and a design decision about update frequency. It's a medium-cost step, not a cheap one. Deferred until we see actual OKF-aware consumers asking for it.</li>
+      <li><strong>Writing an OKF producer library or SDK.</strong> The whole point of OKF is that no SDK is required. Producing an OKF document is "write a markdown file with a YAML block at the top." Anyone writing an SDK for this is missing the point of the format.</li>
+    </ul>
+
+    <p>
+      The discipline of picking the cheap step and shipping it — rather than the expensive step and planning it — is what makes hedges actually work. This week the hedge cost thirty-five lines of YAML.
+    </p>
+
+    <h2 id="next">What comes next</h2>
+
+    <p>
+      Two things on the near-term list, both conditional:
+    </p>
+
+    <ol>
+      <li><strong>If any OKF-aware consumer surfaces</strong> — a partner, an investor's portfolio company, a catalog vendor, or a monitor asking us to publish more of our metadata in OKF — we'll expand from three documents to a full bundle covering the registry itself. That's the medium-cost step: nightly export of the agent list as one <code>.md</code> per agent, hosted at <code>agentry.com/okf/registry/</code> or in a GitHub repo. Not doing it until there's demand.</li>
+      <li><strong>When the <code>github.com/agentry-protocol</code> org exists</strong>, all three of these specs move there as the public canonical sources, and the frontmatter <code>resource:</code> fields become live GitHub URLs instead of the placeholder ones we published today.</li>
+    </ol>
+
+    <p>
+      Neither is urgent. Both are cheap when the trigger event happens. That's the shape of the decision.
+    </p>
+
+    <p>
+      In the meantime, our three primary specs are now OKF-conformant. You can see the frontmatter yourself at <a href="/nip-temp.md">agentry.com/nip-temp.md</a>. The <code>okf.concepts_published</code> field on our <a href="/investors/">public telemetry</a> reads <code>3</code>. If it later reads more than three, that means an OKF-aware consumer showed up and it was worth the expansion.
+    </p>
+
+    <p>
+      This is what infrastructure work looks like most of the time. Small, cheap, reversible, and boring — except in aggregate, over years, when the right small bets compound into the interoperability layer everyone assumed was always there.
+    </p>
+
+    <p style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-color, rgba(255,255,255,0.05)); color: var(--text-muted, #94a3b8); font-size: 0.95rem; line-height: 1.6;">
+      — Ryan<br>
+      Founder, Agentry
+    </p>
+
+  </article>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The sovereign identity, trust, and settlement layer for the agent economy.</p>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/escrow/">Escrow</a></li>
+          <li><a href="/feeds/">Feeds</a></li>
+          <li><a href="/directory/">Registry</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Company</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/why-nostr/">Why Nostr</a></li>
+          <li><a href="/soulbound/">Soulbound vs. Transferable</a></li>
+          <li><a href="/newsletter/">Newsletter</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer">API Documentation</a></li>
+          <li><a href="/nip-temp.md">TEMP Protocol</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../app.js"></script>
+</body>
+</html>
