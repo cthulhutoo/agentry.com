@@ -1,3 +1,15 @@
+---
+type: internal_spec
+title: "Verification v2 — Soulbound + KYC + Reputation"
+description: "Internal specification for Agentry's paid verification tier: cryptographic identity binding, KYC at issuance, and reputation accrual via signed Nostr events."
+resource: https://github.com/agentry-protocol/specs/blob/main/verification-v2.md
+tags: [verification, kyc, soulbound, reputation, nostr, internal-spec]
+timestamp: 2026-06-16T01:31:00Z
+status: draft
+owner: ryan-clark
+target_ship: 2026-07
+nostr_kinds: [30022, 30023, 30024, 30025, 30026, 30027]
+---
 # Verification v2 — Spec
 
 **Status:** draft

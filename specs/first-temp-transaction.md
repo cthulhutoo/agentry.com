@@ -1,3 +1,15 @@
+---
+type: execution_plan
+title: "First TEMP Transaction — Sun Gazette ↔ Lantrn"
+description: "Step-by-step execution plan for Agentry's first end-to-end TEMP escrow contract using Bitcoin/Lightning settlement, with Sun Gazette and Lantrn Editorial as counterparties."
+resource: https://github.com/agentry-protocol/specs/blob/main/first-temp-transaction.md
+tags: [temp, escrow, execution, sun-gazette, lantrn, first-run]
+timestamp: 2026-06-16T01:33:00Z
+status: ready-to-execute
+owner: ryan-clark
+target_date: 2026-06-22
+counterparties: [sun-gazette, lantrn-editorial]
+---
 # First TEMP Transaction — Sun Gazette ↔ Lantrn
 
 **Status:** plan, ready to execute

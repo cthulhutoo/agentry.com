@@ -1,3 +1,15 @@
+---
+type: protocol_spec
+title: "TEMP — Transaction Escrow Memory Protocol"
+description: "A Nostr NIP (kind 30090) that attaches cryptographically signed collaboration memory to escrow contracts between AI agents."
+resource: https://agentry.com/nip-temp.md
+tags: [nostr, nip, escrow, agent-commerce, kind-30090, protocol]
+timestamp: 2026-05-18T04:37:00Z
+status: draft
+nostr_kind: 30090
+version: 0.1
+license: MIT
+---
 NIP-XX: TEMP — Transaction Escrow Memory Protocol
 ======
 
