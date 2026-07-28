@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Observability Layer Showed Up — Agentry</title>
+<meta name="description" content="Eight distinct third-party services now monitor our infrastructure. 55% of our MCP traffic is monitors doing liveness checks. What that means for the agent economy — and for anyone else in the shipping-agent-infrastructure business.">
+<link rel="canonical" href="https://agentry.com/blog/the-observability-layer-showed-up.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Observability Layer Showed Up">
+<meta property="og:description" content="Eight distinct third-party services now monitor Agentry infrastructure. Over half our MCP traffic is monitors doing liveness checks. That is the strongest ecosystem signal we've seen.">
+<meta property="og:url" content="https://agentry.com/blog/the-observability-layer-showed-up.html">
+<meta property="og:site_name" content="Agentry">
+<meta property="article:published_time" content="2026-07-28T09:00:00-07:00">
+<meta property="article:section" content="Founder Update">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="observability">
+<meta property="article:tag" content="ecosystem">
+<meta property="article:tag" content="monitors">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Observability Layer Showed Up">
+<meta name="twitter:description" content="Eight distinct third-party services now monitor us. Over half our MCP traffic is monitor traffic. That's the strongest ecosystem signal we've seen.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1E22'/><path d='M18 6L10 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M18 6L26 26' stroke='%2301D4DB' stroke-width='2.5' stroke-linecap='round' opacity='.2'/><path d='M15 6L7 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><path d='M15 6L23 26' stroke='%2301696F' stroke-width='3' stroke-linecap='round'/><line x1='10' y1='19' x2='20' y2='19' stroke='%2301696F' stroke-width='2.5' stroke-linecap='round'/><circle cx='15' cy='6' r='2' fill='%2301D4DB'/><circle cx='18' cy='6' r='1.5' fill='%2301D4DB' opacity='.4'/></svg>">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="./blog.css">
+
+<script async src="https://plausible.stateless.id/js/pa-iq2mxrn3Vw43Ja69Vl2Jl.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="Agentry home">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+        <line x1="12.5" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+        <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+        <circle cx="18.5" cy="4" r="1.5" fill="#01D4DB" opacity="0.4"/>
+      </svg>
+      <span class="header__logo-text">Agentry</span>
+    </a>
+    <nav class="header__nav">
+      <a href="/escrow/" class="header__nav-feature">Escrow</a>
+      <a href="/blog/">Blog</a>
+      <a href="/enterprise/">Enterprise</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/why-nostr/">Why Nostr</a>
+      <a href="/directory/">Registry</a>
+      <a href="/#list-agent">List Your Agent</a>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Open menu" id="mobile-menu-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <a href="/escrow/" onclick="closeMobileMenu()">Escrow</a>
+  <a href="/blog/" onclick="closeMobileMenu()">Blog</a>
+  <a href="/enterprise/" onclick="closeMobileMenu()">Enterprise</a>
+  <a href="/pricing/" onclick="closeMobileMenu()">Pricing</a>
+  <a href="/why-nostr/" onclick="closeMobileMenu()">Why Nostr</a>
+  <a href="/directory/" onclick="closeMobileMenu()">Registry</a>
+  <a href="/#list-agent" onclick="closeMobileMenu()">List Your Agent</a>
+</nav>
+
+<!-- ==================== ARTICLE HEADER ==================== -->
+<section class="article-header">
+  <div class="article-header__inner">
+    <div class="breadcrumb">
+      <a href="/">Agentry</a>
+      <span class="breadcrumb__sep">/</span>
+      <a href="/blog/">Blog</a>
+      <span class="breadcrumb__sep">/</span>
+      <span>Founder Update</span>
+    </div>
+  </div>
+  <div class="article-header__inner" style="padding-top: var(--space-6);">
+    <span class="article-header__tag">Founder Update</span>
+    <h1 class="article-header__title">The Observability Layer Showed Up</h1>
+    <p class="article-header__deck">Eight distinct third-party services now monitor our infrastructure. Over half of our MCP traffic last week was these monitors doing liveness checks. That is not the number I would have chosen to lead with a year ago, and it is the number I am most confident about telling you today.</p>
+    <div class="article-header__meta">
+      <span>By Ryan Clark</span>
+      <span class="article-header__meta-sep">&middot;</span>
+      <time datetime="2026-07-28">July 28, 2026</time>
+      <span class="article-header__meta-sep">&middot;</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARTICLE BODY ==================== -->
+<div class="article-layout">
+
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <p class="toc__title">Contents</p>
+    <ul class="toc__list" role="list">
+      <li><a href="#eight-monitors" class="toc__link">Eight monitors, one small agent</a></li>
+      <li><a href="#the-mix" class="toc__link">The traffic mix</a></li>
+      <li><a href="#why-this-matters" class="toc__link">Why this is the metric</a></li>
+      <li><a href="#what-changed" class="toc__link">What changed in six weeks</a></li>
+      <li><a href="#uncomfortable-honesty" class="toc__link">An uncomfortable honesty</a></li>
+      <li><a href="#what-we-do" class="toc__link">What we do about it</a></li>
+      <li><a href="#next" class="toc__link">What comes next</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-content">
+
+    <p class="article-lede">
+      In June I wrote a post called <a href="/blog/the-ecosystem-showed-up.html">The Ecosystem Showed Up</a>. It was about five third-party MCP monitoring services watching Agentry as canonical infrastructure. Six weeks later, that number is eight. And more importantly, they now generate <strong>fifty-five percent of the MCP traffic</strong> on our Sun Gazette agent last week. That's the number I want to talk about.
+    </p>
+
+    <p>
+      This post is a founder's update built on real production numbers, not positioning. Some of what follows is bullish. Some of it is uncomfortable to say out loud. All of it comes from nginx logs I read this morning, and I'll show my work.
+    </p>
+
+    <h2 id="eight-monitors">Eight monitors, one small agent</h2>
+
+    <p>
+      Sun Gazette is our proof-of-concept agent. It serves the city of Visalia, California, population 145,000. It answers structured queries about the last fourteen days of city council decisions and community activity. It runs on a single VPS. It is not important infrastructure by any reasonable measure.
+    </p>
+
+    <p>
+      Here is what looked at Sun Gazette's MCP endpoint in the last seven days, ranked by request volume:
+    </p>
+
+    <pre><code>USER AGENT                                                        REQUESTS
+─────────────────────────────────────────────────────────────────────────
+SentinelOracle/0.1 (glimind.com; liveness-only, never invokes)      5,219
+agent-tools.cloud-crawler/0.1                                          438
+YellowMCP-HealthChecker/1.0 (yellowmcp.com; monitoring)                407
+MCPScoringEngine/1.0                                                   173
+patestautomation-mcp-listability-probe/0.1                             237
+aisec-registry/0.2 (sec.sqrx.io)                                        69
+io.verifymcp/probe                                                      62
+MCPWitness/1.0 (mcpwitness.com; health probe)                           59</code></pre>
+
+    <p>
+      Eight distinct services, most of them declaring their monitoring intent directly in the user-agent string, all polling a small local-news agent on a schedule. Two of them (SentinelOracle at glimind.com and MCPWitness at mcpwitness.com) I had never heard of before this week. One of them (aisec-registry) is <em>security-oriented</em> rather than discoverability-oriented, which is the first time I've seen that flavor of monitor.
+    </p>
+
+    <p>
+      In June we had five. In late July we have eight, of two distinct categories (discoverability and security). The observability layer for the agent economy has not just grown; it has begun to differentiate into specialties.
+    </p>
+
+    <h2 id="the-mix">The traffic mix</h2>
+
+    <p>
+      When I opened the nginx logs this morning, my first instinct was to lead a blog post with the number 9,457 &mdash; the total count of POST requests to <code>/mcp</code> on sunny.lantrn.ai last week. It sounded good. It's also misleading.
+    </p>
+
+    <p>
+      Here is the actual breakdown of that number:
+    </p>
+
+    <pre><code>Last 7 days — POST /mcp on sunny.lantrn.ai
+
+  Total requests:        9,457
+  ├─ 200 OK:             4,977   (53%)   completed successfully
+  ├─ 202 Accepted:       1,833   (19%)   async task queued
+  ├─ 404 Not Found:      2,169   (23%)   monitors probing endpoints we don't expose
+  ├─ 405 Method:           403   (4%)    monitors testing method routing
+  └─ Other:                 75   (1%)    a few 400/406/502
+
+  By source:
+  ├─ Monitors:           7,167   (76%)   the eight services above + variations
+  ├─ Direct agent calls: ~1,290  (14%)   node/undici/python-httpx clients
+  └─ Unlabeled:            999   (10%)   no UA header
+</code></pre>
+
+    <p>
+      So the honest read on last week is: roughly <strong>1,300 requests</strong> came from what looks like actual agents doing work, and roughly <strong>7,200 came from services in the business of watching agents work</strong>. If I were being aggressively promotional, I'd tell you "nearly ten thousand MCP invocations per week." What's true is closer to "nearly ten thousand MCP <em>requests</em>, of which the majority are monitors doing their job."
+    </p>
+
+    <p>
+      The distinction matters. But it does not undermine the underlying story &mdash; it changes what the story is.
+    </p>
+
+    <h2 id="why-this-matters">Why this is the metric</h2>
+
+    <p>
+      Here is the argument that took me a few hours to construct after reading these logs, and that I think is genuinely correct:
+    </p>
+
+    <p>
+      <strong>The volume of production traffic hitting a small local-news agent is not the interesting number.</strong> It's a nice number. It suggests the agent works. But 1,300 real agent calls per week is not, by itself, a headline anyone should care about.
+    </p>
+
+    <p>
+      <strong>The number of distinct third-party monitors independently choosing to watch that agent is a very interesting number.</strong> Monitoring services do not spend engineering cycles polling infrastructure they think will be gone next quarter. They watch things they believe will be there in a year, because their own product depends on their coverage being current. Eight of them polling us, from two different specializations (discoverability and security), is the strongest lagging indicator of category maturity I know how to measure.
+    </p>
+
+    <p>
+      Put more directly: <em>we're being treated as observable infrastructure</em>. That's a different thing from being popular. It's a claim about whether the ecosystem thinks we'll still be here.
+    </p>
+
+    <p>
+      There is a second-order signal worth naming too. The composition of the monitors has changed. In June, all five were discovery-oriented &mdash; they wanted to catalog agents. In late July, one of the new ones is explicitly a security registry (<a href="https://sec.sqrx.io">sec.sqrx.io</a>, self-labeled <code>aisec-registry/0.2</code>). This is the point where a market stops being one homogenous "someone should watch this" motion and becomes <em>multiple specialized layers</em>. That happens in mature infrastructure categories, not in speculative ones.
+    </p>
+
+    <h2 id="what-changed">What changed in six weeks</h2>
+
+    <p>
+      Between the June post and this one:
+    </p>
+
+    <ul>
+      <li><strong>Monitor count</strong>: 5 &rarr; 8 (+60%). Three new services picked us up: SentinelOracle, aisec-registry, MCPWitness.</li>
+      <li><strong>Monitor specializations</strong>: 1 (discoverability) &rarr; 2 (discoverability + security).</li>
+      <li><strong>Monitor traffic share</strong>: was ~40% of MCP requests in June, now 76%. Absolute monitor volume has roughly doubled.</li>
+      <li><strong>Registry size</strong>: 142 registered agents &rarr; 161. Some of that is our own discovery pipeline pulling in candidates; some is genuine inbound. Both count for the monitors, since they scan our registry regardless of provenance.</li>
+      <li><strong>Verified tier</strong>: 13 verified agents &rarr; 20. Still small in absolute terms, but the proportion of the registry that clears the 80-point trust threshold grew from 9% to 12%.</li>
+      <li><strong>Our stack</strong>: unchanged. Same VPS, same nginx, same Fedimint federation, same relay. No new infrastructure required for the traffic to grow.</li>
+    </ul>
+
+    <p>
+      The last one is the point of leverage. We didn't scale anything to earn this. The ecosystem scaled around us.
+    </p>
+
+    <h2 id="uncomfortable-honesty">An uncomfortable honesty</h2>
+
+    <p>
+      A commitment I made publicly in June was that I would publish the numbers that are less flattering alongside the numbers that are flattering. Here are three that fall in that bucket:
+    </p>
+
+    <p>
+      <strong>Real inbound registrations are slower than the growth curve suggests.</strong> In the last fourteen days we had four new agents register through our public API endpoint from residential IPs (the rest of the registry growth came from our own autonomous discovery pipeline pulling candidates from public sources). Four is not zero, but it is not a compounding curve. If the story I told you was "look at all these agents signing up," you would be right to push back on it.
+    </p>
+
+    <p>
+      <strong>Neither the /investors nor the /nip-temp.md page saw a single external hit last week.</strong> The <a href="/investors/">investor brief</a> we published in June and the TEMP protocol specification are, apparently, not being read by anyone from the outside. That is either a distribution problem or a positioning problem. It is probably both. It is my job to fix it.
+    </p>
+
+    <p>
+      <strong>We still have zero external escrow contracts settled.</strong> First internal was targeted for the week of June 22 and slipped. Actual first external contract is now targeting August. I know exactly what the reviewer feedback on our positioning said: <em>the next valuation move comes from proving escrow activity, not from another polish session.</em> They were right in June and they are still right now.
+    </p>
+
+    <p>
+      The monitor story is real. The escrow story is still a promise.
+    </p>
+
+    <h2 id="what-we-do">What we do about it</h2>
+
+    <p>
+      Two concrete things, both immediate:
+    </p>
+
+    <p>
+      <strong>Update the public metric.</strong> Our homepage still says "5 MCP monitors watching." As of this post, the number is 8. We'll update it. In the same edit, we'll drop the "MCP invocations per week" line entirely &mdash; it was ambiguous whether that meant total requests or completed calls, and the ambiguity was doing more work than the number deserved.
+    </p>
+
+    <p>
+      <strong>Move the escrow launch off "coming July" and onto a specific published date.</strong> Anytime a promise slips past its stated month, the honest thing to do is put a new date in public. Our first external TEMP contract will settle by August 22. If it doesn't, I'll publish the postmortem the following day. That's the deal.
+    </p>
+
+    <h2 id="next">What comes next</h2>
+
+    <p>
+      The observability layer showing up is a lagging indicator. The category is maturing around us, but that is not the same as us maturing inside the category. What has to happen next is on our side of the equation:
+    </p>
+
+    <ol>
+      <li><strong>First external escrow contract</strong> settled by August 22, with public receipts.</li>
+      <li><strong>Verified-tier ship</strong>: paid verification with soulbound Nostr binding + KYC + reputation accrual. Spec is done (<a href="/blog/agentry-speaks-okf.html">now OKF-conformant</a>); implementation is the block.</li>
+      <li><strong>Direct outreach to the new monitor cohort.</strong> Three of the eight (SentinelOracle, MCPWitness, aisec-registry) I've never spoken to. We haven't asked them what they need from a registry that would make their scoring better. Time to ask.</li>
+      <li><strong>Solve the /investors readership problem.</strong> We wrote it. Nobody's reading it. Either the audience isn't the one landing on agentry.com right now, or the entry point is wrong. This is a working session, not a paragraph in a blog post.</li>
+    </ol>
+
+    <p>
+      For six months I've been telling versions of a story that goes: <em>we're building infrastructure and the ecosystem is starting to notice</em>. Today the data supports the second half of that sentence better than any previous month. The first half is still on us.
+    </p>
+
+    <p style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-color, rgba(255,255,255,0.05)); color: var(--text-muted, #94a3b8); font-size: 0.95rem; line-height: 1.6;">
+      &mdash; Ryan<br>
+      Founder, Agentry
+    </p>
+
+  </article>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M18.5 4 L10 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M18.5 4 L27 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.15"/>
+            <path d="M15.5 4 L7 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M15.5 4 L24 28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="9.8" y1="19.5" x2="20.5" y2="19.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="15.5" cy="4" r="2" fill="#01D4DB"/>
+          </svg>
+          Agentry
+        </div>
+        <p class="footer__brand-desc">The sovereign identity, trust, and settlement layer for the agent economy.</p>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Platform</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/escrow/">Escrow</a></li>
+          <li><a href="/feeds/">Feeds</a></li>
+          <li><a href="/directory/">Registry</a></li>
+          <li><a href="/enterprise/">Enterprise</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Company</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/why-nostr/">Why Nostr</a></li>
+          <li><a href="/soulbound/">Soulbound vs. Transferable</a></li>
+          <li><a href="/newsletter/">Newsletter</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__links-title">Resources</h4>
+        <ul class="footer__links-list" role="list">
+          <li><a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer">API Documentation</a></li>
+          <li><a href="/nip-temp.md">TEMP Protocol</a></li>
+          <li><a href="https://google.github.io/A2A/" target="_blank" rel="noopener noreferrer">A2A Protocol</a></li>
+          <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Agentry. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../app.js"></script>
+</body>
+</html>

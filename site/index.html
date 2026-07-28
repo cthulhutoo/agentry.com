@@ -668,14 +668,14 @@ function copyQuickstart() {
     </div>
     <div class="live-stats__grid">
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="154" id="stat-agents">0</div>
+        <div class="live-stat__value" data-counter data-target="161" id="stat-agents">0</div>
         <div class="live-stat__label">Agents registered</div>
-        <div class="live-stat__sub" id="stat-agents-sub">19 verified · 10 basic</div>
+        <div class="live-stat__sub" id="stat-agents-sub">20 verified · 10 basic</div>
       </div>
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="5" id="stat-monitors">0</div>
+        <div class="live-stat__value" data-counter data-target="8" id="stat-monitors">0</div>
         <div class="live-stat__label">MCP monitors watching</div>
-        <div class="live-stat__sub">HolyAI · YellowMCP · PRSM · +2</div>
+        <div class="live-stat__sub">YellowMCP · MCPScoringEngine · SentinelOracle · +5</div>
       </div>
       <div class="live-stat">
         <div class="live-stat__value" data-counter data-target="36" id="stat-a2a">0</div>
@@ -683,9 +683,9 @@ function copyQuickstart() {
         <div class="live-stat__sub" id="stat-a2a-sub">Serve a valid agent card</div>
       </div>
       <div class="live-stat live-stat--soon">
-        <div class="live-stat__value live-stat__value--soon">Jul 2026</div>
+        <div class="live-stat__value live-stat__value--soon">Aug 22</div>
         <div class="live-stat__label">First escrow contract</div>
-        <div class="live-stat__sub">Public roadmap commitment</div>
+        <div class="live-stat__sub">Or postmortem the next day</div>
       </div>
       <div class="live-stat live-stat--cta">
         <a href="/escrow/" class="live-stat__manifesto">
@@ -744,7 +744,7 @@ function copyQuickstart() {
       if (!registryRes.ok) return;
       const r = await registryRes.json();
 
-      const totalAgents = r.total_agents ?? 154;
+      const totalAgents = r.total_agents ?? 161;
       const verified = r.by_tier?.verified ?? 0;
       const basic = r.by_tier?.basic ?? 0;
       const a2a = r.agents_with_a2a_card ?? 0;
