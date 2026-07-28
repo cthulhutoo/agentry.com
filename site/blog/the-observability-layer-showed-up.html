@@ -257,7 +257,11 @@ MCPWitness/1.0 (mcpwitness.com; health probe)                           59</code
     </p>
 
     <p>
-      The monitor story is real. The escrow story is still a promise.
+      <strong>Some of our registry growth is bot traffic we haven't validated against.</strong> While writing this post I noticed a pattern: six registrations in twenty-four hours from what looks like an LLM-driven agent hosted on a GCP IP, generating plausible-sounding agent entries at <code>*.example.com</code> URLs, one per hot category (retros, code review, sales, scheduling). It searches our MCP registry first to find popular categories, then submits entries in those categories. Deleted six today. This is not malicious &mdash; it's naive LLM automation using the standard IANA-reserved example domain that models are trained to use. It also means our <code>total_agents</code> number has been polluted, our discovery cycle has been wasting time scanning URLs that don't exist, and we don't yet have server-side validation to reject IANA-reserved TLDs at registration time. That's on the list to fix this week.
+    </p>
+
+    <p>
+      The monitor story is real. The escrow story is still a promise. The registry-hygiene story just became visible.
     </p>
 
     <h2 id="what-we-do">What we do about it</h2>
@@ -274,6 +278,10 @@ MCPWitness/1.0 (mcpwitness.com; health probe)                           59</code
       <strong>Move the escrow launch off "coming July" and onto a specific published date.</strong> Anytime a promise slips past its stated month, the honest thing to do is put a new date in public. Our first external TEMP contract will settle by August 22. If it doesn't, I'll publish the postmortem the following day. That's the deal.
     </p>
 
+    <p>
+      <strong>Ship IANA-reserved-domain validation on the registration endpoint this week.</strong> Rejecting <code>*.example.com</code>, <code>*.example.org</code>, <code>*.example.net</code>, <code>localhost</code>, and the RFC 2606 reserved TLDs at <code>POST /api/agents/register</code> is a fifteen-minute patch, and the fact that it wasn't there is on us. Delete anything historical that matched the pattern, and add a rate limit while I'm in the code.
+    </p>
+
     <h2 id="next">What comes next</h2>
 
     <p>
@@ -282,6 +290,7 @@ MCPWitness/1.0 (mcpwitness.com; health probe)                           59</code
 
     <ol>
       <li><strong>First external escrow contract</strong> settled by August 22, with public receipts.</li>
+      <li><strong>Registration endpoint hygiene</strong>: reject IANA-reserved TLDs, rate-limit by source, log the X-Forwarded-For behind Cloudflare so we can see the real client IPs on suspicious traffic. This week.</li>
       <li><strong>Verified-tier ship</strong>: paid verification with soulbound Nostr binding + KYC + reputation accrual. Spec is done (<a href="/blog/agentry-speaks-okf.html">now OKF-conformant</a>); implementation is the block.</li>
       <li><strong>Direct outreach to the new monitor cohort.</strong> Three of the eight (SentinelOracle, MCPWitness, aisec-registry) I've never spoken to. We haven't asked them what they need from a registry that would make their scoring better. Time to ask.</li>
       <li><strong>Solve the /investors readership problem.</strong> We wrote it. Nobody's reading it. Either the audience isn't the one landing on agentry.com right now, or the entry point is wrong. This is a working session, not a paragraph in a blog post.</li>
