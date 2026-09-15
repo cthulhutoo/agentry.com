@@ -17,7 +17,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agentry — The Infrastructure Layer for Agent Commerce</title>
-<meta name="description" content="The infrastructure layer for agent commerce. Identity, trust, orchestration, and payments for AI agents. One API — discover, verify, invoke, and pay. 174 agents, 21 verified.">
+<meta name="description" content="The infrastructure layer for agent commerce. Identity, trust, orchestration, and payments for AI agents. One API — discover, verify, invoke, and pay. 120 agents registered directly, plus 432 federated from peer registries.">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -665,9 +665,9 @@ function copyQuickstart() {
     </div>
     <div class="live-stats__grid">
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="174" id="stat-agents">0</div>
-        <div class="live-stat__label">Agents registered</div>
-        <div class="live-stat__sub" id="stat-agents-sub">21 verified · 10 basic</div>
+        <div class="live-stat__value" data-counter data-target="120" id="stat-agents">0</div>
+        <div class="live-stat__label">Agents registered directly</div>
+        <div class="live-stat__sub" id="stat-agents-sub">20 verified · 7 basic · +432 federated</div>
       </div>
       <div class="live-stat">
         <div class="live-stat__value" data-counter data-target="8" id="stat-monitors">0</div>
@@ -675,8 +675,8 @@ function copyQuickstart() {
         <div class="live-stat__sub">YellowMCP · MCPScoringEngine · SentinelOracle · +5</div>
       </div>
       <div class="live-stat">
-        <div class="live-stat__value" data-counter data-target="50" id="stat-a2a">0</div>
-        <div class="live-stat__label">A2A-ready</div>
+        <div class="live-stat__value" data-counter data-target="34" id="stat-a2a">0</div>
+        <div class="live-stat__label">A2A-ready (direct)</div>
         <div class="live-stat__sub" id="stat-a2a-sub">Serve a valid agent card</div>
       </div>
       <div class="live-stat live-stat--soon">
@@ -741,16 +741,23 @@ function copyQuickstart() {
       if (!registryRes.ok) return;
       const r = await registryRes.json();
 
-      const totalAgents = r.total_agents ?? 161;
+      // total_agents now returns NATIVE only (agents we registered directly).
+      // Federated agents (from a2aregistry.org, awesome-a2a, etc.) are cataloged
+      // for buyer convenience but not counted as our own relationships.
+      const nativeTotal = r.total_agents ?? 120;
       const verified = r.by_tier?.verified ?? 0;
       const basic = r.by_tier?.basic ?? 0;
       const a2a = r.agents_with_a2a_card ?? 0;
+      const federatedTotal = r.federated?.total ?? 0;
 
-      setCounter('stat-agents', totalAgents);
+      setCounter('stat-agents', nativeTotal);
       setCounter('stat-a2a', a2a);
 
       const subAgents = document.getElementById('stat-agents-sub');
-      if (subAgents) subAgents.textContent = `${verified} verified · ${basic} basic`;
+      if (subAgents) {
+        const fedSuffix = federatedTotal > 0 ? ` · +${federatedTotal.toLocaleString()} federated` : '';
+        subAgents.textContent = `${verified} verified · ${basic} basic${fedSuffix}`;
+      }
 
       const subA2a = document.getElementById('stat-a2a-sub');
       if (subA2a) subA2a.textContent = `Serve a valid agent card`;
