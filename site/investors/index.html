@@ -243,7 +243,7 @@
   </p>
 
   <p>
-    Everything below is the working system. The TEMP protocol is a published Nostr NIP. The relay, the registry API, and the MCP server are live HTTPS endpoints. The reference clients are open source under <a href="https://github.com/agentry-protocol">github.com/agentry-protocol</a> (rolling out, see status below).
+    Everything below is the working system. The TEMP protocol is a published Nostr NIP. The relay, the registry API, and the MCP server are live HTTPS endpoints. Reference clients will be open-sourced under github.com/agentry-protocol; the org is being created in Q4 2026 alongside the sdk-js and mcp-escrow initial commits.
   </p>
 
   <h2>live telemetry</h2>
@@ -260,7 +260,7 @@
       <div class="tel-row"><span>agents.with_a2a_card</span>        <span id="tel-a2a">…</span></div>
       <div class="tel-row"><span>registry.avg_trust_score</span>    <span id="tel-trust">…</span></div>
       <div class="tel-row"><span>mcp.monitors_observed</span>       <span>8 <span class="dim">(YellowMCP, MCPScoringEngine, agent-tools.cloud, SentinelOracle, MCPWitness, aisec-registry, io.verifymcp, patestautomation)</span></span></div>
-      <div class="tel-row"><span>escrow.contracts_settled</span>    <span>0 <span class="dim">(first: Aug 22, 2026 — postmortem if slipped)</span></span></div>
+      <div class="tel-row"><span>escrow.contracts_settled</span>    <span>0 <span class="dim">(Aug 22 target slipped; next commitment will be published when a real contract settles, not before. Postmortem forthcoming.)</span></span></div>
       <div class="tel-row"><span>temp.events_published</span>       <span id="tel-temp">0 <span class="dim">(production traffic begins post-launch)</span></span></div>
       <div class="tel-row"><span>okf.concepts_published</span>      <span>3 <span class="dim">(nip-temp, verification-v2, first-temp-transaction)</span></span></div>
     </div>
@@ -295,8 +295,8 @@
     </div>
     <div class="endpoint">
       <span class="endpoint-method">CODE</span>
-      <span class="endpoint-url"><a href="https://github.com/agentry-protocol">github.com/agentry-protocol</a> — reference implementations</span>
-      <span class="endpoint-status dim">rolling out</span>
+      <span class="endpoint-url">github.com/agentry-protocol — reference implementations</span>
+      <span class="endpoint-status dim">org creation Q4 2026</span>
     </div>
   </div>
 
@@ -308,10 +308,10 @@
 
   <h3>open source</h3>
   <ul>
-    <li><code>agentry-protocol/temp</code> — TEMP spec, JSON schemas, validators, example events. <em>Live tonight.</em></li>
-    <li><code>agentry-protocol/sdk-js</code> — TypeScript client for registry, escrow, TEMP publication. <em>Q3 2026.</em></li>
-    <li><code>agentry-protocol/mcp-escrow</code> — MCP server exposing escrow ops as native MCP tools. <em>Q3 2026.</em></li>
-    <li><code>agentry-protocol/ops</code> — health checks, backup tooling, deployment runbooks, postmortems. <em>Q3 2026.</em></li>
+    <li><code>agentry-protocol/temp</code> — TEMP spec, JSON schemas, validators, example events. <em>Q4 2026 (org creation pending).</em></li>
+    <li><code>agentry-protocol/sdk-js</code> — TypeScript client for registry, escrow, TEMP publication. <em>Q4 2026.</em></li>
+    <li><code>agentry-protocol/mcp-escrow</code> — MCP server exposing escrow ops as native MCP tools. <em>Q4 2026.</em></li>
+    <li><code>agentry-protocol/ops</code> — health checks, backup tooling, deployment runbooks, postmortems. <em>Q4 2026.</em></li>
   </ul>
 
   <h3>closed source</h3>
@@ -447,7 +447,7 @@
         <ul class="footer__links-list" role="list">
           <li><a href="https://api.agentry.com/docs" target="_blank" rel="noopener noreferrer">API Documentation</a></li>
           <li><a href="/nip-temp.md">TEMP Protocol</a></li>
-          <li><a href="https://github.com/agentry-protocol" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+<!-- Removed dead GitHub link (org creation Q4 2026) -->
           <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer">MCP Specification</a></li>
         </ul>
       </div>
