@@ -297,17 +297,56 @@ def build_trust_signals(
 # Full discovery cycle
 # ---------------------------------------------------------------------------
 
+# Consecutive failed card fetches tolerated before a previously-resolving
+# agent loses its card signals. A single timeout or blip must not flip a
+# working agent to "suspicious".
+FAILURE_GRACE_CHECKS = 3
+
+
+def _carry_forward_on_transient_failure(
+    signals: TrustSignals,
+    previous_signals: TrustSignals | None,
+) -> TrustSignals:
+    """If a previously-resolving card failed this cycle, keep its card
+    signals for up to FAILURE_GRACE_CHECKS consecutive misses.
+
+    Uptime still records the failed check, so repeated outages lower the
+    score through uptime_ratio before the card signals are dropped.
+    """
+    if previous_signals is None or not previous_signals.card_resolves:
+        signals.consecutive_failures = 0
+        return signals
+    failures = previous_signals.consecutive_failures + 1
+    if failures >= FAILURE_GRACE_CHECKS:
+        signals.consecutive_failures = failures
+        return signals
+    carried = previous_signals.model_copy(deep=True)
+    carried.uptime_checks_passed = signals.uptime_checks_passed
+    carried.uptime_checks_total = signals.uptime_checks_total
+    carried.consecutive_failures = failures
+    carried.a2a_endpoint_live = False
+    carried.mcp_endpoint_live = False
+    carried.last_checked = datetime.now(timezone.utc)
+    return carried
+
+
 async def run_discovery_cycle(store: Any) -> dict[str, Any]:
     """Run a full discovery cycle across all agents in the store.
 
-    For each agent:
-    1. Extract domain from URL
-    2. Attempt to fetch AgentCard
-    3. Create snapshot and diff against previous
-    4. Compute trust signals and score
-    5. Update the agent listing
+    Two phases, deliberately separated:
 
-    Returns summary statistics.
+    1. **Network phase** — fetch every card and probe endpoints concurrently.
+       No store reads that hit disk and no store writes happen here.
+    2. **Persist phase** — compute trust signals/scores in memory and write
+       the store exactly once via ``store.apply_discovery_batch``.
+
+    The previous implementation persisted the full store.json 2–3 times per
+    agent *inside* the event loop. Once the store grew (federated import,
+    unbounded trust_reports/card_snapshots), each write blocked the loop for
+    ~10s, so concurrent in-flight HTTP requests blew through their timeouts
+    and working agents were recorded as "card stopped resolving" →
+    ``suspicious``. Measured response times of 10–237s for cards that serve
+    in <1s were the symptom.
     """
     agents, total = store.list_agents(limit=10000, offset=0)
     logger.info("Starting discovery cycle for %d agents", total)
@@ -319,88 +358,106 @@ async def run_discovery_cycle(store: Any) -> dict[str, Any]:
         "cards_new": 0,
         "cards_changed": 0,
         "cards_unchanged": 0,
+        "grace_carried": 0,
         "errors": 0,
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
     semaphore = asyncio.Semaphore(MAX_CONCURRENT)
 
-    async def _process_agent(agent: dict[str, Any]) -> None:
+    # ---- Phase 1: network only ------------------------------------------
+    async def _fetch(agent: dict[str, Any]) -> dict[str, Any] | None:
         agent_id = agent.get("id", "")
-        agent_url = agent.get("url", "")
-        domain = _extract_domain(agent_url)
-
+        domain = _extract_domain(agent.get("url", ""))
         if not domain:
-            logger.debug("Skipping agent %s — no domain from URL %s", agent_id, agent_url)
             stats["errors"] += 1
-            return
-
+            return None
         async with semaphore:
             try:
                 snapshot = await discover_agent_card(domain)
             except Exception as exc:
                 logger.error("Discovery failed for %s: %s", domain, exc)
                 stats["errors"] += 1
-                return
-
+                return None
+            card_data = snapshot.raw_json if snapshot else None
+            a2a_path, mcp_path = await asyncio.gather(
+                probe_a2a_endpoint(f"https://{domain}", card_data),
+                probe_mcp_endpoint(f"https://{domain}", card_data),
+            )
         stats["scanned"] += 1
+        return {
+            "agent": agent,
+            "agent_id": agent_id,
+            "domain": domain,
+            "snapshot": snapshot,
+            "a2a_path": a2a_path,
+            "mcp_path": mcp_path,
+        }
 
-        # Get previous snapshot for diffing
-        previous_snapshot = store.get_latest_snapshot(agent_id)
-        previous_report = store.get_trust_report(agent_id)
+    fetched = await asyncio.gather(*[_fetch(a) for a in agents], return_exceptions=True)
+
+    # ---- Phase 2: score in memory, persist once --------------------------
+    latest_snapshots = store.latest_snapshots_by_agent()
+    latest_reports = store.latest_trust_reports_by_agent()
+
+    new_snapshots: list[dict[str, Any]] = []
+    new_reports: list[dict[str, Any]] = []
+    agent_updates: dict[str, dict[str, Any]] = {}
+
+    for item in fetched:
+        if not isinstance(item, dict):
+            if isinstance(item, Exception):
+                logger.error("Discovery task exception: %s", item)
+                stats["errors"] += 1
+            continue
+
+        agent = item["agent"]
+        agent_id = item["agent_id"]
+        domain = item["domain"]
+        snapshot = item["snapshot"]
+        a2a_path, mcp_path = item["a2a_path"], item["mcp_path"]
+
+        previous_snapshot = latest_snapshots.get(agent_id)
+        previous_report = latest_reports.get(agent_id)
         previous_signals = (
             TrustSignals(**previous_report["signals"])
             if previous_report and "signals" in previous_report
             else None
         )
 
+        snapshot_stored = False
         if snapshot is not None:
             snapshot.agent_id = agent_id
             stats["cards_found"] += 1
-
-            # Diff against previous
             if previous_snapshot:
                 diff = diff_cards(previous_snapshot, snapshot.model_dump(mode="json"))
                 snapshot.diff_from_previous = diff
-                has_changes = bool(diff.get("added") or diff.get("removed") or diff.get("changed"))
-                if has_changes:
+                if diff.get("added") or diff.get("removed") or diff.get("changed"):
                     stats["cards_changed"] += 1
+                    new_snapshots.append(snapshot.model_dump(mode="json"))
+                    snapshot_stored = True
                 else:
+                    # Unchanged card: don't append a duplicate snapshot.
                     stats["cards_unchanged"] += 1
             else:
                 stats["cards_new"] += 1
-
-            # Store snapshot
-            snap_data = snapshot.model_dump(mode="json")
-            store.add_card_snapshot(snap_data)
-
-            # Build trust signals
+                new_snapshots.append(snapshot.model_dump(mode="json"))
+                snapshot_stored = True
             signals = build_trust_signals(snapshot, domain, previous_signals)
+            signals.consecutive_failures = 0
         else:
-            # Card didn't resolve — still build signals to track uptime failure
             signals = build_trust_signals(None, domain, previous_signals)
-
-        # Live endpoint probes (bounded by the same semaphore)
-        base_url = f"https://{domain}"
-        card_data = snapshot.raw_json if snapshot else None
-
-        async with semaphore:
-            a2a_path, mcp_path = await asyncio.gather(
-                probe_a2a_endpoint(base_url, card_data),
-                probe_mcp_endpoint(base_url, card_data),
-            )
+            signals = _carry_forward_on_transient_failure(signals, previous_signals)
+            if signals.card_resolves:
+                stats["grace_carried"] += 1
 
         if a2a_path:
             signals.a2a_endpoint_live = True
-            logger.info("A2A endpoint live for %s at %s", domain, a2a_path)
         if mcp_path:
             signals.mcp_endpoint_live = True
-            logger.info("MCP endpoint live for %s at %s", domain, mcp_path)
 
-        # Compute trust score
         score, tier, breakdown = compute_trust_score(signals)
 
-        # Store trust report
         report = TrustReport(
             agent_id=agent_id,
             trust_score=score,
@@ -408,38 +465,38 @@ async def run_discovery_cycle(store: Any) -> dict[str, Any]:
             signals=signals,
             score_breakdown=breakdown,
         )
-        store.add_trust_report(report.model_dump(mode="json"))
+        new_reports.append(report.model_dump(mode="json"))
 
-        # Update the agent listing
-        trust_update: dict[str, Any] = {
+        update: dict[str, Any] = {
             "trust_score": score,
             "trust_tier": tier,
             "verification_status": tier,
             "last_card_check": datetime.now(timezone.utc).isoformat(),
         }
         if snapshot is not None:
-            trust_update["card_url"] = snapshot.url_source
-            trust_update["agent_card_snapshot_id"] = snapshot.id
-            # Set a2a_support based on live probe, not just card existence
-            trust_update["a2a_support"] = "Yes" if a2a_path else "No"
-            trust_update["a2a_endpoint"] = a2a_path
-            trust_update["mcp_support"] = "Yes" if mcp_path else agent.get("mcp_support", "Unknown")
-            trust_update["mcp_endpoint"] = mcp_path
-        else:
-            trust_update["a2a_support"] = "No"
-            trust_update["a2a_endpoint"] = None
-            trust_update["mcp_endpoint"] = None
-        store.update_agent_trust(agent_id, trust_update)
+            update["card_url"] = snapshot.url_source
+            update["agent_card_snapshot_id"] = (
+                snapshot.id if snapshot_stored else (previous_snapshot or {}).get("id", snapshot.id)
+            )
+            update["a2a_support"] = "Yes" if a2a_path else "No"
+            update["a2a_endpoint"] = a2a_path
+            update["mcp_support"] = "Yes" if mcp_path else agent.get("mcp_support", "Unknown")
+            update["mcp_endpoint"] = mcp_path
+        elif not signals.card_resolves:
+            update["a2a_support"] = "No"
+            update["a2a_endpoint"] = None
+            update["mcp_endpoint"] = None
+        agent_updates[agent_id] = update
 
-    # Run all agent discoveries concurrently (bounded by semaphore)
-    tasks = [_process_agent(agent) for agent in agents]
-    await asyncio.gather(*tasks, return_exceptions=True)
+    store.apply_discovery_batch(
+        agent_updates=agent_updates,
+        snapshots=new_snapshots,
+        reports=new_reports,
+    )
 
     logger.info(
-        "Discovery cycle complete: %d scanned, %d cards found, %d new, %d changed",
-        stats["scanned"],
-        stats["cards_found"],
-        stats["cards_new"],
-        stats["cards_changed"],
+        "Discovery cycle complete: %d scanned, %d cards found, %d new, %d changed, %d grace-carried",
+        stats["scanned"], stats["cards_found"], stats["cards_new"],
+        stats["cards_changed"], stats["grace_carried"],
     )
     return stats
