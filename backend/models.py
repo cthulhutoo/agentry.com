@@ -218,6 +218,7 @@ class TrustSignals(BaseModel):
     uptime_checks_total: int = 0
     last_checked: datetime = Field(default_factory=datetime.utcnow)
     version_changes_30d: int = 0
+    consecutive_failures: int = 0
 
 
 class TrustReport(BaseModel):

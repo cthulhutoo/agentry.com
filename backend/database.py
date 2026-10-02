@@ -403,6 +403,71 @@ class DataStore:
         reports.sort(key=lambda r: r.get("computed_at", ""), reverse=True)
         return reports[0]
 
+    # -- Batched discovery writes -------------------------------------------
+
+    # History retained per agent. Older entries are pruned on every batch so
+    # store.json stops growing by ~one report per agent per cycle forever.
+    MAX_TRUST_REPORTS_PER_AGENT = 20
+    MAX_SNAPSHOTS_PER_AGENT = 10
+
+    def latest_snapshots_by_agent(self) -> dict[str, dict[str, Any]]:
+        """Most recent card snapshot per agent, in one pass."""
+        self._reload_if_stale()
+        latest: dict[str, dict[str, Any]] = {}
+        for s in self._store.get("card_snapshots", []):
+            aid = s.get("agent_id")
+            if aid and (aid not in latest or s.get("fetched_at", "") > latest[aid].get("fetched_at", "")):
+                latest[aid] = s
+        return latest
+
+    def latest_trust_reports_by_agent(self) -> dict[str, dict[str, Any]]:
+        """Most recent trust report per agent, in one pass."""
+        self._reload_if_stale()
+        latest: dict[str, dict[str, Any]] = {}
+        for r in self._store.get("trust_reports", []):
+            aid = r.get("agent_id")
+            if aid and (aid not in latest or r.get("computed_at", "") > latest[aid].get("computed_at", "")):
+                latest[aid] = r
+        return latest
+
+    @staticmethod
+    def _prune_per_agent(rows: list[dict[str, Any]], key: str, keep: int) -> list[dict[str, Any]]:
+        by_agent: dict[str, list[dict[str, Any]]] = {}
+        for r in rows:
+            by_agent.setdefault(r.get("agent_id", ""), []).append(r)
+        kept: list[dict[str, Any]] = []
+        for group in by_agent.values():
+            group.sort(key=lambda r: r.get(key, ""), reverse=True)
+            kept.extend(group[:keep])
+        kept.sort(key=lambda r: r.get(key, ""))
+        return kept
+
+    def apply_discovery_batch(
+        self,
+        agent_updates: dict[str, dict[str, Any]],
+        snapshots: list[dict[str, Any]],
+        reports: list[dict[str, Any]],
+    ) -> None:
+        """Apply a whole discovery cycle's results with a single persist.
+
+        Re-reads the store first so registrations made while the cycle's
+        network phase was running are not overwritten.
+        """
+        self._reload_if_stale()
+        now = datetime.utcnow().isoformat()
+        for a in self._store["agents"]:
+            upd = agent_updates.get(a.get("id"))
+            if upd:
+                a.update(upd)
+                a["updated_at"] = now
+        self._store.setdefault("card_snapshots", []).extend(snapshots)
+        self._store.setdefault("trust_reports", []).extend(reports)
+        self._store["card_snapshots"] = self._prune_per_agent(
+            self._store["card_snapshots"], "fetched_at", self.MAX_SNAPSHOTS_PER_AGENT)
+        self._store["trust_reports"] = self._prune_per_agent(
+            self._store["trust_reports"], "computed_at", self.MAX_TRUST_REPORTS_PER_AGENT)
+        self._persist()
+
     # -- Organizations ------------------------------------------------------
 
     def create_org(self, data: dict[str, Any]) -> dict[str, Any]:
